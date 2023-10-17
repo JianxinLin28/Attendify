@@ -87,5 +87,6 @@ This following steps will only work if you have XCode.
    Third, click the run button in XCode to run the App. After these three steps, a real app
    will be created. Before opening it, you need to trust yourself on your mobile device.
    To do that, go to "Setting -> General -> VPN&Device Management" and trust Attendify.
-5. Now you can open the app. With this approach, your app will have zero overhead. 
+5. Now you can open the app. With this approach, your app will have absolutely zero overhead
+   and it is equivalent to the Apps deployed in App Store. 
    
