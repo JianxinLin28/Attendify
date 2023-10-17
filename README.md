@@ -1,7 +1,7 @@
 # Welcome to the Attendify Mobile front-end development
 **Please treat this branch like a main branch.
-If you want to contribute, create a sub-branch to this branch
-and add things to there!**
+If you want to contribute, create a new branch and make
+its source to this branch!**
 
 Developer: Jianxin Lin & Aadi Deshmukh
 
