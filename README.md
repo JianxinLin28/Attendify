@@ -34,7 +34,21 @@ Pressing 'i' will open an iOS simulator. Pressing 'a' will open an Android simul
 
 ## Installing our project
 Download the project as a zip file and unzip it. Change directory to the unzip folder,
-then run the app by following the above instruction "How to run the app?"
+Start by running this command in the terminal:
+```
+npm install
+```
+Then
+```
+npm start
+```
+Now you should see the QR code along with many instructions. The next thing to do
+is to follow the "How to run the app?" section.
+
+## Uploading to sub-branches
+Remember, whenever you upload a project, **delete the node_modules file**.
+Also, **delete the ios file and android file**. They are huge!
+After done that, name your project to 'Attendify_Student' and upload.
 
 ## How to contribute to our development?
 ### Understanding the structure
