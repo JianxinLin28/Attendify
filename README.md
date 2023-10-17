@@ -1,4 +1,5 @@
 # Welcome to my development space
+## This branch's source is the "Mobile" branch.
 Jianxin Lin (Kolyn090)
 
 **I primary focus on the mobile front end development
