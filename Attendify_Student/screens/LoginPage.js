@@ -1,15 +1,16 @@
 import * as React from 'react';
 import {useState, useCallback} from 'react';
 import { Platform } from 'react-native';
-import { StyleSheet, Text, View, TextInput, Pressable } from 'react-native';
-import { SafeAreaView, Image, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, Pressable } from 'react-native';
+import { SafeAreaView } from 'react-native';
 import Checkbox from 'expo-checkbox';
 import * as SplashScreen from 'expo-splash-screen';
-import { currentTheme, changeTheme } from '../style/AppTheme';
+import { currentTheme } from '../kits/AppTheme';
 import { loadFont } from '../props/FontLoader';
-import { kolynScreen, kolynInputfield, kolynButton, kolynLabel } from '../style/KolynKit';
+import * as KolynStyle from '../kits/KolynStyleKit';
+import * as KolynComponent from '../kits/KolynComponentKit';
+import {KolynMainTitleImage} from '../kits/KolynComponentKit';
 
-changeTheme(0);
 const ios = Platform.OS == 'ios';
 
 export function LoginPage(props) {
@@ -40,11 +41,11 @@ export function LoginPage(props) {
         style={{flex: 1}}>
         <View style={{flex: 1}}/>
         <View style={{flex: 6}}>
-          <MainTitleImage/>
+          <KolynMainTitleImage/>
 
-          <EmailTextfield
-            onChangeEmailText={onChangeEmailText}
+          <EmailTextfield 
             emailText={emailText}
+            onChangeEmailText={onChangeEmailText}
           />
 
           <PasswordTextfild
@@ -68,42 +69,28 @@ export function LoginPage(props) {
   );
 }
 
-/* The icon & title image */
-function MainTitleImage() {
-  return (
-    <Image
-      source={require('../assets/main-title.png')}
-      style={styles.title}
-    />
-  )
-}
-
 /* The email textfield */
-function EmailTextfield({ onChangeEmailText, emailText }) {
-  return (
-    <TextInput
-      style={styles.inputTextfield}
-      onChangeText={onChangeEmailText}
-      value={emailText}
-      placeholder="Enter email"
-      keyboardType="email-address"
-      secureTextEntry={false}
-    />
-  )
+function EmailTextfield({ emailText, onChangeEmailText }) {
+  return KolynComponent.KolynTextfield({
+    style: styles.inputTextfield, 
+    text: emailText, 
+    onChangeText: onChangeEmailText, 
+    placeholder: "Enter email", 
+    keyboardType: "email-address", 
+    isSecure: false
+  });
 }
 
 /* The password textfield, secure typing */
 function PasswordTextfild({ onChangePasswordText, passwordText }) {
-  return (
-    <TextInput
-      style={styles.inputTextfield}
-      onChangeText={onChangePasswordText}
-      value={passwordText}
-      placeholder="Enter password"
-      keyboardType="default"
-      secureTextEntry={true}
-    />
-  )
+  return KolynComponent.KolynTextfield({
+    style: styles.inputTextfield, 
+    text: passwordText, 
+    onChangeText: onChangePasswordText, 
+    placeholder: "Enter password", 
+    keyboardType: "default", 
+    isSecure: true
+  });
 }
 
 /* The login button */
@@ -112,7 +99,7 @@ function LoginButton({ onPress }) {
     <Pressable style={styles.loginButton} onPress={onPress}>
       <Text style={styles.loginButtonLabel}>Log in</Text>
     </Pressable>
-  )
+  );
 }
 
 /* Remember me check-in box and label */
@@ -126,7 +113,7 @@ function RememberMe({ setChecked, isChecked }) {
         value={isChecked}/>
       <Text style={styles.rememberMeLabel}>Remember me</Text>
     </View>
-  )
+  );
 }
 
 /* The signup button */
@@ -137,44 +124,36 @@ function SignupButton({ onPress }) {
       onPress={onPress}>
       <Text style={styles.signupButtonLabel}>Sign up</Text>
     </Pressable>
-  )
+  );
 }
 
 /* The credits label */
-function Credits({  }) {
+function Credits() {
   return (
     <Text style={styles.creditLabel}>
       Credits: Proud app made by CS 320 Group 6
     </Text>
-  )
+  );
 }
 
-const {width} = Dimensions.get('window');
 const styles = StyleSheet.create({
 
   screen: StyleSheet.flatten([
-    kolynScreen(currentTheme.mainColor),
+    KolynStyle.kolynScreen(currentTheme.mainColor),
   ]),
-
-  title: {
-    resizeMode: 'contain',
-    width: 400,
-    height: width*0.2,
-    alignSelf: 'center',
-  },
 
   inputTextfield: StyleSheet.flatten([
     {height: 40, width: 300}, 
-    kolynInputfield(currentTheme.subColor, currentTheme.mainFont),
+    KolynStyle.kolynInputTextfield(currentTheme.subColor, currentTheme.mainFont),
   ]),
 
   loginButton: StyleSheet.flatten([
     {top: 55, width: 240}, 
-    kolynButton(currentTheme.subColor),
+    KolynStyle.kolynButton(currentTheme.subColor),
   ]),
 
   loginButtonLabel: StyleSheet.flatten([
-    kolynLabel(currentTheme.fontSizes.casual, currentTheme.mainFont, currentTheme.mainColor)
+    KolynStyle.kolynLabel(currentTheme.fontSizes.casual, currentTheme.mainFont, currentTheme.mainColor)
   ]),
 
   rememberMe: {
@@ -186,21 +165,21 @@ const styles = StyleSheet.create({
   checkbox: { margin: 8 },
 
   rememberMeLabel: StyleSheet.flatten([
-    kolynLabel(currentTheme.fontSizes.medium, currentTheme.mainFont, currentTheme.subColor),
+    KolynStyle.kolynLabel(currentTheme.fontSizes.medium, currentTheme.mainFont, currentTheme.subColor),
   ]),
 
   signupButton: StyleSheet.flatten([
     {height: 40, width: 70},
-    kolynButton(currentTheme.subColor),
+    KolynStyle.kolynButton(currentTheme.subColor),
   ]),
 
   signupButtonLabel: StyleSheet.flatten([
-    kolynLabel(currentTheme.fontSizes.small, currentTheme.mainFont, currentTheme.mainColor,),
+    KolynStyle.kolynLabel(currentTheme.fontSizes.small, currentTheme.mainFont, currentTheme.mainColor,),
   ]),
 
   creditLabel: StyleSheet.flatten([
     {textAlign: 'center'},
-    kolynLabel(currentTheme.fontSizes.tiny, currentTheme.mainFont, currentTheme.subColor),
+    KolynStyle.kolynLabel(currentTheme.fontSizes.tiny, currentTheme.mainFont, currentTheme.subColor),
   ]),
 
 });
