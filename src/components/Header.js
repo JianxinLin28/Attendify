@@ -1,11 +1,16 @@
 import { Link } from "react-router-dom";
-import logoImg from "../constants/AttendifyLogo.PNG";
+import AttendifyHeader from "../constants/AttendifyHeader.png";
 
 const Header = ({ heading, paragraph, linkName, linkUrl = "#" }) => {
   return (
     <div className="mb-10">
       <div className="flex justify-center">
-        <img alt="" className="h-24 w-24" src={logoImg} />
+        <img
+          alt=""
+          className="w-max-width h-auto"
+          src={AttendifyHeader}
+          style={{ maxWidth: "250px" }}
+        />
       </div>
       <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
         {heading}

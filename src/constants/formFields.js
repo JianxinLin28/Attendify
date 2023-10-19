@@ -23,6 +23,36 @@ const loginFields = [
 
 const signupFields = [
   {
+    labelText: "First Name",
+    labelFor: "first-name",
+    id: "fname",
+    name: "fname",
+    type: "text",
+    autoComplete: "fname",
+    isRequired: true,
+    placeholder: "First Name",
+  },
+  {
+    labelText: "Last Name",
+    labelFor: "last-name",
+    id: "lname",
+    name: "lname",
+    type: "text",
+    autoComplete: "lname",
+    isRequired: true,
+    placeholder: "Last Name",
+  },
+  {
+    labelText: "Spire ID",
+    labelFor: "spire-id",
+    id: "sid",
+    name: "spire-id",
+    type: "spire-id",
+    autoComplete: "spire-id",
+    isRequired: true,
+    placeholder: "SPIRE ID",
+  },
+  {
     labelText: "Email address",
     labelFor: "email-address",
     id: "email-address",
