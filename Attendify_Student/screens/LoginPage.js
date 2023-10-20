@@ -1,14 +1,12 @@
 import * as React from 'react';
-import {useState, useCallback} from 'react';
 import { Platform } from 'react-native';
-import { StyleSheet, Text, View, Pressable } from 'react-native';
+import { StyleSheet, Text, View, Pressable, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native';
 import Checkbox from 'expo-checkbox';
 import * as SplashScreen from 'expo-splash-screen';
 import { currentTheme } from '../kits/AppTheme';
 import { loadFont } from '../props/FontLoader';
 import * as KolynStyle from '../kits/KolynStyleKit';
-import * as KolynComponent from '../kits/KolynComponentKit';
 import {KolynMainTitleImage} from '../kits/KolynComponentKit';
 
 const ios = Platform.OS == 'ios';
@@ -20,10 +18,10 @@ export function LoginPage(props) {
   const [passwordText, onChangePasswordText] = React.useState('');
   const { onPress = 'Save' } = props;
   /* The 'isChecked' turns to true if the box if checked, otherwise false */
-  const [isChecked, setChecked] = useState(false);
+  const [isChecked, setChecked] = React.useState(false);
 
   const fontsLoaded = loadFont();
-  const onLayoutRootView = useCallback(async () => {
+  const onLayoutRootView = React.useCallback(async () => {
     if (fontsLoaded) {
       await SplashScreen.hideAsync();
     }
@@ -71,26 +69,28 @@ export function LoginPage(props) {
 
 /* The email textfield */
 function EmailTextfield({ emailText, onChangeEmailText }) {
-  return KolynComponent.KolynTextfield({
-    style: styles.inputTextfield, 
-    text: emailText, 
-    onChangeText: onChangeEmailText, 
-    placeholder: "Enter email", 
-    keyboardType: "email-address", 
-    isSecure: false
-  });
+  return (
+    <TextInput
+      style={styles.inputTextfield}
+      value={emailText}
+      onChangeText={onChangeEmailText}
+      placeholder="Enter email"
+      keyboardType="email-address"
+      secureTextEntry={false}
+    />);
 }
 
 /* The password textfield, secure typing */
 function PasswordTextfild({ onChangePasswordText, passwordText }) {
-  return KolynComponent.KolynTextfield({
-    style: styles.inputTextfield, 
-    text: passwordText, 
-    onChangeText: onChangePasswordText, 
-    placeholder: "Enter password", 
-    keyboardType: "default", 
-    isSecure: true
-  });
+  return (
+    <TextInput
+      style={styles.inputTextfield}
+      value={passwordText}
+      onChangeText={onChangePasswordText}
+      placeholder="Enter password"
+      keyboardType="default"
+      secureTextEntry={true}
+    />);
 }
 
 /* The login button */

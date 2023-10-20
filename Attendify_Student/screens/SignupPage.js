@@ -1,13 +1,11 @@
 import * as React from 'react';
-import {useState, useCallback} from 'react';
-import { Keyboard, Platform, TouchableWithoutFeedback } from 'react-native';
+import { Keyboard, Platform, TouchableWithoutFeedback, Dimensions } from 'react-native';
 import { StyleSheet, Text, View, KeyboardAvoidingView, TextInput, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native';
 import * as SplashScreen from 'expo-splash-screen';
-import { currentTheme, changeTheme } from '../kits/AppTheme';
+import { currentTheme } from '../kits/AppTheme';
 import { loadFont } from '../props/FontLoader';
 import * as KolynStyle from '../kits/KolynStyleKit';
-import * as KolynComponent from '../kits/KolynComponentKit';
 import {KolynMainTitleImage} from '../kits/KolynComponentKit';
 
 const ios = Platform.OS == 'ios';
@@ -23,7 +21,7 @@ export function SignupPage(props) {
   const [errorText, onChangeErrorText] = React.useState('');
 
   const fontsLoaded = loadFont();
-  const onLayoutRootView = useCallback(async () => {
+  const onLayoutRootView = React.useCallback(async () => {
   if (fontsLoaded) {
     await SplashScreen.hideAsync();
     }
@@ -88,10 +86,14 @@ export function SignupPage(props) {
             keyboardType="default"
           />
 
+        </View>
+        <View style={{flex: 3}}>
+
           <ErrorMessager 
             errorText={errorText}
-            onChangeErrorText={onChangeErrorText} />
-
+            onChangeErrorText={onChangeErrorText} 
+          />
+  
           <SignupButton onPress={() => ValidateSignupInfo(
             {
               lnameText: lnameText,
@@ -102,11 +104,13 @@ export function SignupPage(props) {
               repasswordText: repasswordText,
               onChangeErrorText: onChangeErrorText,
             }
-          )} />
-
+          )} 
+          />
+  
           <BackButton onPress={onPress} />
 
-          </View>
+        </View>
+
       </SafeAreaView>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
@@ -145,14 +149,15 @@ function NameTextfields({ lnameText, onChangeLnameText, fnameText, onChangeFname
 }
 
 function CustomTextfield({ style, text, onChangeText, placeholder, keyboardType }) {
-  return KolynComponent.KolynTextfield({
-    style: style, 
-    text: text, 
-    onChangeText: onChangeText, 
-    placeholder: placeholder, 
-    keyboardType: keyboardType, 
-    isSecure: false
-  });
+  return (
+    <TextInput
+      style={style}
+      value={text}
+      onChangeText={onChangeText}
+      placeholder={placeholder}
+      keyboardType={keyboardType}
+      secureTextEntry={false}
+    />);
 }
 
 function ErrorMessager({ errorText, onChangeErrorText }) {
@@ -224,6 +229,7 @@ function ValidateSignupInfo({
   onChangeErrorText("");
 }
 
+const {width, height} = Dimensions.get('window');
 const styles = StyleSheet.create({
 
   screen: StyleSheet.flatten([
@@ -256,7 +262,7 @@ const styles = StyleSheet.create({
   ]),
 
   signupButton: StyleSheet.flatten([
-    {width: 240, top: 55},
+    {width: 240},
     KolynStyle.kolynButton(currentTheme.subColor),
   ]),
 
@@ -265,7 +271,7 @@ const styles = StyleSheet.create({
   ]),
 
   backButton: StyleSheet.flatten([
-    {width: 70, top: 90},
+    {width: 70, top: 36},
     KolynStyle.kolynButton(currentTheme.subColor),
   ]),
 

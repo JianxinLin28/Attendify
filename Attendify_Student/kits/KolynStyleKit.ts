@@ -1,3 +1,5 @@
+import { Dimensions } from 'react-native';
+
 export function kolynScreen(screenBackground: string) {
     return {
         flex: 1,
@@ -35,5 +37,15 @@ export function kolynLabel(fontSize: number, font: string, fontColor: string) {
         fontSize: fontSize,
         fontFamily: font,
         color: fontColor,
+    };
+}
+
+const {width, height} = Dimensions.get('window');
+export function kolynDivider(color: string) {
+    return {
+        width: width,
+        height: 20,
+        backgroundColor: color,
+        alignSelf: 'center'
     };
 }
