@@ -49,6 +49,7 @@ is to follow the "How to run the app?" section.
 Remember, whenever you upload a project, **delete the node_modules file**.
 Also, **delete the ios file and android file**. They are huge!
 After done that, name your project to 'Attendify_Student' and upload.
+**Do not** directly upload to other people's branch without their permission.
 
 ## How to contribute to our development?
 ### Understanding the structure
@@ -59,13 +60,44 @@ For screen navigations, we plan to use the stack navigator library by React Nati
 Tutorial I wrote:
 https://docs.google.com/document/d/1_EzUmDY-dMop2H4Ky1Bvnebc8gwR2QuCnwDDyu6vWHQ/edit?usp=sharing
 
+### Project UI structure (Navigation)
+First of all, everything originates from App() function in the App.js file. 
+(Very) general structure
+```
+<NavigationContainer>
+   <Stack.Navigator>
+      <Stack.Screen login page>
+      <Stack.Screen signup page>
+      <Stack.Screen bottom tab>
+
+<Stack.Screen bottom tab>
+   <Tab.Navigator>
+      <Tab.Screen bluetooth page>
+      <Tab.Screen camera page>
+      <Tab.Screen course page>
+      <Tab.Screen clicker page>
+      <Tab.Screen profile page>
+```
+There is only one Navigation Container across the entire app.
+Inside of it, there is navigator. We have two navigators here: Stack and Tab.
+Notice that Tab is a nested navigator of Stack. (inside of Stack)
+The Tab is also equivalent to 'bottom tab'. If you have took a look on my
+figma design, you will know what I mean. I decided to put the bottom tab 
+as a "page" of the main Stack because it seems to be easier to manage in
+this way. The login page and the signup page do not have bottom tab. 
+
 ### Coding practice
 1. Always including things in a SafeAreaView. This makes sure the app looks good on
 every iOS devices.
 2. Be sure all your logs can be disabled in some way.
 3. Name all your folders starting with a lower case letter, i.e. **stardewValley**
-4. Name all other files with the Pascal Case style, i.e. **MyDude.js**
-5. Make use of style sheets, do avoid extensive inline style. 
+4. Name all js and ts files with the Pascal Case style, i.e. **MyDude.js** and **YuGiOh.ts**
+5. For system generated files, please leave it as it is.
+6. The use of StyleSheet: for each page, please make it its own file,
+   and concentrate styles as much as possible.
+7. Your Component functions all start with capital letters!
+8. Almost all other functions start with lower letters!
+9. One file === one page || One file === one functionality
 
 ## Troubleshooting
 ### Asset bundle works on an iOS simulator but not a real iOS device
@@ -79,7 +111,7 @@ The configuation of a new font can be tedious and I do not intend to add others.
 The main reason being Apple is using the font family name and Android is using the file
 name. 
 
-### Troubleshooting on a real iOS device as an App
+## Deploy to iOS
 This following steps will only work if you have XCode. 
 [Warning: XCode is very large]
 1. Run this command in the project directory
