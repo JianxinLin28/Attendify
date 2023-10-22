@@ -2,20 +2,18 @@ import * as React from 'react';
 import { Platform, Dimensions, TextInput } from 'react-native';
 import { StyleSheet, Text, View, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native';
-import Checkbox from 'expo-checkbox';
 import * as SplashScreen from 'expo-splash-screen';
-import { currentTheme } from '../kits/AppTheme';
+import { currentTheme, changeTheme } from '../kits/AppTheme';
 import { loadFont } from '../props/FontLoader';
 import * as KolynStyle from '../kits/KolynStyleKit';
-import * as KolynComponent from '../kits/KolynComponentKit';
-import {KolynSwitchCourseButton, 
-        KolynTopTitleLabel,
-        KolynBottomNavigatorTab} from '../kits/KolynComponentKit';
+import {KolynSwitchCourseButton } from '../kits/KolynComponentKit';
+import { CommonPart } from '../kits/CommonPart';
 
-const ios = Platform.OS == 'ios';
 
-export function QRScanPage(props) {
-  const [errorText, onChangeErrorText] = React.useState('');
+export function QRScanPage({ navigation }) {
+  const [courseText, onChangeCourseText] = React.useState('');
+  const [timeText, onChangeTimeText] = React.useState('');
+  const [statusText, onChangeStatusText] = React.useState('');
 
   const fontsLoaded = loadFont();
   const onLayoutRootView = React.useCallback(async () => {
@@ -29,59 +27,49 @@ export function QRScanPage(props) {
   }
 
   return (
-    <View style={styles.screen}
-        onLayout={onLayoutRootView}>
-      <SafeAreaView 
-        className={ios? '-mb-8': ''}
-        style={{flex: 1}}>
-        
-        <KolynTopTitleLabel
-          text="QR Code Scan"
-          backgroundStyle={styles.topTitle}
-          textLabelStyle={styles.topTitleLabel}
+    <CommonPart 
+      title={"QR Code Scan"}
+      navigation={navigation}
+      components={
+        <View style={{flex: 6}}>
+        <KolynSwitchCourseButton
+          foregroundColor={currentTheme.mainColor}
+          backgroundColor={currentTheme.primaryColor}
         />
 
-        <View style={styles.divider} />
+        <View style={{top: 50, flex: 2}}>
 
-        <View style={{flex: 6}}>
+          <TextInput
+            editable={false}
+            style={styles.courseLabel}
+            value={courseText}
+            onChangeText={onChangeCourseText}
+          >CS 320, Jaime Dávila</TextInput>
 
-          <KolynSwitchCourseButton
-            buttonStyle={styles.switchCourseButton}
-            textLabelStyle={styles.switchCourseButtonLabel}
-          />
+          <TextInput
+            editable={false}
+            style={styles.courseLabel}
+            value={timeText}
+            onChangeText={onChangeTimeText}
+          >Tu, Th 13:00 - 14:15</TextInput>
 
-          <View style={{top: 50, flex: 2}}>
-
-            <TextInput
-              editable={false}
-              style={styles.courseLabel}
-              value={errorText}
-              onChangeText={onChangeErrorText}
-            >CS 320, Jaime Dávila</TextInput>
-  
-            <TextInput
-              editable={false}
-              style={styles.courseLabel}
-              value={errorText}
-              onChangeText={onChangeErrorText}
-            >Tu, Th 13:00 - 14:15</TextInput>
-
-          </View>
-
-          <View style={{top: 50, flex: 3}}>
-            <CameraButton/>
-          </View>
-
-          <View style={[styles.divider, {top: -20}]} />
-
-          <KolynBottomNavigatorTab 
-            backgroundStyle={styles.topTitle}
-            circleColor={currentTheme.mainColor}
-          />
-          
         </View>
-      </SafeAreaView>
-    </View>
+
+        <View style={{top: 50, flex: 3}}>
+          <CameraButton/>
+        </View>
+
+        <TextInput
+            editable={false}
+            style={styles.statusLabel}
+            value={statusText}
+            onChangeText={onChangeStatusText}
+        >
+          Status: Not checked in
+        </TextInput>
+        </View>
+      }
+    />
   );
 }
 
@@ -103,22 +91,9 @@ const styles = StyleSheet.create({
     KolynStyle.kolynScreen(currentTheme.mainColor),
   ]),
 
-  topTitle: {color: currentTheme.mainColor},
-
-  topTitleLabel: StyleSheet.flatten([
-    {alignSelf: 'center', height: 50},
-    KolynStyle.kolynLabel(currentTheme.fontSizes.casual, currentTheme.mainFont, currentTheme.primaryColor)
-  ]),
-
-  divider: KolynStyle.kolynDivider(currentTheme.primaryColor),
-
-  switchCourseButton: StyleSheet.flatten([
-    {top: 20, width: 240, end: -width/3.0}, 
-    KolynStyle.kolynButton(currentTheme.subColor),
-  ]),
-
-  switchCourseButtonLabel: StyleSheet.flatten([
-    KolynStyle.kolynLabel(currentTheme.fontSizes.small, currentTheme.mainFont, currentTheme.mainColor)
+  divider: StyleSheet.flatten([
+    {top: -20},
+    KolynStyle.kolynDivider(currentTheme.primaryColor)
   ]),
 
   courseLabel: StyleSheet.flatten([
@@ -126,9 +101,14 @@ const styles = StyleSheet.create({
     KolynStyle.kolynLabel(currentTheme.fontSizes.small, currentTheme.mainFont, currentTheme.primaryColor)
   ]),
 
+  statusLabel:StyleSheet.flatten([
+    {alignSelf: 'center', height: 30, top: -80},
+    KolynStyle.kolynLabel(currentTheme.fontSizes.small, currentTheme.mainFont, currentTheme.primaryColor)
+  ]),
+
   cameraButton: StyleSheet.flatten([
     {height: 40, width: 160, justifyContent: 'flex-start', alignItems: 'center'},
-    KolynStyle.kolynButton(currentTheme.subColor),
+    KolynStyle.kolynButton(currentTheme.primaryColor),
   ]),
 
   cameraButtonLabel: StyleSheet.flatten([

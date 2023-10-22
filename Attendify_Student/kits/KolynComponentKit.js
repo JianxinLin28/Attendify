@@ -1,6 +1,8 @@
 import * as React from 'react';
-import { Pressable, StyleSheet, TextInput, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { Image, Dimensions } from 'react-native';
+import { currentTheme } from './AppTheme';
+import * as KolynStyle from '../kits/KolynStyleKit';
 
 
 const {width} = Dimensions.get('window');
@@ -15,57 +17,26 @@ export function KolynMainTitleImage() {
   );
 }
 
-export function KolynTopTitleLabel({ text, backgroundStyle, textLabelStyle }) {
+export function KolynTopTitleLabel({ text, foregroundColor }) {
   return (
     <View
-      style={backgroundStyle}>
-      <Text style={textLabelStyle}>{text}</Text>
+      style={styles.topTitle}>
+      <Text style={[styles.topTitleLabel, {color: foregroundColor}]}>{text}</Text>
     </View>
   );
 }
 
 /* Navigate to 'Switch Course' page when pressed */
-export function KolynSwitchCourseButton({ buttonStyle, textLabelStyle }) {
+/* By default, background white, foreground blue */
+export function KolynSwitchCourseButton({ foregroundColor, backgroundColor }) {
   return (
     <Pressable
-      style={[buttonStyle, {height: 40}, {width: 120}]}>
-      <Text style={textLabelStyle}>Switch course</Text>
+      style={[styles.switchCourseButton, {backgroundColor: backgroundColor}]}>
+      <Text style={[styles.switchCourseButtonLabel, {color: foregroundColor}]}>Switch course</Text>
     </Pressable>
   );
 }
 
-export function KolynBottomNavigatorTab({ backgroundStyle, circleColor }) {
-  return (
-      <View
-        style={[styles.circle, {backgroundColor: circleColor}]}>
-        <View
-        style={[backgroundStyle, {alignSelf: 'center', top: 28, flexDirection: 'row', gap: 15}]}>
-        <Image
-          source={require('../assets/bluetooth-scan-icon.png')}
-          style={styles.smallPageIcon}
-        />
-        <Image
-          source={require('../assets/qr-scan-icon.png')}
-          style={styles.smallPageIcon}
-        />
-        <Image
-          source={require('../assets/add-icon.png')}
-          style={[styles.bigPageIcon, {top: -20}]}
-        />
-        <Image
-          source={require('../assets/clicker-icon.png')}
-          style={styles.smallPageIcon}
-        />
-        <Image
-          source={require('../assets/profile-icon.png')}
-          style={styles.smallPageIcon}
-        />
-      </View>
-      </View>
-  );
-}
-
-// do not add any style that is related to the current theme
 const styles = StyleSheet.create({
 
   mainTitle: {
@@ -75,24 +46,19 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
 
-  smallPageIcon: {
-    resizeMode: 'contain',
-    width: 56,
-    height: 56,
-  },
+  topTitle: {color: currentTheme.mainColor},
 
-  bigPageIcon: {
-    resizeMode: 'contain',
-    width: 64,
-    height: 64,
-  },
+  topTitleLabel: StyleSheet.flatten([
+    {alignSelf: 'center', height: 50, top: -10},
+    KolynStyle.kolynLabel(currentTheme.fontSizes.casual, currentTheme.mainFont, currentTheme.primaryColor)
+  ]),
 
-  circle: {
-    top: -30,
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-    alignSelf: 'center',
-  },
+  switchCourseButton: StyleSheet.flatten([
+    {top: 20, width: 150, height: 40, end: -width/3.5}, 
+    KolynStyle.kolynButton(currentTheme.primaryColor),
+  ]),
 
+  switchCourseButtonLabel: StyleSheet.flatten([
+    KolynStyle.kolynLabel(currentTheme.fontSizes.small, currentTheme.mainFont, currentTheme.mainColor)
+  ]),
 });

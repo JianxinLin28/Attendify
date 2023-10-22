@@ -238,7 +238,7 @@ const styles = StyleSheet.create({
 
   registerLabel: StyleSheet.flatten([
     {textAlign: 'center'},
-    KolynStyle.kolynLabel(currentTheme.fontSizes.small, currentTheme.mainFont, currentTheme.subColor),
+    KolynStyle.kolynLabel(currentTheme.fontSizes.small, currentTheme.mainFont, currentTheme.primaryColor),
   ]),
 
   name: {
@@ -248,12 +248,12 @@ const styles = StyleSheet.create({
 
   nameTextfield: StyleSheet.flatten([
     {height: 40, width: 140}, 
-    KolynStyle.kolynInputTextfield(currentTheme.subColor, currentTheme.mainFont),
+    KolynStyle.kolynInputTextfield(currentTheme.primaryColor, currentTheme.mainFont),
   ]),
 
   inputTextfield: StyleSheet.flatten([
     {height: 40, width: 300}, 
-    KolynStyle.kolynInputTextfield(currentTheme.subColor, currentTheme.mainFont),
+    KolynStyle.kolynInputTextfield(currentTheme.primaryColor, currentTheme.mainFont),
   ]),
 
   errorLabel: StyleSheet.flatten([
@@ -263,7 +263,7 @@ const styles = StyleSheet.create({
 
   signupButton: StyleSheet.flatten([
     {width: 240},
-    KolynStyle.kolynButton(currentTheme.subColor),
+    KolynStyle.kolynButton(currentTheme.primaryColor),
   ]),
 
   signupButtonLabel: StyleSheet.flatten([
@@ -272,7 +272,7 @@ const styles = StyleSheet.create({
 
   backButton: StyleSheet.flatten([
     {width: 70, top: 36},
-    KolynStyle.kolynButton(currentTheme.subColor),
+    KolynStyle.kolynButton(currentTheme.primaryColor),
   ]),
 
   backButtonLabel: StyleSheet.flatten([

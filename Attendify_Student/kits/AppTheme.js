@@ -22,7 +22,7 @@ const balooBhaiFontSize = {
 /* You can create a new theme below */
 const defaultTheme = {
     mainColor: palette.colorDodgerblue,
-    subColor: palette.colorWhite,
+    subColor: palette.colorBlack,
     primaryColor: palette.colorWhite,
     disableColor: palette.colorGainsboro,
     checkBoxColor: palette.colorEmeraldGreen,
@@ -33,7 +33,7 @@ const defaultTheme = {
 
 const greenTheme = {
     mainColor: palette.colorEmeraldGreen,
-    subColor: palette.colorWhite,
+    subColor: palette.colorBlack,
     primaryColor: palette.colorWhite,
     disableColor: palette.colorGainsboro,
     checkBoxColor: palette.colorBlack,
@@ -42,9 +42,21 @@ const greenTheme = {
     fontSizes: balooBhaiFontSize
 }
 
+const redTheme = {
+    mainColor: palette.colorScarletRed,
+    subColor: palette.colorBlack,
+    primaryColor: palette.colorWhite,
+    disableColor: palette.colorGainsboro,
+    checkBoxColor: palette.colorBlack,
+    errorColor: palette.colorEmeraldGreen,
+    mainFont: fontFamily.balooBhai,
+    fontSizes: balooBhaiFontSize
+}
+
 /* Remember to add the theme you created to this array */
-const themes = [defaultTheme, greenTheme];
+const themes = [defaultTheme, greenTheme, redTheme];
 export var currentTheme = defaultTheme;
+
 export function changeTheme(themeNumber) {
     if (themeNumber >= themes.length)
         return;

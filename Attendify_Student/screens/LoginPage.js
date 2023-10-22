@@ -4,14 +4,15 @@ import { StyleSheet, Text, View, Pressable, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native';
 import Checkbox from 'expo-checkbox';
 import * as SplashScreen from 'expo-splash-screen';
-import { currentTheme } from '../kits/AppTheme';
+import { currentTheme, changeTheme } from '../kits/AppTheme';
 import { loadFont } from '../props/FontLoader';
 import * as KolynStyle from '../kits/KolynStyleKit';
 import {KolynMainTitleImage} from '../kits/KolynComponentKit';
 
+
 const ios = Platform.OS == 'ios';
 
-export function LoginPage(props) {
+export function LoginPage({ navigation }, props) {
   /* The 'emailText' variable will be modified by the user */
   const [emailText, onChangeEmailText] = React.useState('');
   /* The 'passwordText' variable will be modified by the user */
@@ -51,7 +52,7 @@ export function LoginPage(props) {
             passwordText={passwordText}
           />
 
-          <LoginButton onPress={onPress}/>
+          <LoginButton onPress={() => navigation.navigate('BottomTab')}/>
 
           <RememberMe 
             setChecked = {setChecked}
@@ -59,7 +60,7 @@ export function LoginPage(props) {
           />
         </View>
         <View style={{flex: 1}}>
-          <SignupButton onPress={onPress} />
+          <SignupButton onPress={() => navigation.navigate('Signup')} />
           <Credits/>
         </View>
       </SafeAreaView>
@@ -144,12 +145,12 @@ const styles = StyleSheet.create({
 
   inputTextfield: StyleSheet.flatten([
     {height: 40, width: 300}, 
-    KolynStyle.kolynInputTextfield(currentTheme.subColor, currentTheme.mainFont),
+    KolynStyle.kolynInputTextfield(currentTheme.primaryColor, currentTheme.mainFont),
   ]),
 
   loginButton: StyleSheet.flatten([
     {top: 55, width: 240}, 
-    KolynStyle.kolynButton(currentTheme.subColor),
+    KolynStyle.kolynButton(currentTheme.primaryColor),
   ]),
 
   loginButtonLabel: StyleSheet.flatten([
@@ -165,12 +166,12 @@ const styles = StyleSheet.create({
   checkbox: { margin: 8 },
 
   rememberMeLabel: StyleSheet.flatten([
-    KolynStyle.kolynLabel(currentTheme.fontSizes.medium, currentTheme.mainFont, currentTheme.subColor),
+    KolynStyle.kolynLabel(currentTheme.fontSizes.medium, currentTheme.mainFont, currentTheme.primaryColor),
   ]),
 
   signupButton: StyleSheet.flatten([
     {height: 40, width: 70},
-    KolynStyle.kolynButton(currentTheme.subColor),
+    KolynStyle.kolynButton(currentTheme.primaryColor),
   ]),
 
   signupButtonLabel: StyleSheet.flatten([
@@ -179,7 +180,7 @@ const styles = StyleSheet.create({
 
   creditLabel: StyleSheet.flatten([
     {textAlign: 'center'},
-    KolynStyle.kolynLabel(currentTheme.fontSizes.tiny, currentTheme.mainFont, currentTheme.subColor),
+    KolynStyle.kolynLabel(currentTheme.fontSizes.tiny, currentTheme.mainFont, currentTheme.primaryColor),
   ]),
 
 });
