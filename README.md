@@ -10,5 +10,5 @@ html, css before.
 
 ## Things to do:
 1. Design a register page
-2. Code a bottom-tab navigator
-3. Code the 'open camera' pages
+2. Code the 'open camera' feature
+3. Build bridges for backend connection
