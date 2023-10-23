@@ -1,10 +1,12 @@
 const express = require('express');
 const app = express();
-const studentReasource = require('./API/reasources/student');
-const instructorReasource = require('./API/reasources/instructor');
-const courseReasource = require('./API/reasources/course');
+const studentResource = require('./API/resources/student');
+const instructorResource = require('./API/resources/instructor');
+const courseResource = require('./API/resources/course');
+const dbConnect = require("./db/dbConnect");
+dbConnect();
 
-app.use('/student', studentReasource);
-app.use('/instructor', instructorReasource);
-app.use('/course', courseReasource);
+app.use('/student', studentResource);
+app.use('/instructor', instructorResource);
+app.use('/course', courseResource);
 module.exports = app;
