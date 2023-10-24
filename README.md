@@ -86,6 +86,33 @@ figma design, you will know what I mean. I decided to put the bottom tab
 as a "page" of the main Stack because it seems to be easier to manage in
 this way. The login page and the signup page do not have bottom tab. 
 
+### Page code structure
+Each complete page code should have one to three sections.
+
+Section 1: Internal logic functions, here we handle all interactions between UI components
+
+Coder: Jianxin
+```
+/* Internal logic code start */
+/* Internal logic code end */
+```
+
+Section 2: Backend logic connection functions, here is all the connections to the backend
+
+Coder: Aadi
+```
+/* Connect to backend logic code start */
+/* Connect to backend logic code end */
+```
+
+Section 3: UI functions, here contains all functional UI components
+
+Coder: Jianxin
+```
+/* User interface code start */
+/* User interface code end */
+```
+
 ### Coding practice
 1. Always including things in a SafeAreaView. This makes sure the app looks good on
 every iOS devices.
