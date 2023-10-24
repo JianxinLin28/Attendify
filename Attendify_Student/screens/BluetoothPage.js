@@ -10,24 +10,11 @@ import { KolynSwitchCourseButton } from '../kits/KolynComponentKit';
 import { CommonPart } from '../kits/CommonPart';
 
 
-export function BluetoothPage({navigation}, props) {
-
-
-  const fontsLoaded = loadFont();
-  const onLayoutRootView = React.useCallback(async () => {
-    if (fontsLoaded) {
-      await SplashScreen.hideAsync();
-    }
-  }, [fontsLoaded]);
-
-  if (!fontsLoaded) {
-    return null;
-  }
+export function BluetoothPage(props) {
 
   return (
     <CommonPart 
       title={"Bluetooth Scan"}
-      navigation={navigation}
       components={
         <View style={{flex: 6}}>
 
@@ -43,3 +30,16 @@ export function BluetoothPage({navigation}, props) {
     />
   )
 }
+
+/* Internal logic code start */
+/* Internal logic code end */
+
+/*************************************************************************************************/
+
+/* Connect to backend logic code start */
+/* Connect to backend logic code end */
+
+/*************************************************************************************************/
+
+/* User interface code start */
+/* User interface code end */

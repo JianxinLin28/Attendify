@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Keyboard, Platform, TouchableWithoutFeedback, Dimensions } from 'react-native';
+import { Keyboard, Platform, TouchableWithoutFeedback } from 'react-native';
 import { StyleSheet, Text, View, KeyboardAvoidingView, TextInput, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native';
 import * as SplashScreen from 'expo-splash-screen';
@@ -8,17 +8,41 @@ import { loadFont } from '../props/FontLoader';
 import * as KolynStyle from '../kits/KolynStyleKit';
 import {KolynMainTitleImage} from '../kits/KolynComponentKit';
 
+
+/* 
+  The signup page requests information from the user 
+  Once the information is validated, click 'sign in' button 
+  should transit to the 'sign up alert page', see SignupAlertPage.js:
+
+    1. If the server is working correctly, pass all necessary info to the 'sign up alert page'
+    2. Otherwise, display the error and ask the user to retry
+
+  If the information is invalid, click the 'sign in' button
+  should result in displaying error message, see function ValidateSignupInfo
+*/
+
 const ios = Platform.OS == 'ios';
 
-export function SignupPage(props) {
+const ValidateResult = {
+  Success: 'Success',
+  MissingLastNameError: 'Missing last name.',
+  MissingFirstNameError: 'Missing first name.',
+  MissingIDError: 'Missing ID.',
+  MissingEmailError: 'Missing email.',
+  MissingPasswordError: 'Missing password.',
+  IncorrectReEnterPasswordError: 'Password not match.',
+}
+
+export function SignupPage({navigation}, props) {
   const [lnameText, onChangeLnameText] = React.useState('');
   const [fnameText, onChangeFnameText] = React.useState('');
   const [idText, onChangeIDText] = React.useState('');
   const [emailText, onChangeEmailText] = React.useState('');
   const [passwordText, onChangePasswordText] = React.useState('');
   const [repasswordText, onChangeRePasswordText] = React.useState('');
-  const { onPress = 'Save' } = props;
   const [errorText, onChangeErrorText] = React.useState('');
+
+
 
   const fontsLoaded = loadFont();
   const onLayoutRootView = React.useCallback(async () => {
@@ -93,9 +117,9 @@ export function SignupPage(props) {
             errorText={errorText}
             onChangeErrorText={onChangeErrorText} 
           />
-  
-          <SignupButton onPress={() => ValidateSignupInfo(
-            {
+
+          <SignupButton onPress={() => 
+            PressSignupButton({
               lnameText: lnameText,
               fnameText: fnameText,
               idText: idText,
@@ -103,11 +127,12 @@ export function SignupPage(props) {
               passwordText: passwordText,
               repasswordText: repasswordText,
               onChangeErrorText: onChangeErrorText,
-            }
-          )} 
+              navigation: navigation
+            })
+          } 
           />
-  
-          <BackButton onPress={onPress} />
+
+          <BackButton onPress={() => PressGoBackButton({navigation: navigation})} />
 
         </View>
 
@@ -117,6 +142,157 @@ export function SignupPage(props) {
   );
 }
 
+/* Internal logic code start */
+
+/* Called when the 'sign up' button is pressed */
+function PressSignupButton(
+  { 
+    lnameText, 
+    fnameText, 
+    idText, 
+    emailText, 
+    passwordText, 
+    repasswordText,
+    onChangeErrorText,
+    navigation
+  }
+) {
+  var validateResult = ValidateSignupInfo({
+    lnameText: lnameText,
+    fnameText: fnameText,
+    idText: idText,
+    emailText: emailText,
+    passwordText: passwordText,
+    repasswordText: repasswordText,
+  });
+
+  // The entered information is validated
+  if (validateResult == ValidateResult.Success)
+  {
+    var passingToAlertInfo = {
+      isErrorSignal: false,
+    };
+
+    if (IsServerReady()) {
+      TransferDataToServer({ 
+        lnameText: lnameText,
+        fnameText: fnameText,
+        idText: idText,
+        emailText: emailText,
+        passwordText: passwordText,
+      });
+    } 
+    else {
+      PassErrorSignalToAlertPage({ passingToAlertInfo: passingToAlertInfo });
+    }
+
+    OpenAlertPage({ 
+      navigation: navigation, 
+      passingToAlertInfo: passingToAlertInfo 
+    });
+  }
+  else {
+    ChangeErrorMessagerText({ onChangeErrorText, validateResult });
+  }
+}
+
+/* 
+  Called when the 'go back' button is pressed
+*/
+function PressGoBackButton({ navigation }) {
+  navigation.replace('Login');
+}
+
+/* Open the alert page, and make it display the occurred errors */
+function PassErrorSignalToAlertPage({ passingToAlertInfo }) {
+  passingToAlertInfo.isErrorSignal = true;
+}
+
+function OpenAlertPage({ navigation, passingToAlertInfo})
+{
+  navigation.push('SignupAlert', { fromSignupPage: passingToAlertInfo });
+}
+
+/* Internal logic code end */
+
+/*************************************************************************************************/
+
+/* Connect to backend logic code start */
+
+/* 
+  Confirm all entered information is valid
+
+  The error label should present error to the user if any error occur
+  in the order of:
+  1. Last name
+  2. First name
+  3. ID
+  4. Email
+  5. Password
+  6. Re-enter password
+  
+  only one error is presented at a time
+
+  You can add your own enum items to ValidateResult as you see fit
+*/
+function ValidateSignupInfo(
+  { 
+    lnameText, 
+    fnameText, 
+    idText, 
+    emailText, 
+    passwordText, 
+    repasswordText
+  }
+  ) {
+  
+  if (lnameText == "") {
+    return ValidateResult.MissingLastNameError;
+  }
+  if (fnameText == "") {
+    return ValidateResult.MissingFirstNameError;
+  }
+  if (idText == "") {
+    return ValidateResult.MissingIDError;
+  }
+  if (emailText == "") {
+    return ValidateResult.MissingEmailError;
+  }
+  if (passwordText == "") {
+    return ValidateResult.MissingPasswordError;
+  }
+  if (repasswordText != passwordText) {
+    return ValidateResult.IncorrectReEnterPasswordError;
+  }
+  
+  return ValidateResult.Success;
+}
+
+/* Sent any necessary data to server */
+function TransferDataToServer(
+  { 
+    lnameText, 
+    fnameText, 
+    idText, 
+    emailText, 
+    passwordText
+  }
+) {
+
+}
+
+/* Check to see if server is available, returns a boolean */
+function IsServerReady() {
+  return false;
+}
+
+/* Connect to backend logic code end */
+
+/*************************************************************************************************/
+
+/* User interface code start */
+
+/* The title that says register a new student account */
 function RegisterLabel() {
   return (
     <Text style={styles.registerLabel}>
@@ -160,6 +336,7 @@ function CustomTextfield({ style, text, onChangeText, placeholder, keyboardType 
     />);
 }
 
+/* The error message label, use the error font color */
 function ErrorMessager({ errorText, onChangeErrorText }) {
   return (
   <TextInput
@@ -169,6 +346,14 @@ function ErrorMessager({ errorText, onChangeErrorText }) {
     onChangeText={onChangeErrorText}>
   </TextInput>
   );
+}
+
+/* Update the error messager label */
+function ChangeErrorMessagerText({ onChangeErrorText, validateResult })
+{
+  if (validateResult != ValidateResult.Success) {
+    onChangeErrorText( validateResult );
+  }
 }
 
 /* The signup button */
@@ -193,43 +378,9 @@ function BackButton({ onPress }) {
   );
 }
 
-function ValidateSignupInfo({ 
-      lnameText, 
-      fnameText, 
-      idText, 
-      emailText, 
-      passwordText, 
-      repasswordText, 
-      onChangeErrorText }) {
-  if (lnameText == "") {
-    onChangeErrorText("Error: last name is empty.");
-    return;
-  }
-  if (fnameText == "") {
-    onChangeErrorText("Error: first name is empty.");
-    return;
-  }
-  if (idText == "") {
-    onChangeErrorText("Error: spire ID is empty.");
-    return;
-  }
-  if (emailText == "") {
-    onChangeErrorText("Error: email is empty.");
-    return;
-  }
-  if (passwordText == "") {
-    onChangeErrorText("Error: password is empty.");
-    return;
-  }
-  if (repasswordText == "") {
-    onChangeErrorText("Error: re-enter password is empty.");
-    return;
-  }
+/* User interface code end */
 
-  onChangeErrorText("");
-}
 
-const {width, height} = Dimensions.get('window');
 const styles = StyleSheet.create({
 
   screen: StyleSheet.flatten([

@@ -10,26 +10,16 @@ import {KolynSwitchCourseButton } from '../kits/KolynComponentKit';
 import { CommonPart } from '../kits/CommonPart';
 
 
-export function QRScanPage({ navigation }) {
+export function QRScanPage() {
   const [courseText, onChangeCourseText] = React.useState('');
   const [timeText, onChangeTimeText] = React.useState('');
   const [statusText, onChangeStatusText] = React.useState('');
 
-  const fontsLoaded = loadFont();
-  const onLayoutRootView = React.useCallback(async () => {
-    if (fontsLoaded) {
-      await SplashScreen.hideAsync();
-    }
-  }, [fontsLoaded]);
-
-  if (!fontsLoaded) {
-    return null;
-  }
+  
 
   return (
     <CommonPart 
       title={"QR Code Scan"}
-      navigation={navigation}
       components={
         <View style={{flex: 6}}>
         <KolynSwitchCourseButton
@@ -73,6 +63,18 @@ export function QRScanPage({ navigation }) {
   );
 }
 
+/* Internal logic code start */
+/* Internal logic code end */
+
+/*************************************************************************************************/
+
+/* Connect to backend logic code start */
+/* Connect to backend logic code end */
+
+/*************************************************************************************************/
+
+/* User interface code start */
+
 /* The open camera button */
 function CameraButton({ onPress }) {
   return (
@@ -83,6 +85,8 @@ function CameraButton({ onPress }) {
     </Pressable>
   );
 }
+
+/* User interface code end */
 
 const {width, height} = Dimensions.get('window');
 const styles = StyleSheet.create({

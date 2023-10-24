@@ -4,13 +4,32 @@ import { StyleSheet, Text, View, Pressable, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native';
 import Checkbox from 'expo-checkbox';
 import * as SplashScreen from 'expo-splash-screen';
-import { currentTheme, changeTheme } from '../kits/AppTheme';
+import { currentTheme } from '../kits/AppTheme';
 import { loadFont } from '../props/FontLoader';
 import * as KolynStyle from '../kits/KolynStyleKit';
 import {KolynMainTitleImage} from '../kits/KolynComponentKit';
 
 
+/*
+  The login page requests information from the user 
+  Only the email and the password and rememeber me (checkmark)
+
+  Once the login button is pressed, the system will attempt to search 
+  account according to the given login info.
+    1. If success, load all necessary user info to the next loaded page
+    2. If fail, display the error label to indicate to the user the error
+
+  Once the signup button is pressed, a sign up page will present (see SignupPage.js)
+*/
+
 const ios = Platform.OS == 'ios';
+
+const ValidateResult = {
+  Success: 'Success',
+  MissingEmailError: 'Missing email',
+  MissingPasswordError: 'Missing password',
+  NotMatchCredentialErro: "Incorrect login info",
+}
 
 export function LoginPage({ navigation }, props) {
   /* The 'emailText' variable will be modified by the user */
@@ -67,6 +86,18 @@ export function LoginPage({ navigation }, props) {
     </View>
   );
 }
+
+/* Internal logic code start */
+/* Internal logic code end */
+
+/*************************************************************************************************/
+
+/* Connect to backend logic code start */
+/* Connect to backend logic code end */
+
+/*************************************************************************************************/
+
+/* User interface code start */
 
 /* The email textfield */
 function EmailTextfield({ emailText, onChangeEmailText }) {
@@ -136,6 +167,8 @@ function Credits() {
     </Text>
   );
 }
+
+/* User interface code end */
 
 const styles = StyleSheet.create({
 

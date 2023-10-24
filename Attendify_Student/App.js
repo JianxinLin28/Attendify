@@ -6,6 +6,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { TestPage } from './screens/TestPage';
 import { LoginPage } from './screens/LoginPage';
 import { SignupPage } from './screens/SignupPage';
+import { SignupAlertPage } from './screens/SingupAlertPage';
 import { QRScanPage } from './screens/QRScanPage';
 import { CoursePage } from './screens/CoursePage';
 import { ClickerPage } from './screens/ClickerPage';
@@ -26,6 +27,7 @@ export default function App() {
           <Stack.Screen name="Test" component={TestPage}/>
           <Stack.Screen name="Login" component={LoginPage}/>
           <Stack.Screen name="Signup" component={SignupPage}/>
+          <Stack.Screen name="SignupAlert" component={SignupAlertPage}/>
           <Stack.Screen name="BottomTab" component={BottomTabNavigator}/>
       </Stack.Navigator>
     </NavigationContainer>

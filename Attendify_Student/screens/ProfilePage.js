@@ -9,19 +9,7 @@ import * as KolynStyle from '../kits/KolynStyleKit';
 import { CommonPart } from '../kits/CommonPart';
 
 
-export function ProfilePage({ navigation }, props) {
-
-
-  const fontsLoaded = loadFont();
-  const onLayoutRootView = React.useCallback(async () => {
-    if (fontsLoaded) {
-      await SplashScreen.hideAsync();
-    }
-  }, [fontsLoaded]);
-
-  if (!fontsLoaded) {
-    return null;
-  }
+export function ProfilePage(props) {
 
   return (
     <CommonPart title={"Profile"}></CommonPart>

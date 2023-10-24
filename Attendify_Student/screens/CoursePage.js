@@ -9,21 +9,22 @@ import * as KolynStyle from '../kits/KolynStyleKit';
 import { CommonPart } from '../kits/CommonPart';
 
 
-export function CoursePage({ navigation }, props) {
-
-
-  const fontsLoaded = loadFont();
-  const onLayoutRootView = React.useCallback(async () => {
-    if (fontsLoaded) {
-      await SplashScreen.hideAsync();
-    }
-  }, [fontsLoaded]);
-
-  if (!fontsLoaded) {
-    return null;
-  }
+export function CoursePage(props) {
 
   return (
     <CommonPart title={"Manage Course"}></CommonPart>
   );
 }
+
+/* Internal logic code start */
+/* Internal logic code end */
+
+/*************************************************************************************************/
+
+/* Connect to backend logic code start */
+/* Connect to backend logic code end */
+
+/*************************************************************************************************/
+
+/* User interface code start */
+/* User interface code end */

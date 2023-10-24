@@ -9,6 +9,11 @@ import * as KolynStyle from '../kits/KolynStyleKit';
 import { CommonPart } from '../kits/CommonPart';
 
 
+/*
+  This page is solely for UI testing
+  If you are not doing UI, please do not write on this page
+*/
+
 export function TestPage({navigation}) {
   const [, forceRender] = React.useState(undefined);
 
@@ -29,7 +34,6 @@ export function TestPage({navigation}) {
 
   return (
     <CommonPart 
-      navigation={navigation}
       component={<LoginButton onPress={()=>console.log()}/>}
     />
   );

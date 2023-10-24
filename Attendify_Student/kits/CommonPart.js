@@ -1,17 +1,20 @@
 import * as React from 'react';
-import { Platform, Dimensions, TextInput } from 'react-native';
-import { StyleSheet, Text, View, Pressable } from 'react-native';
+import { Platform, Dimensions } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native';
 import * as SplashScreen from 'expo-splash-screen';
-import { currentTheme, changeTheme } from '../kits/AppTheme';
+import { currentTheme } from '../kits/AppTheme';
 import { loadFont } from '../props/FontLoader';
 import * as KolynStyle from '../kits/KolynStyleKit';
 import { KolynTopTitleLabel } from '../kits/KolynComponentKit';
 
+/*
+  The common part for the Bluetooth scan, QR code scan, Manage course, Clicker, Profile pages
+*/
 
 const ios = Platform.OS == 'ios';
 
-export function CommonPart({navigation, components, title}) {
+export function CommonPart({components, title}) {
   const MemoizedDivider = React.memo(function Divider() {
     return (<View style={styles.divider} />);
   });
@@ -53,9 +56,7 @@ export function CommonPart({navigation, components, title}) {
   );
 }
 
-const {width, height} = Dimensions.get('window');
 const styles = StyleSheet.create({
-
   screen: StyleSheet.flatten([
     KolynStyle.kolynScreen(currentTheme.mainColor),
   ]),

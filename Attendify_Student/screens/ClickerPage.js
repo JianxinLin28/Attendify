@@ -9,21 +9,22 @@ import * as KolynStyle from '../kits/KolynStyleKit';
 import { CommonPart } from '../kits/CommonPart';
 
 
-export function ClickerPage({ navigation }, props) {
-
-
-  const fontsLoaded = loadFont();
-  const onLayoutRootView = React.useCallback(async () => {
-    if (fontsLoaded) {
-      await SplashScreen.hideAsync();
-    }
-  }, [fontsLoaded]);
-
-  if (!fontsLoaded) {
-    return null;
-  }
+export function ClickerPage(props) {
 
   return (
     <CommonPart title={"Clicker"}></CommonPart>
   );
 }
+
+/* Internal logic code start */
+/* Internal logic code end */
+
+/*************************************************************************************************/
+
+/* Connect to backend logic code start */
+/* Connect to backend logic code end */
+
+/*************************************************************************************************/
+
+/* User interface code start */
+/* User interface code end */
