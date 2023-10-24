@@ -4,8 +4,11 @@ const studentResource = require("./API/resources/student");
 const instructorResource = require("./API/resources/instructor");
 const courseResource = require("./API/resources/course");
 const bcrypt = require("bcrypt");
+
 const dbConnect = require("./db/dbConnect");
 dbConnect();
+
+const User = require("./db/userModel");
 
 app.use("/student", studentResource);
 app.use("/instructor", instructorResource);
@@ -13,8 +16,6 @@ app.use("/course", courseResource);
 app.use(express.json());
 
 app.post("/register", (request, response) => {
-  console.log(request.body);
-  console.log(request.body.password);
   bcrypt
     .hash(request.body.password, 10)
     .then((hashedPassword) => {
@@ -27,7 +28,7 @@ app.post("/register", (request, response) => {
         .save()
         .then((result) => {
           response.status(201).send({
-            message: "User Created Successfully",
+            message: "User created!",
             result,
           });
         })
@@ -40,11 +41,38 @@ app.post("/register", (request, response) => {
     })
     .catch((e) => {
       response.status(500).send({
-        message: "Password was not hashed successfully",
+        message: "Error during password hashing",
         e,
       });
     });
 });
-const User = require("./db/userModel");
+
+app.post("/login", (request, response) => {
+  User.findOne({ email: request.body.email })
+    .then((user)=>{
+      console.log(request.body.password);
+      console.log(user.password_hash);
+      bcrypt.compare(request.body.password, user.password_hash)
+        .then((correct_password) => {
+          if(!correct_password) {
+            return response.status(400).send({
+              message: "Passwords does not match",
+            });
+          }
+          response.status(200).send({
+            message: "Login Successful",
+            email: user.email,
+          });
+        })
+    })
+    .catch((e) => {
+      response.status(404).send({
+        message: "Email not found",
+        e,
+    });
+  })
+
+})
+
 
 module.exports = app;
