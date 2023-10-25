@@ -138,6 +138,11 @@ The configuation of a new font can be tedious and I do not intend to add others.
 The main reason being Apple is using the font family name and Android is using the file
 name. 
 
+### The expo QR code says 'Go to localhost'
+This means that you are currently not using expo to test your app.
+You should enter 's' key to switch the development environment to expo.
+You will notice the QR code will change and it should work after that.
+
 ## Deploy to iOS
 This following steps will only work if you have XCode. 
 [Warning: XCode is very large]
