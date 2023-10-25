@@ -6,9 +6,8 @@ import { currentTheme } from '../kits/AppTheme';
 import * as KolynStyle from '../kits/KolynStyleKit';
 import {KolynSwitchCourseButton } from '../kits/KolynComponentKit';
 import { CommonPart } from '../kits/CommonPart';
+
 import { BarCodeScanner } from 'expo-barcode-scanner';
-
-
 const {width, height} = Dimensions.get('window');
 
 const CheckinStatus = {
