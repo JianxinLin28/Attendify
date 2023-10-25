@@ -56,7 +56,7 @@ export function SignupPage({navigation}, props) {
   }
 
   return (
-    <KeyboardAvoidingView 
+    <View 
       behavior={ios ? 'padding' : 'height'}
       style={styles.screen}
       onLayout={onLayoutRootView}>
@@ -65,7 +65,7 @@ export function SignupPage({navigation}, props) {
           className={ios ? '-mb-8': ''}
           style={{flex: 1}}>
           <View style={{flex: 1}}/>
-          <View style={{flex: 6}}>
+          <KeyboardAvoidingView style={{flex: 6}}>
 
             <KolynMainTitleImage/>
 
@@ -110,7 +110,7 @@ export function SignupPage({navigation}, props) {
             keyboardType="default"
           />
 
-        </View>
+        </KeyboardAvoidingView>
         <View style={{flex: 3}}>
 
           <ErrorMessager 
@@ -138,7 +138,7 @@ export function SignupPage({navigation}, props) {
 
       </SafeAreaView>
       </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
+    </View>
   );
 }
 

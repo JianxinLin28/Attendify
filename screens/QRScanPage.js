@@ -6,9 +6,8 @@ import { currentTheme } from '../kits/AppTheme';
 import * as KolynStyle from '../kits/KolynStyleKit';
 import {KolynSwitchCourseButton } from '../kits/KolynComponentKit';
 import { CommonPart } from '../kits/CommonPart';
-
 import { BarCodeScanner } from 'expo-barcode-scanner';
-const {width, height} = Dimensions.get('window');
+
 
 const CheckinStatus = {
   CheckedIn: 'Status: Checked in',
@@ -17,14 +16,7 @@ const CheckinStatus = {
 
 const PageVariant = {
   Default: 'Default',
-  ScanSuccess: 'ScanSuccess',
-  CheckedIn: 'CheckedIn',
-  ScanFail: 'ScanFail'
-}
-
-const ScanMessage = {
-  Success: 'Scan success! You have been checked in !',
-  Fail: 'Scan failed, please try again.',
+  CheckedIn: 'CheckedIn'
 }
 
 export function QRScanPage() {
@@ -32,33 +24,31 @@ export function QRScanPage() {
 
   const [courseText, onChangeCourseText] = React.useState('');
   const [timeText, onChangeTimeText] = React.useState('');
-  const [statusText, onChangeStatusText] = React.useState('');
-  const [pageVariant, setPageVariant] = React.useState(
-                                                      checkinStatus == CheckinStatus.CheckedIn ? 
+  const [statusText, onChangeStatusText] = React.useState(checkinStatus == CheckinStatus.CheckedIn ?
+                                                      CheckinStatus.CheckedIn : CheckinStatus.NotCheckedIn);
+  const [pageVariant, setPageVariant] = React.useState(checkinStatus == CheckinStatus.CheckedIn ? 
                                                       PageVariant.CheckedIn : PageVariant.Default);
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
 
-  useEffect(() => {
-    const getBarCodeScannerPermissions = async () => {
-      const { status } = await BarCodeScanner.requestPermissionsAsync();
-      setHasPermission(status === 'granted');
-    };
+  const HasPermission = () => !(hasPermission === null || hasPermission === false);
 
+  const getBarCodeScannerPermissions = async () => {
+    const { status } = await BarCodeScanner.requestPermissionsAsync();
+    setHasPermission(status === 'granted');
+  };
+
+  useEffect(() => {
     getBarCodeScannerPermissions();
   }, []);
 
+  // Add handle bar code logic to here
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
     alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+    onChangeStatusText(CheckinStatus.CheckedIn);
+    setPageVariant(PageVariant.CheckedIn);
   };
-
-  if (hasPermission === null) {
-    return <Text>Requesting for camera permission</Text>;
-  }
-  if (hasPermission === false) {
-    return <Text>No access to camera</Text>;
-  }
 
   return (
     <CommonPart 
@@ -87,32 +77,31 @@ export function QRScanPage() {
 
         </View>
 
-        <BarCodeScanner
-          onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-          style={{top: 30, height: 300, width: width, alignSelf: 'center'}}
-        />
-        {scanned && <Pressable title={'Tap to Scan Again'} onPress={() => setScanned(false)} />}
-
         <View style={{top: 50, flex: 3}}>
 
-          { /* pageVariant == PageVariant.Default && <CameraButton onPress={()=>OpenCameraApp()}/> */ }
+          { pageVariant == PageVariant.Default && !((hasPermission === null || hasPermission === false)) &&
+          <CameraScanner
+            handleBarCodeScanned={handleBarCodeScanned}
+            scanned={scanned}
+            setScanned={setScanned}
+            setPageVariant={setPageVariant}
+          /> }
 
-          { /* pageVariant == PageVariant.CheckedIn && <DisabledCameraButton/> */ }
+          { pageVariant == PageVariant.Default && HasPermission && <ScanHintLabel text={"Scan your instructor's QR code to check in."}/>}
 
-          { pageVariant == PageVariant.ScanSuccess && <MessageLabel text={ScanMessage.Success}/> }
+          { pageVariant == PageVariant.CheckedIn && HasPermission && <MessageLabel text={"You have been checked in."}/>}
 
-          { pageVariant == PageVariant.ScanSuccess && <OKButton onPress={()=>{setPageVariant(PageVariant.CheckedIn)}}/> }
+          { pageVariant == PageVariant.CheckedIn && HasPermission && <ScanAgainButton onPress={()=>{setPageVariant(PageVariant.Default)}} /> }
 
-          { pageVariant == PageVariant.ScanFail && <MessageLabel text={ScanMessage.Fail}/> }
+          { !HasPermission && <MessageLabel text={"Camera permission is not enabled."}/>}
 
-          { pageVariant == PageVariant.ScanFail && <View style={styles.scanPageCameraButton}><CameraButton onPress={()=>OpenCameraApp()}/></View> }
+          { !HasPermission && <GrantPermissionButton onPress={() => {setHasPermission(true)}}/>}
 
         </View>
 
         <StatusLabel
           statusText={statusText}
           onChangeStatusText={onChangeStatusText}
-          checkinStatus={checkinStatus}
         />
 
         </View>
@@ -122,10 +111,6 @@ export function QRScanPage() {
 }
 
 /* Internal logic code start */
-
-function OpenCameraApp() {
-
-}
 
 /* Internal logic code end */
 
@@ -148,16 +133,60 @@ function ReadCheckinStatus()
 
 /* User interface code start */
 
+/* The in-app camera scanner, dose not work in a simulator */
+function CameraScanner({
+  handleBarCodeScanned,
+}) {
+  return (
+    <View>
+      <BarCodeScanner
+        onBarCodeScanned={handleBarCodeScanned}
+        style={styles.barCodeScanner}
+      />
+    </View>
+  );
+}
+
+/* A button when pressed changed the page variant to default */
+function ScanAgainButton({ onPress }) {
+  return (
+    <Pressable style={styles.scanAgainButton} onPress={onPress}>
+        <Text style={styles.scanAgainLabel}>Press to scan again</Text>
+    </Pressable>
+  );
+}
+
+function GrantPermissionButton({ onPress }) {
+  return (
+    <Pressable style={styles.scanAgainButton} onPress={onPress}>
+        <Text style={styles.scanAgainLabel}>Grant Permission</Text>
+    </Pressable>
+  );
+}
+
+/* Show the user that he has been checked in */
 function MessageLabel({ text }) {
   return (
     <Text
-      style={[styles.courseLabel, {flex: 1, flexWrap: 'wrap', top: -50}]}
+      style={styles.messageLabel}
     >
       { text }
     </Text>
   );
 }
 
+/* A tiny label used to hint the user to scan the QR code */
+function ScanHintLabel({ text }) {
+  return (
+    <Text
+      style={styles.scanHintLabel}
+    >
+      { text }
+    </Text>
+  );
+}
+
+/* Used to display both the course title, instructor name, and course period */
 function CourseLabel({ courseText, onChangeCourseText, text }) {
   return (
     <TextInput
@@ -171,57 +200,22 @@ function CourseLabel({ courseText, onChangeCourseText, text }) {
   );
 }
 
-function OKButton({ onPress }) {
-  return (
-    <Pressable style={[
-      styles.cameraButton,
-      styles.scanPageCameraButton
-    ]}
-      onPress={onPress}
-    >
-      <Text style={styles.cameraButtonLabel}>OK</Text>
-    </Pressable>
-  );
-}
-
-/* The open camera button */
-function CameraButton({ onPress }) {
-  return (
-    <Pressable style={[
-      styles.cameraButton]}
-      onPress={onPress}
-    >
-      <Text style={styles.cameraButtonLabel}>Open 'Camera'</Text>
-    </Pressable>
-  );
-}
-
-/* The open camera button */
-function DisabledCameraButton() {
-  return (
-    <Pressable style={[
-      styles.disabledCameraButton]}
-    >
-      <Text style={styles.cameraButtonLabel}>Open 'Camera'</Text>
-    </Pressable>
-  );
-}
-
 /* The label used to indicate check-in status to the user */
-function StatusLabel({ statusText, onChangeStatusText, checkinStatus }) {
+function StatusLabel({ statusText, onChangeStatusText }) {
   return (
     <TextInput
       editable={false}
       style={styles.statusLabel}
-      value={statusText}
       onChangeText={onChangeStatusText}
     >
-      { checkinStatus }
+      { statusText }
     </TextInput>
   );
 }
 
 /* User interface code end */
+
+const {width, height} = Dimensions.get('window');
 
 const styles = StyleSheet.create({
 
@@ -239,24 +233,29 @@ const styles = StyleSheet.create({
     KolynStyle.kolynLabel(currentTheme.fontSizes.small, currentTheme.mainFont, currentTheme.primaryColor)
   ]),
 
-  statusLabel:StyleSheet.flatten([
-    {alignSelf: 'center', height: 30, top: -80},
+  barCodeScanner: {top: -120, height: height/3, width: width, alignSelf: 'center'},
+
+  messageLabel: StyleSheet.flatten([
+    {alignSelf: 'center', height: 30, top: -50},
     KolynStyle.kolynLabel(currentTheme.fontSizes.small, currentTheme.mainFont, currentTheme.primaryColor)
   ]),
 
-  cameraButton: StyleSheet.flatten([
-    {height: 40, width: 160, justifyContent: 'flex-start', alignItems: 'center'},
+  scanHintLabel: StyleSheet.flatten([
+    {alignSelf: 'center', height: 30, top: -110},
+    KolynStyle.kolynLabel(currentTheme.fontSizes.tiny, currentTheme.mainFont, currentTheme.primaryColor)
+  ]),
+
+  statusLabel: StyleSheet.flatten([
+    {alignSelf: 'center', height: 30, top: -40},
+    KolynStyle.kolynLabel(currentTheme.fontSizes.small, currentTheme.mainFont, currentTheme.primaryColor)
+  ]),
+
+  scanAgainButton: StyleSheet.flatten([
+    {top: 55, width: 240, alignSelf: 'center'}, 
     KolynStyle.kolynButton(currentTheme.primaryColor),
   ]),
 
-  scanPageCameraButton: { top: -200 },
-
-  disabledCameraButton: StyleSheet.flatten([
-    {height: 40, width: 160, justifyContent: 'flex-start', alignItems: 'center'},
-    KolynStyle.kolynButton(currentTheme.disableColor),
-  ]),
-
-  cameraButtonLabel: StyleSheet.flatten([
-    KolynStyle.kolynLabel(currentTheme.fontSizes.medium, currentTheme.mainFont, currentTheme.mainColor,),
+  scanAgainLabel: StyleSheet.flatten([
+    KolynStyle.kolynLabel(currentTheme.fontSizes.casual, currentTheme.mainFont, currentTheme.mainColor)
   ]),
 });

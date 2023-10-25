@@ -25,20 +25,22 @@ import {KolynMainTitleImage} from '../kits/KolynComponentKit';
 const ios = Platform.OS == 'ios';
 
 const ValidateResult = {
+  Default: '',
   Success: 'Success',
-  MissingEmailError: 'Missing email',
-  MissingPasswordError: 'Missing password',
-  NotMatchCredentialErro: "Incorrect login info",
+  MissingEmailError: 'Missing email.',
+  MissingPasswordError: 'Missing password.',
+  NotMatchEmailErro: "Email not found.",
+  IncorrectPasswordError: "Incorrect password."
 }
 
-export function LoginPage({ navigation }, props) {
+export function LoginPage({ navigation }) {
   /* The 'emailText' variable will be modified by the user */
   const [emailText, onChangeEmailText] = React.useState('');
   /* The 'passwordText' variable will be modified by the user */
   const [passwordText, onChangePasswordText] = React.useState('');
-  const { onPress = 'Save' } = props;
   /* The 'isChecked' turns to true if the box if checked, otherwise false */
   const [isChecked, setChecked] = React.useState(false);
+  const [errorText, onChangeErrorText] = React.useState(ValidateResult.Default);
 
   const fontsLoaded = loadFont();
   const onLayoutRootView = React.useCallback(async () => {
@@ -71,12 +73,15 @@ export function LoginPage({ navigation }, props) {
             passwordText={passwordText}
           />
 
-          <LoginButton onPress={() => navigation.navigate('BottomTab')}/>
+          <LoginButton onPress={() => PressLoginButton(navigation)}/>
 
           <RememberMe 
             setChecked = {setChecked}
             isChecked = {isChecked}
           />
+
+          <ErrorLabel errorMessage={errorText}/>
+
         </View>
         <View style={{flex: 1}}>
           <SignupButton onPress={() => navigation.navigate('Signup')} />
@@ -93,6 +98,17 @@ export function LoginPage({ navigation }, props) {
 /*************************************************************************************************/
 
 /* Connect to backend logic code start */
+
+/* 
+  Called when the login button is pressed 
+  Navigate to the main page if the login info has been confirmed
+  Otherwise, change to error label text
+*/
+function PressLoginButton(navigation) {
+
+  navigation.navigate('BottomTab')
+}
+
 /* Connect to backend logic code end */
 
 /*************************************************************************************************/
@@ -159,6 +175,14 @@ function SignupButton({ onPress }) {
   );
 }
 
+function ErrorLabel({ errorMessage }) {
+  return (
+    <Text style={styles.errorLabel}>
+      {errorMessage}
+    </Text>
+  );
+}
+
 /* The credits label */
 function Credits() {
   return (
@@ -209,6 +233,11 @@ const styles = StyleSheet.create({
 
   signupButtonLabel: StyleSheet.flatten([
     KolynStyle.kolynLabel(currentTheme.fontSizes.small, currentTheme.mainFont, currentTheme.mainColor,),
+  ]),
+
+  errorLabel: StyleSheet.flatten([
+    {textAlign: 'center', top: -60},
+    KolynStyle.kolynLabel(currentTheme.fontSizes.small, currentTheme.mainFont, currentTheme.errorColor),
   ]),
 
   creditLabel: StyleSheet.flatten([

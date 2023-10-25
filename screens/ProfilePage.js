@@ -12,6 +12,9 @@ import { CommonPart } from '../kits/CommonPart';
 export function ProfilePage(props) {
 
   return (
-    <CommonPart title={"Profile"}></CommonPart>
+    <CommonPart title={"Profile"}>
+      
+
+    </CommonPart>
   )
 }
