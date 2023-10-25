@@ -126,6 +126,10 @@ every iOS devices.
 8. Almost all other functions start with lower letters!
 9. One file === one page || One file === one functionality
 
+### Terminology
+1. Don't use 'class', instead, use 'course'
+2. Although the standard way for RN to describe a page is 'screen', we use 'page' to refer them.
+
 ## Troubleshooting
 ### Asset bundle works on an iOS simulator but not a real iOS device
 This issue could happen due to various reasons. The one bothered me was my naming
