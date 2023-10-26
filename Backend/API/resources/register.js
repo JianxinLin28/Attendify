@@ -12,6 +12,9 @@ router.post("/", (request, response) => {
           email: request.body.email,
           password_hash: hashedPassword,
           role: request.body.role,
+          first_name: request.body.first_name,
+          last_name: request.body.last_name,
+          spire_id: request.body.spire_id
         });
         user
           .save()
