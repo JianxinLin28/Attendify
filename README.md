@@ -31,6 +31,10 @@ Second, use your camera to scan the QR code. You will be redirected to
 
 Of course, you can use the mobile simulators too. There are only two you need to know.
 Pressing 'i' will open an iOS simulator. Pressing 'a' will open an Android simulator. 
+By the way, the iOS device by default is iPhone 6s, which you might want to change
+to something else. Use 'shift' + 'i' to choose a simulator device. I highly suggest
+you to download as few as possible since each one of them exceeds 6GB. I personally 
+use iPhone 14 Pro and iPad 12.9-inch 6th gen for testing.
 
 ## Installing our project
 Download the project as a zip file and unzip it. Change directory to the unzip folder,
@@ -38,6 +42,11 @@ Start by running this command in the terminal:
 ```
 npm install
 ```
+* note: if you have encountered any kind of permission error, you should use
+```
+sudo npm install
+```
+
 Then
 ```
 npm start
@@ -146,6 +155,12 @@ name.
 This means that you are currently not using expo to test your app.
 You should enter 's' key to switch the development environment to expo.
 You will notice the QR code will change and it should work after that.
+
+### Why the camera is black on my simulator
+You should not test the camera scanning ability on a simulator.
+It simply will not work because the simulator is not built for this.
+Use a real device instead. Please refer to 'How to run the app' section
+for testing on a real device.
 
 ## Deploy to iOS
 This following steps will only work if you have XCode. 
