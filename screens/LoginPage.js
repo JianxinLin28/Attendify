@@ -35,6 +35,10 @@ const ValidateResult = {
 
 export function LoginPage({ navigation }) {
 
+  const themedStyles = ThemedStyles();
+  const checkBoxColor = GetCheckBoxColor();
+  const subColor = GetSubColor();
+
   /* The 'emailText' variable will be modified by the user */
   const [emailText, onChangeEmailText] = React.useState('');
   /* The 'passwordText' variable will be modified by the user */
@@ -53,8 +57,6 @@ export function LoginPage({ navigation }) {
   if (!fontsLoaded) {
     return null;
   }
-
-  const themedStyles = ThemedStyles();
 
   return (
     <View style={themedStyles.screen}
@@ -89,8 +91,8 @@ export function LoginPage({ navigation }) {
             isChecked={isChecked}
             containerStyle={themedStyles.rememberMe}
             checkBoxStyle={themedStyles.checkbox}
-            checkBoxColor={GetCheckBoxColor()}
-            subColor={GetSubColor()}
+            checkBoxColor={checkBoxColor}
+            subColor={subColor}
             labelStyle={themedStyles.rememberMeLabel}
           />
 

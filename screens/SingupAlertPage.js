@@ -8,6 +8,8 @@ import { currentTheme } from '../kits/AppTheme';
 import { loadFont } from '../props/FontLoader';
 import * as KolynStyle from '../kits/KolynStyleKit';
 import {KolynMainTitleImage} from '../kits/KolynComponentKit';
+import { ThemeContext } from '../kits/AppTheme';
+
 
 /*
   The sign up alert page displays label to the user
@@ -27,8 +29,8 @@ import {KolynMainTitleImage} from '../kits/KolynComponentKit';
 const ios = Platform.OS == 'ios';
 
 export function SignupAlertPage({navigation}, props) {
-  /* The 'alert' message used to show sing up success or failure*/
-
+  const themedStyles = ThemedStyles();
+  
   const route = useRoute();
   const fromSignupPage = route.params?.fromSignupPage;
   
@@ -40,8 +42,6 @@ export function SignupAlertPage({navigation}, props) {
       return "Account registration successful! Now you can log in with this account.";
     }
   };
-
-  const { onPress = 'Save' } = props;
 
   const fontsLoaded = loadFont();
   const onLayoutRootView = React.useCallback(async () => {
@@ -57,7 +57,7 @@ export function SignupAlertPage({navigation}, props) {
   return (
     <View
       behavior={ios ? 'padding' : 'height'}
-      style={styles.screen}
+      style={themedStyles.screen}
       onLayout={onLayoutRootView}>
       <SafeAreaView 
           className={ios ? '-mb-8': ''}
@@ -69,6 +69,7 @@ export function SignupAlertPage({navigation}, props) {
 
             <AlertrMessager
               messageText={determineMessage()}
+              style={themedStyles.alertLabel}
             />
 
             <View style={{flex:1}}>
@@ -78,6 +79,8 @@ export function SignupAlertPage({navigation}, props) {
                   navigation: navigation,
                   fromSignupPage: fromSignupPage
                 })}
+                buttonStyle={themedStyles.confirmButton}
+                labelStyle={themedStyles.confirmButtonLabel}
               />
 
             </View>
@@ -111,45 +114,49 @@ function PressConfirmButton({ navigation, fromSignupPage }) {
 /* User interface code start */
 
 /* The alert message label */
-function AlertrMessager({ messageText }) {
+function AlertrMessager({ messageText, style }) {
   return (
   <TextInput
     editable={false}
-    style={[styles.alertLabel, {flex: 1, flexWrap: 'wrap'}]}
+    style={style}
     value={messageText}
   />
   );
 }
 
 /* The confirm button */
-function ConfirmButton({ onPress }) {
+function ConfirmButton({ onPress, buttonStyle, labelStyle }) {
   return (
-    <Pressable style={[
-      styles.confirmButton]}
+    <Pressable style={buttonStyle}
       onPress={onPress}>
-      <Text style={styles.confirmButtonLabel}>Confirm</Text>
+      <Text style={labelStyle}>Confirm</Text>
     </Pressable>
   );
 }
 
 /* User interface code end */
 
-const styles = StyleSheet.create({
-  screen: StyleSheet.flatten([
-    KolynStyle.kolynScreen(currentTheme.mainColor),
-  ]),
+function ThemedStyles() {
+  const themeManager = React.useContext(ThemeContext);
+  const currentTheme = themeManager.theme;
 
-  confirmButton: StyleSheet.flatten([
-    {width: 240},
-    KolynStyle.kolynButton(currentTheme.primaryColor),
-  ]),
-
-  confirmButtonLabel: StyleSheet.flatten([
-    KolynStyle.kolynLabel(currentTheme.fontSizes.casual, currentTheme.mainFont, currentTheme.mainColor,),
-  ]),
-
-  alertLabel: StyleSheet.flatten([
-    {textAlign: 'center'},
-    KolynStyle.kolynLabel(currentTheme.fontSizes.small, currentTheme.mainFont, currentTheme.primaryColor),
-  ]),
-});
+  return (StyleSheet.create({
+    screen: StyleSheet.flatten([
+      KolynStyle.kolynScreen(currentTheme.mainColor),
+    ]),
+  
+    confirmButton: StyleSheet.flatten([
+      {width: 240},
+      KolynStyle.kolynButton(currentTheme.primaryColor),
+    ]),
+  
+    confirmButtonLabel: StyleSheet.flatten([
+      KolynStyle.kolynLabel(currentTheme.fontSizes.casual, currentTheme.mainFont, currentTheme.mainColor,),
+    ]),
+  
+    alertLabel: StyleSheet.flatten([
+      {textAlign: 'center', flex: 1, flexWrap: 'wrap'},
+      KolynStyle.kolynLabel(currentTheme.fontSizes.small, currentTheme.mainFont, currentTheme.primaryColor),
+    ]),
+  }));
+}

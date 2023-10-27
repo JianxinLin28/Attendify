@@ -35,6 +35,8 @@ const ValidateResult = {
 }
 
 export function SignupPage({navigation}) {
+  const themedStyles = ThemedStyles();
+
   const [lnameText, onChangeLnameText] = React.useState('');
   const [fnameText, onChangeFnameText] = React.useState('');
   const [idText, onChangeIDText] = React.useState('');
@@ -42,8 +44,6 @@ export function SignupPage({navigation}) {
   const [passwordText, onChangePasswordText] = React.useState('');
   const [repasswordText, onChangeRePasswordText] = React.useState('');
   const [errorText, onChangeErrorText] = React.useState('');
-
-
 
   const fontsLoaded = loadFont();
   const onLayoutRootView = React.useCallback(async () => {
@@ -55,8 +55,6 @@ export function SignupPage({navigation}) {
   if (!fontsLoaded) {
     return null;
   }
-
-  const themedStyles = ThemedStyles();
 
   return (
     <View 
