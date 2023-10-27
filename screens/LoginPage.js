@@ -4,10 +4,10 @@ import { StyleSheet, Text, View, Pressable, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native';
 import Checkbox from 'expo-checkbox';
 import * as SplashScreen from 'expo-splash-screen';
-import { currentTheme } from '../kits/AppTheme';
 import { loadFont } from '../props/FontLoader';
 import * as KolynStyle from '../kits/KolynStyleKit';
 import {KolynMainTitleImage} from '../kits/KolynComponentKit';
+import { ThemeContext} from '../kits/AppTheme';
 
 
 /*
@@ -34,6 +34,7 @@ const ValidateResult = {
 }
 
 export function LoginPage({ navigation }) {
+
   /* The 'emailText' variable will be modified by the user */
   const [emailText, onChangeEmailText] = React.useState('');
   /* The 'passwordText' variable will be modified by the user */
@@ -53,8 +54,10 @@ export function LoginPage({ navigation }) {
     return null;
   }
 
+  const themedStyles = ThemedStyles();
+
   return (
-    <View style={styles.screen}
+    <View style={themedStyles.screen}
         onLayout={onLayoutRootView}>
       <SafeAreaView 
         className={ios? '-mb-8': ''}
@@ -66,26 +69,44 @@ export function LoginPage({ navigation }) {
           <EmailTextfield 
             emailText={emailText}
             onChangeEmailText={onChangeEmailText}
+            textfieldStyle={themedStyles.inputTextfield}
           />
 
           <PasswordTextfild
             onChangePasswordText={onChangePasswordText}
             passwordText={passwordText}
+            textfieldStyle={themedStyles.inputTextfield}
           />
 
-          <LoginButton onPress={() => PressLoginButton(navigation)}/>
+          <LoginButton 
+            onPress={() => PressLoginButton(navigation)}
+            buttonStyle={themedStyles.loginButton}
+            labelStyle={themedStyles.loginButtonLabel}
+          />
 
           <RememberMe 
-            setChecked = {setChecked}
-            isChecked = {isChecked}
+            setChecked={setChecked}
+            isChecked={isChecked}
+            containerStyle={themedStyles.rememberMe}
+            checkBoxStyle={themedStyles.checkbox}
+            checkBoxColor={GetCheckBoxColor()}
+            subColor={GetSubColor()}
+            labelStyle={themedStyles.rememberMeLabel}
           />
 
-          <ErrorLabel errorMessage={errorText}/>
+          <ErrorLabel 
+            errorMessage={errorText}
+            style={themedStyles.errorLabel}
+          />
 
         </View>
         <View style={{flex: 1}}>
-          <SignupButton onPress={() => navigation.navigate('Signup')} />
-          <Credits/>
+          <SignupButton 
+            onPress={() => navigation.navigate('Signup')}
+            buttonStyle={themedStyles.signupButton}
+            labelStyle={themedStyles.signupButtonLabel}
+          />
+          <Credits style={themedStyles.creditLabel}/>
         </View>
       </SafeAreaView>
     </View>
@@ -93,6 +114,19 @@ export function LoginPage({ navigation }) {
 }
 
 /* Internal logic code start */
+
+function GetCheckBoxColor() {
+  const themeManager = React.useContext(ThemeContext);
+  const currentTheme = themeManager.theme;
+  return currentTheme.checkBoxColor;
+}
+
+function GetSubColor() {
+  const themeManager = React.useContext(ThemeContext);
+  const currentTheme = themeManager.theme;
+  return currentTheme.subColor;
+}
+
 /* Internal logic code end */
 
 /*************************************************************************************************/
@@ -116,10 +150,10 @@ function PressLoginButton(navigation) {
 /* User interface code start */
 
 /* The email textfield */
-function EmailTextfield({ emailText, onChangeEmailText }) {
+function EmailTextfield({ emailText, onChangeEmailText, textfieldStyle }) {
   return (
     <TextInput
-      style={styles.inputTextfield}
+      style={textfieldStyle}
       value={emailText}
       onChangeText={onChangeEmailText}
       placeholder="Enter email"
@@ -129,10 +163,10 @@ function EmailTextfield({ emailText, onChangeEmailText }) {
 }
 
 /* The password textfield, secure typing */
-function PasswordTextfild({ onChangePasswordText, passwordText }) {
+function PasswordTextfild({ onChangePasswordText, passwordText, textfieldStyle }) {
   return (
     <TextInput
-      style={styles.inputTextfield}
+      style={textfieldStyle}
       value={passwordText}
       onChangeText={onChangePasswordText}
       placeholder="Enter password"
@@ -142,51 +176,60 @@ function PasswordTextfild({ onChangePasswordText, passwordText }) {
 }
 
 /* The login button */
-function LoginButton({ onPress }) {
+function LoginButton({ onPress, buttonStyle, labelStyle }) {
   return (
-    <Pressable style={styles.loginButton} onPress={onPress}>
-      <Text style={styles.loginButtonLabel}>Log in</Text>
+    <Pressable style={buttonStyle} onPress={onPress}>
+      <Text style={labelStyle}>Log in</Text>
     </Pressable>
   );
 }
 
 /* Remember me check-in box and label */
-function RememberMe({ setChecked, isChecked }) {
+function RememberMe({ 
+  setChecked, 
+  isChecked, 
+  containerStyle, 
+  checkBoxStyle, 
+  checkBoxColor, 
+  subColor, 
+  labelStyle 
+}) {
   return (
-    <View style={styles.rememberMe}>
+    <View style={containerStyle}>
       <Checkbox 
-        style={styles.checkbox}
+        style={checkBoxStyle}
         onValueChange={setChecked}
-        color={isChecked ? currentTheme.checkBoxColor : currentTheme.subColor}
+        color={isChecked ? checkBoxColor : subColor}
         value={isChecked}/>
-      <Text style={styles.rememberMeLabel}>Remember me</Text>
+      <Text style={labelStyle}>Remember me</Text>
     </View>
   );
 }
 
 /* The signup button */
-function SignupButton({ onPress }) {
+function SignupButton({ onPress, buttonStyle, labelStyle }) {
   return (
-    <Pressable style={[
-      styles.signupButton]}
-      onPress={onPress}>
-      <Text style={styles.signupButtonLabel}>Sign up</Text>
+    <Pressable 
+      style={buttonStyle}
+      onPress={onPress}
+    >
+      <Text style={labelStyle}>Sign up</Text>
     </Pressable>
   );
 }
 
-function ErrorLabel({ errorMessage }) {
+function ErrorLabel({ errorMessage, style }) {
   return (
-    <Text style={styles.errorLabel}>
+    <Text style={style}>
       {errorMessage}
     </Text>
   );
 }
 
 /* The credits label */
-function Credits() {
+function Credits({ style }) {
   return (
-    <Text style={styles.creditLabel}>
+    <Text style={style}>
       Credits: Proud app made by CS 320 Group 6
     </Text>
   );
@@ -194,55 +237,60 @@ function Credits() {
 
 /* User interface code end */
 
-const styles = StyleSheet.create({
+function ThemedStyles() {
+  const themeManager = React.useContext(ThemeContext);
+  const currentTheme = themeManager.theme;
+  
+  return (StyleSheet.create({
 
-  screen: StyleSheet.flatten([
-    KolynStyle.kolynScreen(currentTheme.mainColor),
-  ]),
-
-  inputTextfield: StyleSheet.flatten([
-    {height: 40, width: 300}, 
-    KolynStyle.kolynInputTextfield(currentTheme.primaryColor, currentTheme.mainFont),
-  ]),
-
-  loginButton: StyleSheet.flatten([
-    {top: 55, width: 240}, 
-    KolynStyle.kolynButton(currentTheme.primaryColor),
-  ]),
-
-  loginButtonLabel: StyleSheet.flatten([
-    KolynStyle.kolynLabel(currentTheme.fontSizes.casual, currentTheme.mainFont, currentTheme.mainColor)
-  ]),
-
-  rememberMe: {
-    top: 70,
-    flexDirection: 'row',
-    alignSelf:'center',
-  },
-
-  checkbox: { margin: 8 },
-
-  rememberMeLabel: StyleSheet.flatten([
-    KolynStyle.kolynLabel(currentTheme.fontSizes.medium, currentTheme.mainFont, currentTheme.primaryColor),
-  ]),
-
-  signupButton: StyleSheet.flatten([
-    {height: 40, width: 70},
-    KolynStyle.kolynButton(currentTheme.primaryColor),
-  ]),
-
-  signupButtonLabel: StyleSheet.flatten([
-    KolynStyle.kolynLabel(currentTheme.fontSizes.small, currentTheme.mainFont, currentTheme.mainColor,),
-  ]),
-
-  errorLabel: StyleSheet.flatten([
-    {textAlign: 'center', top: -60},
-    KolynStyle.kolynLabel(currentTheme.fontSizes.small, currentTheme.mainFont, currentTheme.errorColor),
-  ]),
-
-  creditLabel: StyleSheet.flatten([
-    {textAlign: 'center'},
-    KolynStyle.kolynLabel(currentTheme.fontSizes.tiny, currentTheme.mainFont, currentTheme.primaryColor),
-  ]),
-
-});
+    screen: StyleSheet.flatten([
+      KolynStyle.kolynScreen(currentTheme.mainColor),
+    ]),
+  
+    inputTextfield: StyleSheet.flatten([
+      {height: 40, width: 300}, 
+      KolynStyle.kolynInputTextfield(currentTheme.primaryColor, currentTheme.mainFont),
+    ]),
+  
+    loginButton: StyleSheet.flatten([
+      {top: 55, width: 240}, 
+      KolynStyle.kolynButton(currentTheme.primaryColor),
+    ]),
+  
+    loginButtonLabel: StyleSheet.flatten([
+      KolynStyle.kolynLabel(currentTheme.fontSizes.casual, currentTheme.mainFont, currentTheme.mainColor)
+    ]),
+  
+    rememberMe: {
+      top: 70,
+      flexDirection: 'row',
+      alignSelf:'center',
+    },
+  
+    checkbox: { margin: 8 },
+  
+    rememberMeLabel: StyleSheet.flatten([
+      KolynStyle.kolynLabel(currentTheme.fontSizes.medium, currentTheme.mainFont, currentTheme.primaryColor),
+    ]),
+  
+    signupButton: StyleSheet.flatten([
+      {height: 40, width: 70},
+      KolynStyle.kolynButton(currentTheme.primaryColor),
+    ]),
+  
+    signupButtonLabel: StyleSheet.flatten([
+      KolynStyle.kolynLabel(currentTheme.fontSizes.small, currentTheme.mainFont, currentTheme.mainColor,),
+    ]),
+  
+    errorLabel: StyleSheet.flatten([
+      {textAlign: 'center', top: -60},
+      KolynStyle.kolynLabel(currentTheme.fontSizes.small, currentTheme.mainFont, currentTheme.errorColor),
+    ]),
+  
+    creditLabel: StyleSheet.flatten([
+      {textAlign: 'center'},
+      KolynStyle.kolynLabel(currentTheme.fontSizes.tiny, currentTheme.mainFont, currentTheme.primaryColor),
+    ]),
+  
+  }));
+}

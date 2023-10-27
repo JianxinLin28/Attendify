@@ -7,6 +7,7 @@ import { currentTheme } from '../kits/AppTheme';
 import { loadFont } from '../props/FontLoader';
 import * as KolynStyle from '../kits/KolynStyleKit';
 import {KolynMainTitleImage} from '../kits/KolynComponentKit';
+import { ThemeContext } from '../kits/AppTheme';
 
 
 /* 
@@ -33,7 +34,7 @@ const ValidateResult = {
   IncorrectReEnterPasswordError: 'Password not match.',
 }
 
-export function SignupPage({navigation}, props) {
+export function SignupPage({navigation}) {
   const [lnameText, onChangeLnameText] = React.useState('');
   const [fnameText, onChangeFnameText] = React.useState('');
   const [idText, onChangeIDText] = React.useState('');
@@ -55,10 +56,12 @@ export function SignupPage({navigation}, props) {
     return null;
   }
 
+  const themedStyles = ThemedStyles();
+
   return (
     <View 
       behavior={ios ? 'padding' : 'height'}
-      style={styles.screen}
+      style={themedStyles.screen}
       onLayout={onLayoutRootView}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <SafeAreaView 
@@ -79,7 +82,7 @@ export function SignupPage({navigation}, props) {
             />
 
           <CustomTextfield
-            style={styles.inputTextfield}
+            style={themedStyles.inputTextfield}
             text={idText}
             onChangeText={onChangeIDText}
             placeholder="Enter spire ID"
@@ -87,7 +90,7 @@ export function SignupPage({navigation}, props) {
           />  
 
           <CustomTextfield
-            style={styles.inputTextfield}
+            style={themedStyles.inputTextfield}
             text={emailText}
             onChangeText={onChangeEmailText}
             placeholder="Enter email"
@@ -95,7 +98,7 @@ export function SignupPage({navigation}, props) {
           />
 
           <CustomTextfield
-            style={styles.inputTextfield}
+            style={themedStyles.inputTextfield}
             text={passwordText}
             onChangeText={onChangePasswordText}
             placeholder="Enter password"
@@ -103,7 +106,7 @@ export function SignupPage({navigation}, props) {
           />
 
           <CustomTextfield
-            style={styles.inputTextfield}
+            style={themedStyles.inputTextfield}
             text={repasswordText}
             onChangeText={onChangeRePasswordText}
             placeholder="Re-enter password"
@@ -116,23 +119,31 @@ export function SignupPage({navigation}, props) {
           <ErrorMessager 
             errorText={errorText}
             onChangeErrorText={onChangeErrorText} 
+            style={themedStyles.errorLabel}
           />
 
-          <SignupButton onPress={() => 
-            PressSignupButton({
-              lnameText: lnameText,
-              fnameText: fnameText,
-              idText: idText,
-              emailText: emailText,
-              passwordText: passwordText,
-              repasswordText: repasswordText,
-              onChangeErrorText: onChangeErrorText,
-              navigation: navigation
-            })
-          } 
+          <SignupButton 
+            onPress={() => 
+              PressSignupButton({
+                lnameText: lnameText,
+                fnameText: fnameText,
+                idText: idText,
+                emailText: emailText,
+                passwordText: passwordText,
+                repasswordText: repasswordText,
+                onChangeErrorText: onChangeErrorText,
+                navigation: navigation
+              })
+            }
+            buttonStyle={themedStyles.signupButton}
+            labelStyle={themedStyles.signupButtonLabel}
           />
 
-          <BackButton onPress={() => PressGoBackButton({navigation: navigation})} />
+          <BackButton 
+            onPress={() => PressGoBackButton({navigation: navigation})} 
+            buttonStyle={themedStyles.backButton}
+            labelStyle={themedStyles.backButtonLabel}
+          />
 
         </View>
 
@@ -337,11 +348,11 @@ function CustomTextfield({ style, text, onChangeText, placeholder, keyboardType 
 }
 
 /* The error message label, use the error font color */
-function ErrorMessager({ errorText, onChangeErrorText }) {
+function ErrorMessager({ errorText, onChangeErrorText, style }) {
   return (
   <TextInput
     editable={false}
-    style={styles.errorLabel}
+    style={style}
     value={errorText}
     onChangeText={onChangeErrorText}>
   </TextInput>
@@ -357,23 +368,21 @@ function ChangeErrorMessagerText({ onChangeErrorText, validateResult })
 }
 
 /* The signup button */
-function SignupButton({ onPress }) {
+function SignupButton({ onPress, buttonStyle, labelStyle }) {
   return (
-    <Pressable style={[
-      styles.signupButton]}
+    <Pressable style={buttonStyle}
       onPress={onPress}>
-      <Text style={styles.signupButtonLabel}>Sign up</Text>
+      <Text style={labelStyle}>Sign up</Text>
     </Pressable>
   );
 }
 
 /* The back button */
-function BackButton({ onPress }) {
+function BackButton({ onPress, buttonStyle, labelStyle }) {
   return (
-    <Pressable style={[
-      styles.backButton]}
+    <Pressable style={buttonStyle}
       onPress={onPress}>
-      <Text style={styles.backButtonLabel}>Go back</Text>
+      <Text style={labelStyle}>Go back</Text>
     </Pressable>
   );
 }
@@ -431,3 +440,59 @@ const styles = StyleSheet.create({
   ]),
 
 });
+
+function ThemedStyles() {
+  const themeManager = React.useContext(ThemeContext);
+  const currentTheme = themeManager.theme;
+
+  return (StyleSheet.create({
+
+    screen: StyleSheet.flatten([
+      KolynStyle.kolynScreen(currentTheme.mainColor),
+    ]),
+  
+    registerLabel: StyleSheet.flatten([
+      {textAlign: 'center'},
+      KolynStyle.kolynLabel(currentTheme.fontSizes.small, currentTheme.mainFont, currentTheme.primaryColor),
+    ]),
+  
+    name: {
+      flexDirection: 'row',
+      alignSelf:'center',
+    },
+  
+    nameTextfield: StyleSheet.flatten([
+      {height: 40, width: 140}, 
+      KolynStyle.kolynInputTextfield(currentTheme.primaryColor, currentTheme.mainFont),
+    ]),
+  
+    inputTextfield: StyleSheet.flatten([
+      {height: 40, width: 300}, 
+      KolynStyle.kolynInputTextfield(currentTheme.primaryColor, currentTheme.mainFont),
+    ]),
+  
+    errorLabel: StyleSheet.flatten([
+      {textAlign: 'center'},
+      KolynStyle.kolynLabel(currentTheme.fontSizes.small, currentTheme.mainFont, currentTheme.errorColor),
+    ]),
+  
+    signupButton: StyleSheet.flatten([
+      {width: 240},
+      KolynStyle.kolynButton(currentTheme.primaryColor),
+    ]),
+  
+    signupButtonLabel: StyleSheet.flatten([
+      KolynStyle.kolynLabel(currentTheme.fontSizes.casual, currentTheme.mainFont, currentTheme.mainColor,),
+    ]),
+  
+    backButton: StyleSheet.flatten([
+      {width: 70, top: 36},
+      KolynStyle.kolynButton(currentTheme.primaryColor),
+    ]),
+  
+    backButtonLabel: StyleSheet.flatten([
+      KolynStyle.kolynLabel(currentTheme.fontSizes.tiny, currentTheme.mainFont, currentTheme.mainColor,),
+    ]),
+  
+  }));
+}
