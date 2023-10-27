@@ -7,6 +7,7 @@ import * as KolynStyle from '../kits/KolynStyleKit';
 import {KolynSwitchCourseButton } from '../kits/KolynComponentKit';
 import { CommonPart } from '../kits/CommonPart';
 import { BarCodeScanner } from 'expo-barcode-scanner';
+import { ThemeContext} from '../kits/AppTheme';
 
 
 const CheckinStatus = {
@@ -20,6 +21,8 @@ const PageVariant = {
 }
 
 export function QRScanPage() {
+  const themedStyles = ThemedStyles();
+
   const checkinStatus = ReadCheckinStatus();
 
   const [courseText, onChangeCourseText] = React.useState('');
@@ -56,10 +59,7 @@ export function QRScanPage() {
       components={
         <View style={{flex: 6}}>
 
-        <KolynSwitchCourseButton
-          foregroundColor={currentTheme.mainColor}
-          backgroundColor={currentTheme.primaryColor}
-        />
+        <KolynSwitchCourseButton/>
 
         <View style={{top: 50, flex: 2}}>
 
@@ -67,12 +67,14 @@ export function QRScanPage() {
             courseText={courseText}
             onChangeCourseText={onChangeCourseText}
             text="CS 320, Jaime Dávila"
+            style={themedStyles.courseLabel}
           />
 
           <CourseLabel
             courseText={timeText}
             onChangeCourseText={onChangeTimeText}
             text="Tu, Th 13:00 - 14:15"
+            style={themedStyles.courseLabel}
           />
 
         </View>
@@ -82,26 +84,42 @@ export function QRScanPage() {
           { pageVariant == PageVariant.Default && !((hasPermission === null || hasPermission === false)) &&
           <CameraScanner
             handleBarCodeScanned={handleBarCodeScanned}
-            scanned={scanned}
-            setScanned={setScanned}
-            setPageVariant={setPageVariant}
+            style={themedStyles.barCodeScanner}
           /> }
 
-          { pageVariant == PageVariant.Default && HasPermission && <ScanHintLabel text={"Scan your instructor's QR code to check in."}/>}
+          { pageVariant == PageVariant.Default && HasPermission && <ScanHintLabel 
+                                                                    text={"Scan your instructor's QR code to check in."}
+                                                                    style={themedStyles.scanHintLabel}
+                                                                  />}
 
-          { pageVariant == PageVariant.CheckedIn && HasPermission && <MessageLabel text={"You have been checked in."}/>}
+          { pageVariant == PageVariant.CheckedIn && HasPermission && <MessageLabel 
+                                                                      text={"You have been checked in."}
+                                                                      style={themedStyles.messageLabel}
+                                                                    />}
 
-          { pageVariant == PageVariant.CheckedIn && HasPermission && <ScanAgainButton onPress={()=>{setPageVariant(PageVariant.Default)}} /> }
+          { pageVariant == PageVariant.CheckedIn && HasPermission && <ScanAgainButton 
+                                                                      onPress={()=>{setPageVariant(PageVariant.Default)}}
+                                                                      buttonStyle={themedStyles.scanAgainButton}
+                                                                      labelStyle={themedStyles.scanAgainLabel}
+                                                                    /> }
 
-          { !HasPermission && <MessageLabel text={"Camera permission is not enabled."}/>}
+          { !HasPermission && <MessageLabel 
+                                text={"Camera permission is not enabled."}
+                                style={themedStyles.messageLabel}
+                              />}
 
-          { !HasPermission && <GrantPermissionButton onPress={() => {setHasPermission(true)}}/>}
+          { !HasPermission && <GrantPermissionButton 
+                                onPress={() => {setHasPermission(true)}}
+                                buttonStyle={themedStyles.scanAgainButton}
+                                labelStyle={themedStyles.scanAgainLabel}
+                              />}
 
         </View>
 
         <StatusLabel
           statusText={statusText}
           onChangeStatusText={onChangeStatusText}
+          style={themedStyles.statusLabel}
         />
 
         </View>
@@ -134,41 +152,39 @@ function ReadCheckinStatus()
 /* User interface code start */
 
 /* The in-app camera scanner, dose not work in a simulator */
-function CameraScanner({
-  handleBarCodeScanned,
-}) {
+function CameraScanner({ handleBarCodeScanned, style }) {
   return (
     <View>
       <BarCodeScanner
         onBarCodeScanned={handleBarCodeScanned}
-        style={styles.barCodeScanner}
+        style={style}
       />
     </View>
   );
 }
 
 /* A button when pressed changed the page variant to default */
-function ScanAgainButton({ onPress }) {
+function ScanAgainButton({ onPress, buttonStyle, labelStyle }) {
   return (
-    <Pressable style={styles.scanAgainButton} onPress={onPress}>
-        <Text style={styles.scanAgainLabel}>Press to scan again</Text>
+    <Pressable style={buttonStyle} onPress={onPress}>
+        <Text style={labelStyle}>Press to scan again</Text>
     </Pressable>
   );
 }
 
-function GrantPermissionButton({ onPress }) {
+function GrantPermissionButton({ onPress, buttonStyle, labelStyle }) {
   return (
-    <Pressable style={styles.scanAgainButton} onPress={onPress}>
-        <Text style={styles.scanAgainLabel}>Grant Permission</Text>
+    <Pressable style={buttonStyle} onPress={onPress}>
+        <Text style={labelStyle}>Grant Permission</Text>
     </Pressable>
   );
 }
 
 /* Show the user that he has been checked in */
-function MessageLabel({ text }) {
+function MessageLabel({ text, style }) {
   return (
     <Text
-      style={styles.messageLabel}
+      style={style}
     >
       { text }
     </Text>
@@ -176,10 +192,10 @@ function MessageLabel({ text }) {
 }
 
 /* A tiny label used to hint the user to scan the QR code */
-function ScanHintLabel({ text }) {
+function ScanHintLabel({ text, style }) {
   return (
     <Text
-      style={styles.scanHintLabel}
+      style={style}
     >
       { text }
     </Text>
@@ -187,11 +203,11 @@ function ScanHintLabel({ text }) {
 }
 
 /* Used to display both the course title, instructor name, and course period */
-function CourseLabel({ courseText, onChangeCourseText, text }) {
+function CourseLabel({ courseText, onChangeCourseText, text, style }) {
   return (
     <TextInput
       editable={false}
-      style={styles.courseLabel}
+      style={style}
       value={courseText}
       onChangeText={onChangeCourseText}
     >
@@ -201,11 +217,11 @@ function CourseLabel({ courseText, onChangeCourseText, text }) {
 }
 
 /* The label used to indicate check-in status to the user */
-function StatusLabel({ statusText, onChangeStatusText }) {
+function StatusLabel({ statusText, onChangeStatusText, style }) {
   return (
     <TextInput
       editable={false}
-      style={styles.statusLabel}
+      style={style}
       onChangeText={onChangeStatusText}
     >
       { statusText }
@@ -217,45 +233,50 @@ function StatusLabel({ statusText, onChangeStatusText }) {
 
 const {width, height} = Dimensions.get('window');
 
-const styles = StyleSheet.create({
+function ThemedStyles() {
+  const themeManager = React.useContext(ThemeContext);
+  const currentTheme = themeManager.theme;
+  
+  return (StyleSheet.create({
 
-  screen: StyleSheet.flatten([
-    KolynStyle.kolynScreen(currentTheme.mainColor),
-  ]),
-
-  divider: StyleSheet.flatten([
-    {top: -20},
-    KolynStyle.kolynDivider(currentTheme.primaryColor)
-  ]),
-
-  courseLabel: StyleSheet.flatten([
-    {alignSelf: 'center', height: 30},
-    KolynStyle.kolynLabel(currentTheme.fontSizes.small, currentTheme.mainFont, currentTheme.primaryColor)
-  ]),
-
-  barCodeScanner: {top: -120, height: height/3, width: width, alignSelf: 'center'},
-
-  messageLabel: StyleSheet.flatten([
-    {alignSelf: 'center', height: 30, top: -50},
-    KolynStyle.kolynLabel(currentTheme.fontSizes.small, currentTheme.mainFont, currentTheme.primaryColor)
-  ]),
-
-  scanHintLabel: StyleSheet.flatten([
-    {alignSelf: 'center', height: 30, top: -110},
-    KolynStyle.kolynLabel(currentTheme.fontSizes.tiny, currentTheme.mainFont, currentTheme.primaryColor)
-  ]),
-
-  statusLabel: StyleSheet.flatten([
-    {alignSelf: 'center', height: 30, top: -40},
-    KolynStyle.kolynLabel(currentTheme.fontSizes.small, currentTheme.mainFont, currentTheme.primaryColor)
-  ]),
-
-  scanAgainButton: StyleSheet.flatten([
-    {top: 55, width: 240, alignSelf: 'center'}, 
-    KolynStyle.kolynButton(currentTheme.primaryColor),
-  ]),
-
-  scanAgainLabel: StyleSheet.flatten([
-    KolynStyle.kolynLabel(currentTheme.fontSizes.casual, currentTheme.mainFont, currentTheme.mainColor)
-  ]),
-});
+    screen: StyleSheet.flatten([
+      KolynStyle.kolynScreen(currentTheme.mainColor),
+    ]),
+  
+    divider: StyleSheet.flatten([
+      {top: -20},
+      KolynStyle.kolynDivider(currentTheme.primaryColor)
+    ]),
+  
+    courseLabel: StyleSheet.flatten([
+      {alignSelf: 'center', height: 30},
+      KolynStyle.kolynLabel(currentTheme.fontSizes.small, currentTheme.mainFont, currentTheme.primaryColor)
+    ]),
+  
+    barCodeScanner: {top: -120, height: height/3, width: width, alignSelf: 'center'},
+  
+    messageLabel: StyleSheet.flatten([
+      {alignSelf: 'center', height: 30, top: -50},
+      KolynStyle.kolynLabel(currentTheme.fontSizes.small, currentTheme.mainFont, currentTheme.primaryColor)
+    ]),
+  
+    scanHintLabel: StyleSheet.flatten([
+      {alignSelf: 'center', height: 30, top: -110},
+      KolynStyle.kolynLabel(currentTheme.fontSizes.tiny, currentTheme.mainFont, currentTheme.primaryColor)
+    ]),
+  
+    statusLabel: StyleSheet.flatten([
+      {alignSelf: 'center', height: 30, top: -40},
+      KolynStyle.kolynLabel(currentTheme.fontSizes.small, currentTheme.mainFont, currentTheme.primaryColor)
+    ]),
+  
+    scanAgainButton: StyleSheet.flatten([
+      {top: 55, width: 240, alignSelf: 'center'}, 
+      KolynStyle.kolynButton(currentTheme.primaryColor),
+    ]),
+  
+    scanAgainLabel: StyleSheet.flatten([
+      KolynStyle.kolynLabel(currentTheme.fontSizes.casual, currentTheme.mainFont, currentTheme.mainColor)
+    ]),
+  }));
+}

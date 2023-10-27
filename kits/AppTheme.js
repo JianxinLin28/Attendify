@@ -1,3 +1,6 @@
+import * as React from 'react';
+import { createContext } from 'react';
+
 const palette = {
     colorDodgerblue: "#2596ff",
     colorWhite: "#fff",
@@ -29,6 +32,7 @@ const defaultTheme = {
     errorColor: palette.colorScarletRed,
     mainFont: fontFamily.balooBhai,
     fontSizes: balooBhaiFontSize,
+    index: 0,
 }
 
 const greenTheme = {
@@ -39,7 +43,8 @@ const greenTheme = {
     checkBoxColor: palette.colorBlack,
     errorColor: palette.colorScarletRed,
     mainFont: fontFamily.balooBhai,
-    fontSizes: balooBhaiFontSize
+    fontSizes: balooBhaiFontSize,
+    index: 1,
 }
 
 const redTheme = {
@@ -50,15 +55,25 @@ const redTheme = {
     checkBoxColor: palette.colorBlack,
     errorColor: palette.colorEmeraldGreen,
     mainFont: fontFamily.balooBhai,
-    fontSizes: balooBhaiFontSize
+    fontSizes: balooBhaiFontSize,
+    index: 2
 }
 
 /* Remember to add the theme you created to this array */
-const themes = [defaultTheme, greenTheme, redTheme];
+export const themes = [defaultTheme, greenTheme, redTheme];
 export var currentTheme = defaultTheme;
 
-export function changeTheme(themeNumber) {
-    if (themeNumber >= themes.length)
-        return;
-    currentTheme = themes[themeNumber];
-}
+export const ThemeContext = createContext(themes);
+export const ThemeProvider = ({ children }) => {
+  const [theme, setTheme] = React.useState(themes[0]);
+
+  const changeTheme = (themeIndex) => {
+    setTheme(themes[themeIndex]);
+  }
+
+  return (
+    <ThemeContext.Provider value={{theme, changeTheme}}>
+      {children}
+    </ThemeContext.Provider>
+  );
+};

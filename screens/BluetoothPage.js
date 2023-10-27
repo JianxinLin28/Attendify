@@ -3,7 +3,7 @@ import { Platform, Dimensions, TextInput } from 'react-native';
 import { StyleSheet, Text, View, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native';
 import * as SplashScreen from 'expo-splash-screen';
-import { currentTheme, changeTheme } from '../kits/AppTheme';
+import { currentTheme } from '../kits/AppTheme';
 import { loadFont } from '../props/FontLoader';
 import * as KolynStyle from '../kits/KolynStyleKit';
 import { KolynSwitchCourseButton } from '../kits/KolynComponentKit';
@@ -18,10 +18,7 @@ export function BluetoothPage(props) {
       components={
         <View style={{flex: 6}}>
 
-          <KolynSwitchCourseButton
-            foregroundColor={currentTheme.mainColor}
-            backgroundColor={currentTheme.primaryColor}
-          />
+          <KolynSwitchCourseButton/>
 
           {/* Add new stuff here */}
 

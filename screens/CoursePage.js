@@ -1,24 +1,17 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { Dimensions, TextInput, ScrollView } from 'react-native';
-import { StyleSheet, Text, View, Pressable, FlatList, StatusBar } from 'react-native';
-import { currentTheme } from '../kits/AppTheme';
+import { StyleSheet, Text, View, Pressable, FlatList } from 'react-native';
+import { ThemeContext } from '../kits/AppTheme';
 import * as KolynStyle from '../kits/KolynStyleKit';
 import { CommonPart } from '../kits/CommonPart';
 
 
 const {width, height} = Dimensions.get('window');
 
-const Item = ({title}) => 
-{
-  return (
-    <View style={styles.item}>
-      <Text style={styles.title}>{title}</Text>
-    </View>
-  );
-};
-
 export function CoursePage() {
+  const themedStyles = ThemedStyles();
+
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   var initialElements = GetExampleElements(); // GetCourseArray()
@@ -26,7 +19,7 @@ export function CoursePage() {
   const [elementState, setElementState] = useState(initialElements);
   // Called each time the flat list if refreshed
   const refreshElements = () => {
-
+    setElementState(GetExampleElements());
   }
 
   const onRefresh = () => {
@@ -38,8 +31,8 @@ export function CoursePage() {
   return (
     <CommonPart title={"Manage Course"}
       components={
-          <View style={styles.background}>
-            <View style={styles.flatListView}>
+          <View style={themedStyles.background}>
+            <View style={themedStyles.flatListView}>
 
               <CourseList 
                 data={elementState}
@@ -122,6 +115,17 @@ function GetCourseArray()
 
 /* The flat list that is used to show the courses */
 function CourseList({ data, onRefresh, isRefreshing }) {
+  const themedStyles = ThemedStyles();
+
+  const Item = ({title}) => 
+  {
+    return (
+      <View style={themedStyles.item}>
+        <Text style={themedStyles.title}>{title}</Text>
+      </View>
+    );
+  };
+
   return (
     <FlatList
       data={data}
@@ -136,55 +140,62 @@ function CourseList({ data, onRefresh, isRefreshing }) {
 
 /* The 'add course' button */
 function AddCourseButton({ onPress }) {
+  const themedStyles = ThemedStyles();
+
   return (
-    <Pressable style={styles.addCourseButton} onPress={onPress}>
-        <Text style={styles.addCourseLabel}>Add Course</Text>
+    <Pressable style={themedStyles.addCourseButton} onPress={onPress}>
+        <Text style={themedStyles.addCourseLabel}>Add Course</Text>
     </Pressable>
   );
 }
 
 /* User interface code end */
 
-const styles = StyleSheet.create({
-  background: {
-    top: -20, 
-    flex: 1, 
-    width: width, 
-    height: height, 
-    alignSelf: 'center', 
-    backgroundColor: currentTheme.primaryColor
-  },
+function ThemedStyles() {
+  const themeManager = React.useContext(ThemeContext);
+  const currentTheme = themeManager.theme;
 
-  flatListView: {
-    top: 50, 
-    flex: 2, 
-    alignSelf: 'center', 
-    backgroundColor: currentTheme.primaryColor
-  },
-
-  item: StyleSheet.flatten([
-    {
-      top: 0, 
-      width: width*0.9, 
+  return (StyleSheet.create({
+    background: {
+      top: -20, 
+      flex: 1, 
+      width: width, 
+      height: height, 
       alignSelf: 'center', 
-      marginTop: 10, 
-      borderRadius: 10, 
-      backgroundColor: currentTheme.subColor, 
-      borderWidth: 4 }, 
-    KolynStyle.kolynButton(currentTheme.primaryColor),
-  ]),
-
-  title: StyleSheet.flatten([
-    {alignSelf: 'center', height: 55},
-    KolynStyle.kolynLabel(currentTheme.fontSizes.small, currentTheme.mainFont, currentTheme.subColor)
-  ]),
-
-  addCourseButton: StyleSheet.flatten([
-    {top: 55, width: 240, alignSelf: 'center'}, 
-    KolynStyle.kolynButton(currentTheme.mainColor),
-  ]),
-
-  addCourseLabel: StyleSheet.flatten([
-    KolynStyle.kolynLabel(currentTheme.fontSizes.casual, currentTheme.mainFont, currentTheme.primaryColor)
-  ]),
-});
+      backgroundColor: currentTheme.primaryColor
+    },
+  
+    flatListView: {
+      top: 50, 
+      flex: 2, 
+      alignSelf: 'center', 
+      backgroundColor: currentTheme.primaryColor
+    },
+  
+    item: StyleSheet.flatten([
+      {
+        top: 0, 
+        width: width*0.9, 
+        alignSelf: 'center', 
+        marginTop: 10, 
+        borderRadius: 10, 
+        backgroundColor: currentTheme.subColor, 
+        borderWidth: 4 }, 
+      KolynStyle.kolynButton(currentTheme.primaryColor),
+    ]),
+  
+    title: StyleSheet.flatten([
+      {alignSelf: 'center', height: 55},
+      KolynStyle.kolynLabel(currentTheme.fontSizes.small, currentTheme.mainFont, currentTheme.subColor)
+    ]),
+  
+    addCourseButton: StyleSheet.flatten([
+      {top: 55, width: 240, alignSelf: 'center'}, 
+      KolynStyle.kolynButton(currentTheme.mainColor),
+    ]),
+  
+    addCourseLabel: StyleSheet.flatten([
+      KolynStyle.kolynLabel(currentTheme.fontSizes.casual, currentTheme.mainFont, currentTheme.primaryColor)
+    ]),
+  }));
+}
