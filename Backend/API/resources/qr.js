@@ -13,7 +13,7 @@ router.get("/", (request, response) => {
       });
     })
     .catch((e) => {
-      response.status(400).json({
+      response.status(404).json({
         message: "Key not found for course " + request.body.course_id,
       });
     });
@@ -74,7 +74,7 @@ router.post("/checkin", (request, response) => {
       }
     })
     .catch((e) => {
-      response.status(400).json({
+      response.status(404).json({
         message: "Course " + request.body.course_id + " not found",
       });
     });

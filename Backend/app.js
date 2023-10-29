@@ -12,7 +12,7 @@ const dbConnect = require("./db/dbConnect");
 
 dbConnect();
 app.use(morgan('dev'));
-app.use('cors');
+app.use(cors());
 app.use("/student", studentResource);
 app.use("/instructor", instructorResource);
 app.use("/course", courseResource);
