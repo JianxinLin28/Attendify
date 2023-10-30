@@ -8,11 +8,12 @@ import { LoginPage } from './screens/LoginPage';
 import { SignupPage } from './screens/SignupPage';
 import { SignupAlertPage } from './screens/SingupAlertPage';
 import { QRScanPage } from './screens/QRScanPage';
-import { CoursePage } from './screens/CoursePage';
-import { ClickerPage } from './screens/ClickerPage';
-import { ProfilePage } from './screens/ProfilePage';
 import { BluetoothPage } from './screens/BluetoothPage';
 import { ThemeProvider, ThemeContext } from './kits/AppTheme';
+
+import { CoursePage } from './screens/coursePage/CoursePage';
+import { ClickerPage } from './screens/clickerPage/ClickerPage';
+import { ProfilePage } from './screens/profilePage/ProfilePage';
 
 
 const Stack = createNativeStackNavigator();

@@ -30,6 +30,16 @@ export function KolynTopTitleLabel({ text }) {
   );
 }
 
+export function KolynSubtitleLabel({ title }) {
+  const themedStyles = ThemedStyles();
+
+  return (
+    <Text style={themedStyles.subtitle}>
+      {title}
+    </Text>
+  );
+}
+
 /* Navigate to 'Switch Course' page when pressed */
 /* By default, background white, foreground blue */
 export function KolynSwitchCourseButton() {
@@ -39,6 +49,18 @@ export function KolynSwitchCourseButton() {
     <Pressable
       style={[themedStyles.switchCourseButton]}>
       <Text style={[themedStyles.switchCourseButtonLabel]}>Switch course</Text>
+    </Pressable>
+  );
+}
+
+export function KolynCasualButton({onPress, text}) {
+  const themedStyles = ThemedStyles();
+
+  return (
+    <Pressable
+      style={[themedStyles.casualButton]}
+      onPress={onPress}>
+      <Text style={[themedStyles.casualButtonLabel]}>{text}</Text>
     </Pressable>
   );
 }
@@ -71,6 +93,21 @@ function ThemedStyles() {
     switchCourseButtonLabel: StyleSheet.flatten([
       {backgroundColor: currentTheme.primaryColor},
       KolynStyle.kolynLabel(currentTheme.fontSizes.small, currentTheme.mainFont, currentTheme.mainColor)
+    ]),
+
+    subtitle: StyleSheet.flatten([
+      {alignSelf: 'center', top: 20},
+      KolynStyle.kolynLabel(currentTheme.fontSizes.medium, currentTheme.mainFont, currentTheme.subColor)
+    ]),
+
+    casualButton: StyleSheet.flatten([
+      {width: 240, backgroundColor:currentTheme.mainColor, alignSelf: 'center'}, 
+      KolynStyle.kolynButton(currentTheme.mainColor),
+    ]),
+
+    casualButtonLabel: StyleSheet.flatten([
+      {backgroundColor: currentTheme.mainColor},
+      KolynStyle.kolynLabel(currentTheme.fontSizes.casual, currentTheme.mainFont, currentTheme.primaryColor)
     ]),
 
   }));
