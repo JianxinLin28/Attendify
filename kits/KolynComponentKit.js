@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View, TextInput } from 'react-native';
 import { Image, Dimensions } from 'react-native';
 import * as KolynStyle from '../kits/KolynStyleKit';
-import { ThemeContext} from '../kits/AppTheme';
+import { ThemeContext } from '../kits/AppTheme';
 
 const {width} = Dimensions.get('window');
 
@@ -65,6 +65,22 @@ export function KolynCasualButton({onPress, text}) {
   );
 }
 
+/* Used to display both the course title, instructor name, and course period */
+export function KolynCourseLabel({ courseText, onChangeCourseText, text, textColor }) {
+  const themedStyles = ThemedStyles();
+
+  return (
+    <TextInput
+      editable={false}
+      style={[themedStyles.courseLabel, {color: textColor}]}
+      value={courseText}
+      onChangeText={onChangeCourseText}
+    >
+      { text }
+    </TextInput>
+  );
+}
+
 function ThemedStyles() {
   const themeManager = React.useContext(ThemeContext);
   const currentTheme = themeManager.theme;
@@ -108,6 +124,11 @@ function ThemedStyles() {
     casualButtonLabel: StyleSheet.flatten([
       {backgroundColor: currentTheme.mainColor},
       KolynStyle.kolynLabel(currentTheme.fontSizes.casual, currentTheme.mainFont, currentTheme.primaryColor)
+    ]),
+
+    courseLabel: StyleSheet.flatten([
+      {alignSelf: 'center', height: 30},
+      KolynStyle.kolynLabel(currentTheme.fontSizes.small, currentTheme.mainFont, currentTheme.subColor)
     ]),
 
   }));

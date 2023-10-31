@@ -5,7 +5,7 @@ import { StyleSheet, Text, View, Pressable, FlatList } from 'react-native';
 import { themes, ThemeContext } from '../../kits/AppTheme';
 import * as KolynStyle from '../../kits/KolynStyleKit';
 import { CommonPart } from '../../kits/CommonPart';
-
+import { resetNavigatorTabIndex } from '../../props/NavigatorTabIndexController';
 
 export function ProfilePageDefault({navigation}) {
   const themeManager = React.useContext(ThemeContext);
@@ -25,7 +25,7 @@ export function ProfilePageDefault({navigation}) {
         
           <View style={{flex: 2}}>
             <LogoutButton 
-              onPress={()=>navigation.popToTop()}
+              onPress={()=>{navigation.popToTop(); resetNavigatorTabIndex();}}
               buttonStyle={themedStyles.logoutButton}
               labelStyle={themedStyles.logoutButtonLabel}
             />

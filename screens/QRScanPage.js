@@ -2,9 +2,8 @@ import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { Dimensions, TextInput } from 'react-native';
 import { StyleSheet, Text, View, Pressable } from 'react-native';
-import { currentTheme } from '../kits/AppTheme';
 import * as KolynStyle from '../kits/KolynStyleKit';
-import {KolynSwitchCourseButton } from '../kits/KolynComponentKit';
+import {KolynSwitchCourseButton, KolynCourseLabel } from '../kits/KolynComponentKit';
 import { CommonPart } from '../kits/CommonPart';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { ThemeContext} from '../kits/AppTheme';
@@ -63,18 +62,18 @@ export function QRScanPage() {
 
         <View style={{top: 50, flex: 2}}>
 
-          <CourseLabel
+          <KolynCourseLabel
             courseText={courseText}
             onChangeCourseText={onChangeCourseText}
             text="CS 320, Jaime Dávila"
-            style={themedStyles.courseLabel}
+            textColor={GetPrimaryColor()}
           />
 
-          <CourseLabel
+          <KolynCourseLabel
             courseText={timeText}
             onChangeCourseText={onChangeTimeText}
             text="Tu, Th 13:00 - 14:15"
-            style={themedStyles.courseLabel}
+            textColor={GetPrimaryColor()}
           />
 
         </View>
@@ -129,6 +128,12 @@ export function QRScanPage() {
 }
 
 /* Internal logic code start */
+
+function GetPrimaryColor() {
+  const themeManager = React.useContext(ThemeContext);
+  const currentTheme = themeManager.theme;
+  return currentTheme.primaryColor;
+}
 
 /* Internal logic code end */
 
@@ -202,20 +207,6 @@ function ScanHintLabel({ text, style }) {
   );
 }
 
-/* Used to display both the course title, instructor name, and course period */
-function CourseLabel({ courseText, onChangeCourseText, text, style }) {
-  return (
-    <TextInput
-      editable={false}
-      style={style}
-      value={courseText}
-      onChangeText={onChangeCourseText}
-    >
-      { text }
-    </TextInput>
-  );
-}
-
 /* The label used to indicate check-in status to the user */
 function StatusLabel({ statusText, onChangeStatusText, style }) {
   return (
@@ -246,11 +237,6 @@ function ThemedStyles() {
     divider: StyleSheet.flatten([
       {top: -20},
       KolynStyle.kolynDivider(currentTheme.primaryColor)
-    ]),
-  
-    courseLabel: StyleSheet.flatten([
-      {alignSelf: 'center', height: 30},
-      KolynStyle.kolynLabel(currentTheme.fontSizes.small, currentTheme.mainFont, currentTheme.primaryColor)
     ]),
   
     barCodeScanner: {top: -120, height: height/3, width: width, alignSelf: 'center'},

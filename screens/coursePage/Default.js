@@ -28,6 +28,7 @@ export function CoursePageDefault({navigation}) {
     setIsRefreshing(false);
   }
 
+
   return (
     <CommonPart 
       title={"Manage Course"}
@@ -37,6 +38,7 @@ export function CoursePageDefault({navigation}) {
       }
     />
   );
+
 
   return (
     <CommonPart title={"Manage Course"}

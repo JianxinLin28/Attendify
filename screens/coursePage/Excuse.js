@@ -15,13 +15,36 @@ export function CoursePageExcuse() {
       <CommonPart title={"Manage Course"}
         components={
             <View style={themedStyles.background}>
-              <KolynSubtitleLabel title="Apply for excuse" />
+
+              <View style={{flex: 2}}>
+                <KolynSubtitleLabel title="Apply for excuse" />
+              </View>
+
+              <View style={{flex: 2}}>
+                <KolynCourseLabel
+                  courseText={courseText}
+                  onChangeCourseText={onChangeCourseText}
+                  text="CS 320, Jaime Dávila"
+                  textColor={GetSubColor()}
+                />
+
+                <KolynCourseLabel
+                  courseText={timeText}
+                  onChangeCourseText={onChangeTimeText}
+                  text="Tu, Th 13:00 - 14:15"
+                  textColor={GetSubColor()}
+                />
+              </View>
+
+              <View style={{flex: 2}}>
+
+              </View>
+
             </View>
         }
       />
   );
 }
-
 
 /* Internal logic code start */
 
@@ -36,6 +59,10 @@ export function CoursePageExcuse() {
 /*************************************************************************************************/
 
 /* User interface code start */
+
+function UploadDocumentButton() {
+  
+}
 
 /* User interface code end */
 

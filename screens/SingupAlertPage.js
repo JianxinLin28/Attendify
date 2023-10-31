@@ -4,7 +4,6 @@ import { StyleSheet, Text, View, TextInput, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import * as SplashScreen from 'expo-splash-screen';
-import { currentTheme } from '../kits/AppTheme';
 import { loadFont } from '../props/FontLoader';
 import * as KolynStyle from '../kits/KolynStyleKit';
 import {KolynMainTitleImage} from '../kits/KolynComponentKit';

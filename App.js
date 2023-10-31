@@ -10,11 +10,11 @@ import { SignupAlertPage } from './screens/SingupAlertPage';
 import { QRScanPage } from './screens/QRScanPage';
 import { BluetoothPage } from './screens/BluetoothPage';
 import { ThemeProvider, ThemeContext } from './kits/AppTheme';
+import { setNavigatorTabIndex, getNavigatorTabIndex } from './props/NavigatorTabIndexController';
 
 import { CoursePage } from './screens/coursePage/CoursePage';
 import { ClickerPage } from './screens/clickerPage/ClickerPage';
 import { ProfilePage } from './screens/profilePage/ProfilePage';
-
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -38,7 +38,6 @@ export default function App() {
   );
 }
 
-var navigatorTabIndex = 0;
 function BottomTabNavigator() {
   const themedStyles = ThemedStyles();
   const mainColor = GetMainColor();
@@ -66,14 +65,14 @@ function BottomTabNavigator() {
               source={require('./assets/bluetooth-scan-icon.png')}
               style={themedStyles.smallPageIcon}>
             </Image>
-            {navigatorTabIndex == 0 && <View style={themedStyles.bottomUnderline}/>}
+            {getNavigatorTabIndex() == 0 && <View style={themedStyles.bottomUnderline}/>}
           </View>
         )
       }} 
       component={BluetoothPage}
       listeners={{
         tabPress: () => {
-          navigatorTabIndex=0
+          setNavigatorTabIndex(0);
         }
       }}/>
 
@@ -85,14 +84,14 @@ function BottomTabNavigator() {
               source={require('./assets/qr-scan-icon.png')}
               style={themedStyles.smallPageIcon}>
             </Image>
-            {navigatorTabIndex == 1 && <View style={themedStyles.bottomUnderline}/>}
+            {getNavigatorTabIndex() == 1 && <View style={themedStyles.bottomUnderline}/>}
           </View>
         )
       }} 
       component={QRScanPage}
       listeners={{
         tabPress: () => {
-          navigatorTabIndex=1
+          setNavigatorTabIndex(1);
         }
       }}/>
 
@@ -105,7 +104,7 @@ function BottomTabNavigator() {
                 source={require('./assets/add-icon.png')}
                 style={themedStyles.bigPageIcon}>
               </Image>
-              {navigatorTabIndex == 2 && <View style={[themedStyles.bottomUnderline, {top: 20}]}/>}
+              {getNavigatorTabIndex() == 2 && <View style={[themedStyles.bottomUnderline, {top: 20}]}/>}
             </View>
           </View>
         )
@@ -113,7 +112,7 @@ function BottomTabNavigator() {
       component={CoursePage}
       listeners={{
         tabPress: () => {
-          navigatorTabIndex=2
+          setNavigatorTabIndex(2);
         }
       }}/>
 
@@ -125,14 +124,14 @@ function BottomTabNavigator() {
               source={require('./assets/clicker-icon.png')}
               style={themedStyles.smallPageIcon}>
             </Image>
-            {navigatorTabIndex == 3 && <View style={themedStyles.bottomUnderline}/>}
+            {getNavigatorTabIndex() == 3 && <View style={themedStyles.bottomUnderline}/>}
           </View>
         )
       }} 
       component={ClickerPage}
       listeners={{
         tabPress: () => {
-          navigatorTabIndex=3
+          setNavigatorTabIndex(3);
         }
       }}/>
 
@@ -144,14 +143,14 @@ function BottomTabNavigator() {
               source={require('./assets/profile-icon.png')}
               style={themedStyles.smallPageIcon}>
             </Image>
-            {navigatorTabIndex == 4 && <View style={themedStyles.bottomUnderline}/>}
+            {getNavigatorTabIndex() == 4 && <View style={themedStyles.bottomUnderline}/>}
           </View>
         )
       }} 
       component={ProfilePage}
       listeners={{
         tabPress: () => {
-          navigatorTabIndex=4
+          setNavigatorTabIndex(4);
         }
       }}/>
 

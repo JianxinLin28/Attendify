@@ -3,7 +3,6 @@ import { Keyboard, Platform, TouchableWithoutFeedback } from 'react-native';
 import { StyleSheet, Text, View, KeyboardAvoidingView, TextInput, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native';
 import * as SplashScreen from 'expo-splash-screen';
-import { currentTheme } from '../kits/AppTheme';
 import { loadFont } from '../props/FontLoader';
 import * as KolynStyle from '../kits/KolynStyleKit';
 import {KolynMainTitleImage} from '../kits/KolynComponentKit';
@@ -303,8 +302,10 @@ function IsServerReady() {
 
 /* The title that says register a new student account */
 function RegisterLabel() {
+  const themedStyles = ThemedStyles();
+
   return (
-    <Text style={styles.registerLabel}>
+    <Text style={themedStyles.registerLabel}>
       Register a new student account
     </Text>
   );
@@ -312,10 +313,12 @@ function RegisterLabel() {
 
 /* Last & First name */
 function NameTextfields({ lnameText, onChangeLnameText, fnameText, onChangeFnameText }) {
+  const themedStyles = ThemedStyles();
+
   return (
-    <View style={styles.name}>
+    <View style={themedStyles.name}>
       <CustomTextfield
-        style={styles.nameTextfield}
+        style={themedStyles.nameTextfield}
         text={lnameText}
         onChangeText={onChangeLnameText}
         placeholder="Last name"
@@ -323,7 +326,7 @@ function NameTextfields({ lnameText, onChangeLnameText, fnameText, onChangeFname
       />
 
       <CustomTextfield
-        style={styles.nameTextfield}
+        style={themedStyles.nameTextfield}
         text={fnameText}
         onChangeText={onChangeFnameText}
         placeholder="First name"
@@ -386,58 +389,6 @@ function BackButton({ onPress, buttonStyle, labelStyle }) {
 }
 
 /* User interface code end */
-
-
-const styles = StyleSheet.create({
-
-  screen: StyleSheet.flatten([
-    KolynStyle.kolynScreen(currentTheme.mainColor),
-  ]),
-
-  registerLabel: StyleSheet.flatten([
-    {textAlign: 'center'},
-    KolynStyle.kolynLabel(currentTheme.fontSizes.small, currentTheme.mainFont, currentTheme.primaryColor),
-  ]),
-
-  name: {
-    flexDirection: 'row',
-    alignSelf:'center',
-  },
-
-  nameTextfield: StyleSheet.flatten([
-    {height: 40, width: 140}, 
-    KolynStyle.kolynInputTextfield(currentTheme.primaryColor, currentTheme.mainFont),
-  ]),
-
-  inputTextfield: StyleSheet.flatten([
-    {height: 40, width: 300}, 
-    KolynStyle.kolynInputTextfield(currentTheme.primaryColor, currentTheme.mainFont),
-  ]),
-
-  errorLabel: StyleSheet.flatten([
-    {textAlign: 'center'},
-    KolynStyle.kolynLabel(currentTheme.fontSizes.small, currentTheme.mainFont, currentTheme.errorColor),
-  ]),
-
-  signupButton: StyleSheet.flatten([
-    {width: 240},
-    KolynStyle.kolynButton(currentTheme.primaryColor),
-  ]),
-
-  signupButtonLabel: StyleSheet.flatten([
-    KolynStyle.kolynLabel(currentTheme.fontSizes.casual, currentTheme.mainFont, currentTheme.mainColor,),
-  ]),
-
-  backButton: StyleSheet.flatten([
-    {width: 70, top: 36},
-    KolynStyle.kolynButton(currentTheme.primaryColor),
-  ]),
-
-  backButtonLabel: StyleSheet.flatten([
-    KolynStyle.kolynLabel(currentTheme.fontSizes.tiny, currentTheme.mainFont, currentTheme.mainColor,),
-  ]),
-
-});
 
 function ThemedStyles() {
   const themeManager = React.useContext(ThemeContext);
