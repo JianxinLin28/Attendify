@@ -2,6 +2,9 @@ import { useState } from "react";
 import { signupFields } from "../constants/formFields";
 import FormAction from "./FormAction";
 import Input from "./Input";
+import axios from "axios";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const fields = signupFields;
 let fieldsState = {};
@@ -16,12 +19,37 @@ const Signup = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(signupState);
     createAccount();
   };
 
   //handle Signup API Integration here
-  const createAccount = () => {};
+  const createAccount = async () => {
+    try {
+      const userData = {
+        email: signupState.email_address,
+        password: signupState.password,
+        role: "Instructor",
+        first_name: signupState.fname,
+        last_name: signupState.lname,
+        spire_id: signupState.sid,
+      };
+      const response = await axios.post(
+        "http://localhost:8080/register",
+        userData
+      );
+      if (response.status === 201) {
+        toast.success("Signup successful");
+        // Redirect user to dashboard.
+      } else {
+        toast.error("Error Creating User");
+        // Display error message to user.
+      }
+    } catch (error) {
+      console.error("An error occurred while signing up:", error);
+      toast.error("An error occurred while signing up");
+      // Handle error or display error message.
+    }
+  };
 
   return (
     <form className="mt-8 space-y-6" onSubmit={handleSubmit}>

@@ -3,6 +3,9 @@ import { loginFields } from "../constants/formFields";
 import FormAction from "./FormAction";
 import FormExtra from "./FormExtra";
 import Input from "./Input";
+import axios from "axios";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const fields = loginFields;
 let fieldsState = {};
@@ -21,7 +24,30 @@ const Login = () => {
   };
 
   //Handle Login API Integration here
-  const authenticateUser = () => {};
+  const authenticateUser = async () => {
+    try {
+      const userData = {
+        email: loginState.email_address,
+        password: loginState.password,
+      };
+      const response = await axios.post(
+        "http://localhost:8080/login",
+        userData
+      );
+      if (response.status === 200) {
+        toast.success("Login successful");
+        // Redirect user to dashboard.
+      } else if (response.status === 400) {
+        toast.error("Password does not match");
+        // Display error message to user.
+      } else {
+        toast.error("Login Failed");
+      }
+    } catch (error) {
+      toast.error("An error occurred while logging in");
+      // Handle error or display error message.
+    }
+  };
 
   return (
     <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
