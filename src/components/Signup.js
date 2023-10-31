@@ -40,9 +40,12 @@ const Signup = () => {
       if (response.status === 201) {
         toast.success("Signup successful");
         // Redirect user to dashboard.
+      } else if (response.status === 500) {
+        toast.error("Error creating user");
+      } else if (response.status === 502) {
+        toast.error("Error during password hashing");
       } else {
-        toast.error("Error Creating User");
-        // Display error message to user.
+        toast.error("Error during query");
       }
     } catch (error) {
       console.error("An error occurred while signing up:", error);

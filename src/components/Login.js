@@ -40,10 +40,13 @@ const Login = () => {
       } else if (response.status === 400) {
         toast.error("Password does not match");
         // Display error message to user.
+      } else if (response.status === 404) {
+        toast.error("Email not found");
       } else {
         toast.error("Login Failed");
       }
     } catch (error) {
+      console.error("An error occurred while signing up:", error);
       toast.error("An error occurred while logging in");
       // Handle error or display error message.
     }

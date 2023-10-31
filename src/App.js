@@ -3,6 +3,7 @@ import SignupPage from "./pages/Signup";
 import LoginPage from "./pages/Login";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Dashboard from "./pages/Dashboard";
 
 const CommonWrapper = ({ children }) => (
   <div className="min-h-full h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 overflow-y-auto">
@@ -31,6 +32,7 @@ const App = () => {
               </CommonWrapper>
             }
           />
+          <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
       </BrowserRouter>
       <ToastContainer />
