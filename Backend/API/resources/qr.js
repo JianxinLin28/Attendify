@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const QR = require("../../db/qrModel");
+const QR = require("../models/qrModel");
 const mongoose = require("mongoose");
 router.use(express.json());
 
