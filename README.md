@@ -9,6 +9,4 @@ React and React Native is completely new to me. I have not really worked with
 html, css before.
 
 ## Things to do:
-1. Code the 'open camera' feature
-2. Build bridges for backend connection (doing...)
-3. UI for manage course page
+1. UI for clicker pages
