@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useState } from 'react';
 import { Dimensions } from 'react-native';
 import { StyleSheet, Text, View, Pressable, FlatList } from 'react-native';
 import { ThemeContext } from '../../kits/AppTheme';
@@ -12,11 +11,11 @@ const {width, height} = Dimensions.get('window');
 export function CoursePageDefault({navigation}) {
   const themedStyles = ThemedStyles();
 
-  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [isRefreshing, setIsRefreshing] = React.useState(false);
 
   var initialElements = GetExampleElements(); // GetCourseArray()
 
-  const [elementState, setElementState] = useState(initialElements);
+  const [elementState, setElementState] = React.useState(initialElements);
   // Called each time the flat list if refreshed
   const refreshElements = () => {
     setElementState(GetExampleElements());
@@ -27,18 +26,6 @@ export function CoursePageDefault({navigation}) {
     refreshElements();
     setIsRefreshing(false);
   }
-
-
-  return (
-    <CommonPart 
-      title={"Manage Course"}
-      components={
-        <View style={themedStyles.background}>
-        </View>
-      }
-    />
-  );
-
 
   return (
     <CommonPart title={"Manage Course"}

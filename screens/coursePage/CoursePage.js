@@ -6,6 +6,8 @@ import { CoursePageAddSuccess } from './AddSuccess';
 import { CoursePageExcuse } from './Excuse';
 import { CoursePageInspect } from './Inspect';
 import { CoursePageQuitCourse } from './QuitCourse';
+import { CoursePageExcuseSuccess } from './ExcuseSuccess';
+import { UploadDocumentPage } from './UploadDocument';
 
 
 const Stack = createNativeStackNavigator();
@@ -22,6 +24,8 @@ export function CoursePage() {
         <Stack.Screen name="CoursePageExcuse" component={CoursePageExcuse}/>
         <Stack.Screen name="CoursePageInspect" component={CoursePageInspect}/>
         <Stack.Screen name="CoursePageQuitCourse" component={CoursePageQuitCourse}/>
+        <Stack.Screen name="CoursePageExcuseSuccess" component={CoursePageExcuseSuccess}/>
+        <Stack.Screen name="UploadDocumentPage" component={UploadDocumentPage}/>
       </Stack.Navigator>
   );
 }

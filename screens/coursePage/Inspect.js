@@ -1,7 +1,5 @@
 import * as React from 'react';
-import { useState } from 'react';
-import { Dimensions } from 'react-native';
-import { StyleSheet, Text, View, Pressable, FlatList } from 'react-native';
+import { StyleSheet, Text, View, Pressable } from 'react-native';
 import { ThemeContext } from '../../kits/AppTheme';
 import * as KolynStyle from '../../kits/KolynStyleKit';
 import { CommonPart } from '../../kits/CommonPart';
@@ -62,11 +60,17 @@ export function CoursePageInspect({navigation}) {
             </View>
 
             <View style={{flex: 2}}>
-              <QuitCourseButton/>
+              <QuitCourseButton
+                buttonStyle={themedStyles.quitCourseButton}
+                labelStyle={themedStyles.quitCourseButtonLabel}
+                navigation={navigation}
+              />
             </View>
 
             <View style={{flex: 2}}>
-              <ApplyExcuseButton/>
+              <ApplyExcuseButton 
+                navigation={navigation}
+              />
             </View>
 
             <View style={{flex: 2}}>
@@ -112,21 +116,21 @@ function TextLabel({ text, onChangeText, content }) {
   );
 }
 
-function QuitCourseButton() {
-  const themedStyles = ThemedStyles();
-
+function QuitCourseButton({buttonStyle, labelStyle, navigation}) {
   return (
     <Pressable
-      style={[themedStyles.quitCourseButton]}>
-      <Text style={[themedStyles.quitCourseButtonLabel]}>Quit Course</Text>
+      style={buttonStyle}
+      onPress={()=>{navigation.navigate("CoursePageQuitCourse")}}
+    >
+      <Text style={labelStyle}>Quit Course</Text>
     </Pressable>
   );
 }
 
-function ApplyExcuseButton() {
+function ApplyExcuseButton({navigation}) {
   return (
     <KolynCasualButton
-      onPress={()=>{}}
+      onPress={()=>{navigation.navigate("CoursePageExcuse")}}
       text={"Apply Excuse"}
     />
   );
