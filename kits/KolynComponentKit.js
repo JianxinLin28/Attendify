@@ -53,6 +53,17 @@ export function KolynSwitchCourseButton() {
   );
 }
 
+export function KolynSwitchCourseButton2() {
+  const themedStyles = ThemedStyles();
+
+  return (
+    <Pressable
+      style={[themedStyles.switchCourseButton2]}>
+      <Text style={[themedStyles.switchCourseButtonLabel2]}>Switch course</Text>
+    </Pressable>
+  );
+}
+
 export function KolynCasualButton({onPress, text}) {
   const themedStyles = ThemedStyles();
 
@@ -109,6 +120,16 @@ function ThemedStyles() {
     switchCourseButtonLabel: StyleSheet.flatten([
       {backgroundColor: currentTheme.primaryColor},
       KolynStyle.kolynLabel(currentTheme.fontSizes.small, currentTheme.mainFont, currentTheme.mainColor)
+    ]),
+
+    switchCourseButton2: StyleSheet.flatten([
+      {width: 150, height: 40, end: -width/3.5, backgroundColor:currentTheme.primaryColor}, 
+      KolynStyle.kolynButton(currentTheme.mainColor),
+    ]),
+  
+    switchCourseButtonLabel2: StyleSheet.flatten([
+      {backgroundColor: currentTheme.mainColor},
+      KolynStyle.kolynLabel(currentTheme.fontSizes.small, currentTheme.mainFont, currentTheme.primaryColor)
     ]),
 
     subtitle: StyleSheet.flatten([

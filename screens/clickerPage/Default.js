@@ -1,19 +1,60 @@
 import * as React from 'react';
-import { useState } from 'react';
 import { Dimensions } from 'react-native';
-import { StyleSheet, Text, View, Pressable, FlatList } from 'react-native';
+import { StyleSheet, Text, View, Pressable } from 'react-native';
 import { ThemeContext } from '../../kits/AppTheme';
 import * as KolynStyle from '../../kits/KolynStyleKit';
 import { CommonPart } from '../../kits/CommonPart';
+import { KolynCourseLabel, KolynSwitchCourseButton2 } from '../../kits/KolynComponentKit';
 
+const {width} = Dimensions.get('window');
 
 export function ClickerPageDefault() {
   const themedStyles = ThemedStyles();
+
+  const [courseText, onChangeCourseText] = React.useState('');
+  const [timeText, onChangeTimeText] = React.useState('');
 
   return (
       <CommonPart title={"Clicker"}
         components={
             <View style={themedStyles.background}>
+
+            <View style={{flex: 2}}>
+              <HistoryButton
+                buttonStyle={themedStyles.historyButton}
+                labelStyle={themedStyles.historyButtonLabel}
+              />
+              <KolynSwitchCourseButton2/>
+            </View>
+
+            <View style={{flex: 2}}>
+              <KolynCourseLabel
+                courseText={courseText}
+                onChangeCourseText={onChangeCourseText}
+                text="CS 320, Jaime Dávila"
+                textColor={GetSubColor()}
+              />
+
+              <KolynCourseLabel
+                courseText={timeText}
+                onChangeCourseText={onChangeTimeText}
+                text="Tu, Th 13:00 - 14:15"
+                textColor={GetSubColor()}
+              />
+            </View>
+
+            <View style={{flex: 2}}></View>
+
+            <View style={{flex: 2}}>
+              <NoQuestionLabel
+                labelStyle={themedStyles.noQuestionLabel}
+              />
+            </View>
+
+            <View style={{flex: 2}}></View>
+
+            <View style={{flex: 2}}></View>
+
             </View>
         }
       />
@@ -22,6 +63,12 @@ export function ClickerPageDefault() {
 
 
 /* Internal logic code start */
+
+function GetSubColor() {
+  const themeManager = React.useContext(ThemeContext);
+  const currentTheme = themeManager.theme;
+  return currentTheme.subColor;
+}
 
 /* Internal logic code end */
 
@@ -35,6 +82,23 @@ export function ClickerPageDefault() {
 
 /* User interface code start */
 
+function HistoryButton({ buttonStyle, labelStyle }) {
+  return (
+    <Pressable
+      style={buttonStyle}>
+      <Text style={labelStyle}>History</Text>
+    </Pressable>
+  );
+}
+
+function NoQuestionLabel({ labelStyle }) {
+  return (
+    <Text style={labelStyle}>
+      There is no question yet.
+    </Text>
+  );
+}
+
 /* User interface code end */
 
 function ThemedStyles() {
@@ -46,5 +110,20 @@ function ThemedStyles() {
       {top: -20},
       KolynStyle.kolynPrimaryColorScreen(currentTheme.primaryColor)
     ]),
+
+    historyButton: StyleSheet.flatten([
+      {top: 40, width: 150, height: 40, start: -width/3.5, backgroundColor:currentTheme.primaryColor}, 
+      KolynStyle.kolynButton(currentTheme.mainColor),
+    ]),
+  
+    historyButtonLabel: StyleSheet.flatten([
+      {backgroundColor: currentTheme.mainColor},
+      KolynStyle.kolynLabel(currentTheme.fontSizes.small, currentTheme.mainFont, currentTheme.primaryColor)
+    ]),
+    
+    noQuestionLabel: StyleSheet.flatten([
+      {alignSelf: 'center'},
+      KolynStyle.kolynLabel(currentTheme.fontSizes.small, currentTheme.mainFont, currentTheme.subColor)
+    ])
   }));
 }
