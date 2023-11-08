@@ -16,7 +16,7 @@ export function CoursePage() {
   return (
       <Stack.Navigator
         initialRouteName="CoursePageDefault"
-        screenOptions={{headerShown: false}}
+        screenOptions={{headerShown: false, gestureEnabled: false}}
       >
         <Stack.Screen name="CoursePageDefault" component={CoursePageDefault}/>
         <Stack.Screen name="CoursePageAddCourse" component={CoursePageAddCourse}/>

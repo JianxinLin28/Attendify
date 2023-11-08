@@ -3,18 +3,17 @@ import { View, Image, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { TestPage } from './screens/TestPage';
 import { LoginPage } from './screens/LoginPage';
 import { SignupPage } from './screens/SignupPage';
 import { SignupAlertPage } from './screens/SingupAlertPage';
-import { QRScanPage } from './screens/QRScanPage';
-import { BluetoothPage } from './screens/BluetoothPage';
 import { ThemeProvider, ThemeContext } from './kits/AppTheme';
 import { setNavigatorTabIndex, getNavigatorTabIndex } from './props/NavigatorTabIndexController';
 
 import { CoursePage } from './screens/coursePage/CoursePage';
 import { ClickerPage } from './screens/clickerPage/ClickerPage';
 import { ProfilePage } from './screens/profilePage/ProfilePage';
+import { BluetoothPage } from './screens/blutoothPage/BluetoothPage';
+import { QRScanPage } from './screens/qrPage/QRScanPage';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -25,9 +24,8 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator
           initialRouteName="Login"
-          screenOptions={{headerShown: false}}
+          screenOptions={{headerShown: false, gestureEnabled: false}}
         >
-            <Stack.Screen name="Test" component={TestPage}/>
             <Stack.Screen name="Login" component={LoginPage}/>
             <Stack.Screen name="Signup" component={SignupPage}/>
             <Stack.Screen name="SignupAlert" component={SignupAlertPage}/>
@@ -55,6 +53,7 @@ function BottomTabNavigator() {
           paddingHorizontal: 10,
           height: 100
         },
+        gestureEnabled: false
       })}
     >
       <Tab.Screen name="Bluetooth" options={{

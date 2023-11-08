@@ -42,23 +42,27 @@ export function KolynSubtitleLabel({ title }) {
 
 /* Navigate to 'Switch Course' page when pressed */
 /* By default, background white, foreground blue */
-export function KolynSwitchCourseButton() {
+export function KolynSwitchCourseButton({onPress}) {
   const themedStyles = ThemedStyles();
 
   return (
     <Pressable
-      style={[themedStyles.switchCourseButton]}>
+      style={[themedStyles.switchCourseButton]}
+      onPress={onPress}
+    >
       <Text style={[themedStyles.switchCourseButtonLabel]}>Switch course</Text>
     </Pressable>
   );
 }
 
-export function KolynSwitchCourseButton2() {
+export function KolynSwitchCourseButton2({onPress}) {
   const themedStyles = ThemedStyles();
 
   return (
     <Pressable
-      style={[themedStyles.switchCourseButton2]}>
+      style={[themedStyles.switchCourseButton2]}
+      onPress={onPress}
+    >
       <Text style={[themedStyles.switchCourseButtonLabel2]}>Switch course</Text>
     </Pressable>
   );

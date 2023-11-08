@@ -25,7 +25,9 @@ export function ClickerPageDefault({navigation}) {
                 labelStyle={themedStyles.historyButtonLabel}
                 navigation={navigation}
               />
-              <KolynSwitchCourseButton2/>
+              <KolynSwitchCourseButton2
+                onPress={()=>{navigation.navigate("SwitchCourse")}}
+              />
             </View>
 
             <View style={{flex: 2}}>

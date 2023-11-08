@@ -11,7 +11,7 @@ export function ProfilePage() {
   return (
     <Stack.Navigator
       initialRouteName="ProfilePageDefault"
-      screenOptions={{headerShown: false}}
+      screenOptions={{headerShown: false, gestureEnabled: false}}
     >
       <Stack.Screen name="ProfilePageDefault" component={ProfilePageDefault}/>
       <Stack.Screen name="ProfilePageCheckinHistory" component={ProfilePageCheckinHistory}/>
