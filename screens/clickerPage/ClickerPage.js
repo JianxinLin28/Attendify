@@ -10,7 +10,7 @@ const Stack = createNativeStackNavigator();
 export function ClickerPage() {
   return (
     <Stack.Navigator
-      initialRouteName="ClickerPageHistoryDetail"
+      initialRouteName="ClickerPageDefault"
       screenOptions={{headerShown: false}}
     >
       <Stack.Screen name="ClickerPageDefault" component={ClickerPageDefault}/>

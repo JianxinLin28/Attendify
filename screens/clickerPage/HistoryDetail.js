@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Dimensions } from 'react-native';
-import { StyleSheet, Text, View, Pressable, FlatList, TextInput } from 'react-native';
+import { StyleSheet, Text, View, Pressable, TextInput } from 'react-native';
 import { ThemeContext } from '../../kits/AppTheme';
 import * as KolynStyle from '../../kits/KolynStyleKit';
 import { CommonPart } from '../../kits/CommonPart';
@@ -27,7 +27,9 @@ export function ClickerPageHistoryDetail({navigation}) {
                 onChangeBoxText={onChangeBoxText}
                 textfieldStyle={themedStyles.boxTextfield}
               />
-              <ToOriginalButton/>
+              <ToOriginalButton
+                navigation={navigation}
+              />
             </View>
 
             <View style={{flex: 2}}>
@@ -106,13 +108,13 @@ function SwitchButton({buttonStyle, labelStyle }) {
   );
 }
 
-function ToOriginalButton() {
+function ToOriginalButton({navigation}) {
   const themedStyles = ThemedStyles();
 
   return (
     <Pressable
       style={[{alignSelf: 'flex-end', top: -180, left: -30}, themedStyles.toOriginalButton]}
-      onPress={()=>{}}
+      onPress={()=>{navigation.navigate("ClickerPageQuestion", {previousPage: "HistoryDetail"})}}
     >
       <View style={themedStyles.toOriginalButtonInner} />
     </Pressable>

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, Text, View, Pressable, FlatList } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { ThemeContext } from '../../kits/AppTheme';
 import * as KolynStyle from '../../kits/KolynStyleKit';
 import { CommonPart } from '../../kits/CommonPart';
@@ -106,7 +106,7 @@ function HintLabel({ style }) {
 function QuitCourseButton({navigation}) {
   return (
     <KolynCasualButton 
-      onPress={()=>{}} 
+      onPress={()=>{navigation.navigate("CoursePageQuitSuccess")}} 
       text="Quit"
     />
   );

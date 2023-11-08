@@ -6,7 +6,7 @@ import { CommonPart } from '../../kits/CommonPart';
 import { KolynCasualButton } from '../../kits/KolynComponentKit';
 
 
-export function ClickerPageReveal() {
+export function ClickerPageReveal({navigation}) {
   const themedStyles = ThemedStyles();
 
   const [questionTitleText, onChangeQuestionTitleText] = React.useState('Q1');
@@ -59,7 +59,7 @@ export function ClickerPageReveal() {
 
             <View style={{flex: 2}}>
               <KolynCasualButton 
-                onPress={()=>{}} 
+                onPress={()=>{navigation.navigate("ClickerPageDefault")}} 
                 text="Continue"
               />
             </View>

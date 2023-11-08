@@ -4,11 +4,11 @@ import { StyleSheet, Text, View, Pressable } from 'react-native';
 import { ThemeContext } from '../../kits/AppTheme';
 import * as KolynStyle from '../../kits/KolynStyleKit';
 import { CommonPart } from '../../kits/CommonPart';
-import { KolynCourseLabel, KolynSwitchCourseButton2 } from '../../kits/KolynComponentKit';
+import { KolynCourseLabel, KolynSwitchCourseButton2, KolynCasualButton } from '../../kits/KolynComponentKit';
 
 const {width} = Dimensions.get('window');
 
-export function ClickerPageDefault() {
+export function ClickerPageDefault({navigation}) {
   const themedStyles = ThemedStyles();
 
   const [courseText, onChangeCourseText] = React.useState('');
@@ -23,6 +23,7 @@ export function ClickerPageDefault() {
               <HistoryButton
                 buttonStyle={themedStyles.historyButton}
                 labelStyle={themedStyles.historyButtonLabel}
+                navigation={navigation}
               />
               <KolynSwitchCourseButton2/>
             </View>
@@ -53,14 +54,18 @@ export function ClickerPageDefault() {
 
             <View style={{flex: 2}}></View>
 
-            <View style={{flex: 2}}></View>
+            <View style={{flex: 2}}>
+              <KolynCasualButton
+                text="Get a question"
+                onPress={()=>{navigation.navigate("ClickerPageQuestion")}}
+              />
+            </View>
 
             </View>
         }
       />
   );
 }
-
 
 /* Internal logic code start */
 
@@ -82,10 +87,12 @@ function GetSubColor() {
 
 /* User interface code start */
 
-function HistoryButton({ buttonStyle, labelStyle }) {
+function HistoryButton({ buttonStyle, labelStyle, navigation }) {
   return (
     <Pressable
-      style={buttonStyle}>
+      style={buttonStyle}
+      onPress={()=>navigation.navigate("ClickerPageResponseHistory")}
+    >
       <Text style={labelStyle}>History</Text>
     </Pressable>
   );

@@ -1,12 +1,27 @@
 import * as React from 'react';
 import { StyleSheet, View, TextInput, Pressable, Text } from 'react-native';
+import { useRoute } from '@react-navigation/native';
 import { ThemeContext } from '../../kits/AppTheme';
 import * as KolynStyle from '../../kits/KolynStyleKit';
 import { CommonPart } from '../../kits/CommonPart';
 
 
-export function ClickerPageQuestion() {
+export function ClickerPageQuestion({navigation}) {
   const themedStyles = ThemedStyles();
+
+  const route = useRoute();
+  const fromPreviousPage = route.params?.previousPage;
+
+  var questionNavigate;
+  if (fromPreviousPage != null && 
+      fromPreviousPage == "HistoryDetail") {
+    // if you were from 'history detail' page, go back
+    questionNavigate = ()=>{navigation.goBack();}
+  }
+  else {
+    // if you were from other pages, navigate to reveal answer part
+    questionNavigate = ()=>{navigation.navigate("ClickerPageReveal");}
+  }
 
   const [questionTitleText, onChangeQuestionTitleText] = React.useState('Q1');
   const [timerText, onChangeTimerext] = React.useState('00: 59');
@@ -46,7 +61,7 @@ export function ClickerPageQuestion() {
 
               <View style={{flex: 2}}>
                 <OptionButton
-                  onPress={()=>{}}
+                  onPress={()=>{questionNavigate()}}
                   text={"A. 3 * 10^8 m/s"}
                   buttonStyle={themedStyles.optionButton}
                   labelStyle={themedStyles.optionButtonLabel}
@@ -55,7 +70,7 @@ export function ClickerPageQuestion() {
 
               <View style={{flex: 2}}>
                 <OptionButton
-                  onPress={()=>{}}
+                  onPress={()=>{questionNavigate()}}
                   text={"B. 2.3 * 10^8 m/s"}
                   buttonStyle={themedStyles.optionButton}
                   labelStyle={themedStyles.optionButtonLabel}
@@ -64,7 +79,7 @@ export function ClickerPageQuestion() {
 
               <View style={{flex: 2}}>
                 <OptionButton
-                  onPress={()=>{}}
+                  onPress={()=>{questionNavigate()}}
                   text={"C. 3 * 10^9 m/s"}
                   buttonStyle={themedStyles.optionButton}
                   labelStyle={themedStyles.optionButtonLabel}
@@ -73,7 +88,7 @@ export function ClickerPageQuestion() {
 
               <View style={{flex: 2}}>
                 <OptionButton
-                  onPress={()=>{}}
+                  onPress={()=>{questionNavigate()}}
                   text={"D. 2.2 * 10^8 m/s"}
                   buttonStyle={themedStyles.optionButton}
                   labelStyle={themedStyles.optionButtonLabel}

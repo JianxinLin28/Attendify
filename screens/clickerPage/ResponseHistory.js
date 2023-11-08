@@ -148,7 +148,7 @@ function ResponseHistoryList({ data, onRefresh, isRefreshing, navigation }) {
       <View style={themedStyles.item}>
         <Pressable 
           onPress={()=>{
-            
+            navigation.navigate("ClickerPageHistoryDetail")
           }}
         >
           <View style={{flex: 1, flexDirection: 'row'}}>
