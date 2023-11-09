@@ -1,7 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SignupPage from "./pages/Signup";
 import LoginPage from "./pages/Login";
-
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Dashboard from "./pages/Dashboard";
 
 const CommonWrapper = ({ children }) => (
@@ -12,6 +13,7 @@ const CommonWrapper = ({ children }) => (
 
 const App = () => {
   return (
+    <div>
       <BrowserRouter>
         <Routes>
           <Route
