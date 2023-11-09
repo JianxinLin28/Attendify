@@ -185,5 +185,26 @@ This following steps will only work if you have XCode.
    will be created. Before opening it, you need to trust yourself on your mobile device.
    To do that, go to "Setting -> General -> VPN&Device Management" and trust Attendify.
 5. Now you can open the app. With this approach, your app will have absolutely zero overhead
-   and it is equivalent to the Apps deployed in App Store. 
-   
+   and it is equivalent to the Apps deployed in App Store.
+
+## Testing on an Android emulator
+Emulators are hardware dependent! They work by emulating an entire device on your laptop.
+First of all, start by downloading Android Studio from:
+https://developer.android.com/studio. Click 'Download Android Studio Giraffe' button and 
+select the version match to your device, I am using a Mac intel chip. 
+
+After you downloaded Android Studio (1.28GB for me). You should launch the wizard and it will
+ask you to download a series of things, one of them is the emulator. Please download them.
+Then, open Android Studio, in its welcome page, click the three dots next to the 'Get
+from VCS' button. You will see 'Virtual Device Manager', click it and you should see a 
+device (mine is named Pixel_3a_API_34_extension_level_7_x86_64). Click the play button and
+the device will launch. You do not have to open the project in Android Studio, in fact,
+that is useless. I use Android Studio purely for the emulator.
+
+Head back to VScode and open your project & direct to the correct root and open the terminal Type:
+```
+npm start
+```
+then press 'shift + a'. You should see your android emulator device. 
+Select it and press 'enter'. Expo go will be downloaded into the device and 
+the project will be launched after the installation is done.
