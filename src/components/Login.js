@@ -34,11 +34,12 @@ const Login = () => {
         "http://localhost:8080/login",
         userData
       );
+      console.log(response.status);
       if (response.status === 200) {
         toast.success("Login successful");
         // Redirect user to dashboard.
       } else if (response.status === 400) {
-        toast.error("Password does not match");
+        toast.success("Password does not match");
         // Display error message to user.
       } else if (response.status === 404) {
         toast.error("Email not found");
@@ -46,7 +47,7 @@ const Login = () => {
         toast.error("Login Failed");
       }
     } catch (error) {
-      console.error("An error occurred while signing up:", error);
+      console.error("An error occurred while logging in:", error);
       toast.error("An error occurred while logging in");
       // Handle error or display error message.
     }
