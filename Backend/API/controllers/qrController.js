@@ -1,10 +1,6 @@
-const express = require("express");
-const router = express.Router();
 const QR = require("../models/qrModel");
-const mongoose = require("mongoose");
-router.use(express.json());
 
-router.get("/", (request, response) => {
+const get = async (request, response) => {
   QR.findOne({ course_id: request.body.course_id })
     .then((qr) => {
       response.status(200).json({
@@ -17,9 +13,9 @@ router.get("/", (request, response) => {
         message: "Key not found for course " + request.body.course_id,
       });
     });
-});
+};
 
-router.post("/", (request, response) => {
+const generate = async(request, response) => {
   newKey = Math.random() * (300000 - 100000) + 100000;
   QR.findOne({ course_id: request.body.course_id })
     .then((qr) => {
@@ -55,9 +51,9 @@ router.post("/", (request, response) => {
           });
         });
     });
-});
+};
 
-router.post("/checkin", (request, response) => {
+const checkin = async (request, response) => {
   QR.findOne({ course_id: request.body.course_id })
     .then((qr) => {
       if (qr.key == request.body.key) {
@@ -78,6 +74,6 @@ router.post("/checkin", (request, response) => {
         message: "Course " + request.body.course_id + " not found",
       });
     });
-});
+};
 
-module.exports = router;
+module.exports = {get, generate, checkin}
