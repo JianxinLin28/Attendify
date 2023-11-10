@@ -9,6 +9,5 @@ React and React Native is completely new to me. I have not really worked with
 html, css before.
 
 ## Things to do:
-1. Write skeleton functions for manage course pages and clicker pages
-2. Bluetooth pages due 11/17
-3. Profile pages due 11/24
+1. Bluetooth pages due 11/17
+2. Profile pages due 11/24
