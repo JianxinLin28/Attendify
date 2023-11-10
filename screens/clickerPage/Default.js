@@ -8,6 +8,11 @@ import { KolynCourseLabel, KolynSwitchCourseButton2, KolynCasualButton } from '.
 
 const {width} = Dimensions.get('window');
 
+/*
+  Use push notifications to receive signal from the backend server
+  and display the questions (go to question page)
+*/
+
 export function ClickerPageDefault({navigation}) {
   const themedStyles = ThemedStyles();
 
@@ -77,11 +82,26 @@ function GetSubColor() {
   return currentTheme.subColor;
 }
 
+function TransitToQuestionPage() {
+  const question = GetQuestion();
+
+}
+
 /* Internal logic code end */
 
 /*************************************************************************************************/
 
 /* Connect to backend logic code start */
+
+
+/*  
+  Get current question from the server,
+  return the question if there is
+  otherwise return null
+*/
+function GetQuestion() {
+
+}
 
 /* Connect to backend logic code end */
 

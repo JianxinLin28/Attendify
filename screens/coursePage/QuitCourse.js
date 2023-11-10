@@ -81,6 +81,16 @@ function GetSubColor() {
 
 /* Connect to backend logic code start */
 
+/*
+  Called after the Quit button is pressed
+  Quit the course by ID
+  return true is course is successfully quit
+  otherwise return false
+*/
+function QuitButtonPressed(courseId) {
+  return true;
+}
+
 /* Connect to backend logic code end */
 
 /*************************************************************************************************/

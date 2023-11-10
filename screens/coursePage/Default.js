@@ -11,16 +11,19 @@ const {width, height} = Dimensions.get('window');
 export function CoursePageDefault({navigation}) {
   const themedStyles = ThemedStyles();
 
+  // The refresh control for the course flat list
   const [isRefreshing, setIsRefreshing] = React.useState(false);
 
   var initialElements = GetExampleElements(); // GetCourseArray()
 
+  // The entire array for the course items
   const [elementState, setElementState] = React.useState(initialElements);
   // Called each time the flat list if refreshed
   const refreshElements = () => {
     setElementState(GetExampleElements());
   }
 
+  // Refresh the flat list
   const onRefresh = () => {
     setIsRefreshing(true);
     refreshElements();
@@ -99,10 +102,10 @@ function GetExampleElements()
     courseTimespan
     courseSection
   }
-  id can be string/number as long as two elements 
-  in the array do not share the same id value
+  id must be represented in string form and
+  two items do not share the same id value
 */
-function GetCourseArray()
+function GetCourseArray(studentID)
 {
 
 }

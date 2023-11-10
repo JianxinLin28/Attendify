@@ -88,6 +88,16 @@ function GetSubColor() {
 
 /* Connect to backend logic code start */
 
+/*
+  Called when ther confirm button is pressed
+  Send the excuse message to the data base
+  return true if the message is successfully sent
+  otherwise return false
+*/
+function ConfirmButtonPressed(excuseMessage) {
+  return true;
+}
+
 /* Connect to backend logic code end */
 
 /*************************************************************************************************/

@@ -12,6 +12,7 @@ import { CoursePageQuitSuccess } from './QuitSuccess';
 
 
 const Stack = createNativeStackNavigator();
+// The navigator for course management page
 export function CoursePage() {
   return (
       <Stack.Navigator

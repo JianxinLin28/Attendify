@@ -117,6 +117,14 @@ function GetSubColor() {
 
 /* Connect to backend logic code start */
 
+/*
+  Called after the timer reaches 00:00
+  Send the current student response to the backend
+*/
+function OnTimeEnd(studentResponse, studentID) {
+
+}
+
 /* Connect to backend logic code end */
 
 /*************************************************************************************************/

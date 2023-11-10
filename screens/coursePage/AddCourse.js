@@ -9,6 +9,7 @@ import { KolynSubtitleLabel, KolynCasualButton } from '../../kits/KolynComponent
 export function CoursePageAddCourse({navigation}) {
   const themedStyles = ThemedStyles();
 
+  // The entered ID text by user
   const [idText, onChangeIDText] = React.useState('');
 
   return (
@@ -36,6 +37,7 @@ export function CoursePageAddCourse({navigation}) {
             <View style={{flex: 2}}>
               <AddCourseButton
                 navigation={navigation}
+                idText={idText}
               />
             </View>
 
@@ -71,13 +73,21 @@ function PressAddCourseButton({navigation}) {
 
 /* Connect to backend logic code start */
 
+/*
+  Add the course by its entered id
+  return a boolean to indicate if the adding were successful
+*/
+function AddNewCourse(idText) {
+
+}
+
 /* Connect to backend logic code end */
 
 /*************************************************************************************************/
 
 /* User interface code start */
 
-function AddCourseButton({navigation}) {
+function AddCourseButton({navigation, idText}) {
   return (
     <KolynCasualButton 
       onPress={()=>{PressAddCourseButton({navigation: navigation})}} 

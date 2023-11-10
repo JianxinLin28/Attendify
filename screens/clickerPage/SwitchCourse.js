@@ -98,8 +98,19 @@ function GetExampleElements()
   id can be string/number as long as two elements 
   in the array do not share the same id value
 */
-function GetCourseArray()
+function GetCourseArray(studentID)
 {
+
+}
+
+/*
+  Update the current course of this student
+  send this data to the database and update
+
+  return true is action were successful
+  otherwise return false
+*/
+function UpdateStudentCurrentCourse(studentID, courseID) {
 
 }
 

@@ -133,6 +133,15 @@ function GetExampleElements()
 
 /* Connect to backend logic code start */
 
+/*
+  Fetch all historical question & student response
+  from the database
+  return an array
+*/
+function FetchAllQuestionHistory(studentID) {
+
+}
+
 /* Connect to backend logic code end */
 
 /*************************************************************************************************/

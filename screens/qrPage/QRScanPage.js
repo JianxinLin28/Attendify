@@ -3,6 +3,8 @@ import { QRScanPageDefault } from './Default';
 import { SwitchCoursePage } from '../blutoothPage/SwitchCourse';
 
 const Stack = createNativeStackNavigator();
+
+// The navigator for QR scan page
 export function QRScanPage() {
   return (
     <Stack.Navigator

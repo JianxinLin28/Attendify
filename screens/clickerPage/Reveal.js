@@ -79,6 +79,16 @@ export function ClickerPageReveal({navigation}) {
 
 /* Connect to backend logic code start */
 
+/*
+  Fetch the current question's answer & explanation
+  from the database
+  return an object containing these two things if success
+  otherwise return null
+*/
+function FetchQuestionReveal(questionID) {
+
+}
+
 /* Connect to backend logic code end */
 
 /*************************************************************************************************/

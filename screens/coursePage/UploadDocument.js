@@ -97,11 +97,24 @@ function GetExampleElements()
   ];
 }
 
+
+function OpenFileSelection() {
+  
+}
+
 /* Internal logic code end */
 
 /*************************************************************************************************/
 
 /* Connect to backend logic code start */
+
+/*
+  Uploading file require a server
+  just leave this for now
+*/
+function SendFile() {
+
+}
 
 /* Connect to backend logic code end */
 

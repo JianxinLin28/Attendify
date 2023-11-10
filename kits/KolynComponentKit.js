@@ -88,10 +88,9 @@ export function KolynCourseLabel({ courseText, onChangeCourseText, text, textCol
     <TextInput
       editable={false}
       style={[themedStyles.courseLabel, {color: textColor}]}
-      value={courseText}
+      value={text}
       onChangeText={onChangeCourseText}
     >
-      { text }
     </TextInput>
   );
 }

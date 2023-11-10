@@ -8,6 +8,7 @@ import { SwitchCoursePage } from './SwitchCourse';
 
 
 const Stack = createNativeStackNavigator();
+// The navigator for the clicker pages
 export function ClickerPage() {
   return (
     <Stack.Navigator

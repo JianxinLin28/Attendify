@@ -1,7 +1,5 @@
 import * as React from 'react';
-import { useState } from 'react';
-import { Dimensions } from 'react-native';
-import { StyleSheet, Text, View, Pressable, FlatList } from 'react-native';
+import { StyleSheet, Text, View, Pressable } from 'react-native';
 import { themes, ThemeContext } from '../../kits/AppTheme';
 import * as KolynStyle from '../../kits/KolynStyleKit';
 import { CommonPart } from '../../kits/CommonPart';
@@ -25,7 +23,10 @@ export function ProfilePageDefault({navigation}) {
         
           <View style={{flex: 2}}>
             <LogoutButton 
-              onPress={()=>{navigation.popToTop(); resetNavigatorTabIndex();}}
+              onPress={()=>{
+                navigation.popToTop(); 
+                resetNavigatorTabIndex();
+              }}
               buttonStyle={themedStyles.logoutButton}
               labelStyle={themedStyles.logoutButtonLabel}
             />
@@ -61,7 +62,7 @@ function ThemeButtons({ changeTheme, containerStyle, themeButtonStyle, themePres
         {themes.map(theme => (
           <ChangeThemeButton 
             backgroundColor={theme.mainColor}
-            id={theme.index}
+            id={theme.index+""}
             onPress={() => {changeTheme(theme.index)}}
             buttonStyle={themeButtonStyle}
             pressableStyle={themePressableStyle}
