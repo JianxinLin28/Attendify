@@ -12,9 +12,10 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import logo from '../constants/Attendify_centered.png'
 
-const pages = ['Products', 'Pricing', 'Blog'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const pages = ['Dashboard', 'Classes', 'Analytics'];
+const settings = ['Profile', 'Logout'];
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -36,10 +37,10 @@ function ResponsiveAppBar() {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{background: '#FFF'}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-           <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+           <img src={logo} style={{width: '115px' }} alt="logo"/>
           <Typography
             variant="h6"
             noWrap
@@ -55,7 +56,6 @@ function ResponsiveAppBar() {
               textDecoration: 'none',
             }}
           >
-            ATTENDIFY
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -111,14 +111,13 @@ function ResponsiveAppBar() {
               textDecoration: 'none',
             }}
           >
-            LOGO
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
+                sx={{ my: 2, color: '#1976d2', display: 'block' }}
               >
                 {page}
               </Button>
