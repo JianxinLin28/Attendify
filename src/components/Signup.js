@@ -19,6 +19,7 @@ const Signup = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    // console.log(signupState);
     createAccount();
   };
 
