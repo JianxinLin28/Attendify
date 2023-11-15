@@ -68,7 +68,7 @@ export function ClickerPageDefault({navigation}) {
               />
             </View>
 
-            </View>
+          </View>
         }
       />
   );
@@ -93,6 +93,7 @@ function TransitToQuestionPage() {
 
 /* Connect to backend logic code start */
 
+// Go to ./logic/CheckinStatus.js to implement code
 
 /*  
   Get current question from the server,

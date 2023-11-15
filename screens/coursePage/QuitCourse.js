@@ -6,7 +6,7 @@ import { CommonPart } from '../../kits/CommonPart';
 import { KolynSubtitleLabel, KolynCourseLabel, KolynCasualButton } from '../../kits/KolynComponentKit';
 
 
-export function CoursePageQuitCourse({navigation}) {
+export function CoursePageQuitCourse({route, navigation}) {
   const themedStyles = ThemedStyles();
 
   const [courseText, onChangeCourseText] = React.useState('');
@@ -116,7 +116,10 @@ function HintLabel({ style }) {
 function QuitCourseButton({navigation}) {
   return (
     <KolynCasualButton 
-      onPress={()=>{navigation.navigate("CoursePageQuitSuccess")}} 
+      onPress={()=>{
+        navigation.navigate("CoursePageQuitSuccess");
+
+      }} 
       text="Quit"
     />
   );

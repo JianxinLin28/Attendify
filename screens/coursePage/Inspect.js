@@ -6,11 +6,13 @@ import { CommonPart } from '../../kits/CommonPart';
 import { KolynSubtitleLabel, KolynCourseLabel, KolynCasualButton } from '../../kits/KolynComponentKit';
 
 
-export function CoursePageInspect({navigation}) {
+export function CoursePageInspect({route, navigation}) {
   const themedStyles = ThemedStyles();
 
   const [courseText, onChangeCourseText] = React.useState('');
   const [timeText, onChangeTimeText] = React.useState('');
+
+  const { courseID, title } = route.params;
 
   return (
       <CommonPart title={"Manage Course"}
@@ -25,7 +27,7 @@ export function CoursePageInspect({navigation}) {
               <KolynCourseLabel
                 courseText={courseText}
                 onChangeCourseText={onChangeCourseText}
-                text="CS 320, Jaime Dávila"
+                text={title}
                 textColor={GetSubColor()}
               />
 
@@ -64,6 +66,8 @@ export function CoursePageInspect({navigation}) {
                 buttonStyle={themedStyles.quitCourseButton}
                 labelStyle={themedStyles.quitCourseButtonLabel}
                 navigation={navigation}
+                courseID={courseID}
+                title={title}
               />
             </View>
 
@@ -116,11 +120,15 @@ function TextLabel({ text, onChangeText, content }) {
   );
 }
 
-function QuitCourseButton({buttonStyle, labelStyle, navigation}) {
+function QuitCourseButton({buttonStyle, 
+                          labelStyle, 
+                          navigation, 
+                          courseID, 
+                          title}) {
   return (
     <Pressable
       style={buttonStyle}
-      onPress={()=>{navigation.navigate("CoursePageQuitCourse")}}
+      onPress={()=>{navigation.navigate("CoursePageQuitCourse"), {courseID: courseID, title: title}}}
     >
       <Text style={labelStyle}>Quit Course</Text>
     </Pressable>

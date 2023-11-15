@@ -7,16 +7,8 @@ import {KolynSwitchCourseButton, KolynCourseLabel } from '../../kits/KolynCompon
 import { CommonPart } from '../../kits/CommonPart';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { ThemeContext} from '../../kits/AppTheme';
+import { CheckinStatus, ReadCheckinStatus } from '../../logic/CheckinStatus';
 
-
-/*
-  Enum for check-in status
-  The descriptions are for the UI labels in the bottom of the page
-*/
-const CheckinStatus = {
-  CheckedIn: 'Status: Checked in',
-  NotCheckedIn: 'Status: Not checked in'
-}
 
 /*
   -> Purely for UI purpose <-
@@ -77,11 +69,13 @@ export function QRScanPageDefault({navigation}) {
           components={
           <View style={{flex: 6}}>
 
-            <KolynSwitchCourseButton
-              onPress={()=>{navigation.navigate("SwitchCourse")}}
-            />
+            <View style={{flex: 2}}>
+              <KolynSwitchCourseButton
+                onPress={()=>{navigation.navigate("SwitchCourse")}}
+              />
+            </View>
 
-            <View style={{top: 50, flex: 2}}>
+            <View style={{flex: 2, top: -20}}>
 
               <KolynCourseLabel
                 courseText={courseText}
@@ -99,56 +93,63 @@ export function QRScanPageDefault({navigation}) {
 
             </View>
 
-            <View style={{top: 50, flex: 3}}>
-
+            <View style={{flex: 2}}>
               { pageVariant == PageVariant.Default && HasPermission() &&
                 <CameraScanner
                   handleBarCodeScanned={handleBarCodeScanned}
                   style={themedStyles.barCodeScanner}
-                /> 
-              }
+                /> }
 
-              { pageVariant == PageVariant.Default && HasPermission() && <ScanHintLabel 
-                                                                        text={"Scan your instructor's QR code to check in."}
-                                                                        style={themedStyles.scanHintLabel}
-                                                                      />}
+              { pageVariant == PageVariant.Default && HasPermission() && 
+                <ScanHintLabel 
+                  text={"Scan your instructor's QR code to check in."}
+                  style={themedStyles.scanHintLabel}
+                /> }
 
-              { pageVariant == PageVariant.CheckedIn && HasPermission() && <MessageLabel 
-                                                                          text={"You have been checked in."}
-                                                                          style={themedStyles.messageLabel}
-                                                                        />}
+              { pageVariant == PageVariant.CheckedIn && HasPermission() && 
+                <MessageLabel 
+                  text={"You have been checked in."}
+                  style={themedStyles.messageLabel}
+                /> }
 
-              { pageVariant == PageVariant.CheckedIn && HasPermission() && <ScanAgainButton 
-                                                                          onPress={()=>{setPageVariant(PageVariant.Default)}}
-                                                                          buttonStyle={themedStyles.scanAgainButton}
-                                                                          labelStyle={themedStyles.scanAgainLabel}
-                                                                        /> }
-
-              { !HasPermission() && <MessageLabel 
-                                    text={"Camera permission is not enabled."}
-                                    style={themedStyles.messageLabel}
-                                  />}
-
-              { !HasPermission() && <GrantPermissionButton 
-                                    onPress={() => {
-                                        const getBarCodeScannerPermissions = async () => {
-                                          const { status } = await BarCodeScanner.requestPermissionsAsync();
-                                          setHasPermission(status === 'granted');
-                                        };
-
-                                        getBarCodeScannerPermissions();
-                                    }}
-                                    buttonStyle={themedStyles.scanAgainButton}
-                                    labelStyle={themedStyles.scanAgainLabel}
-                                  />}
-
+              { pageVariant == PageVariant.CheckedIn && HasPermission() && 
+                <ScanAgainButton 
+                  onPress={()=>{setPageVariant(PageVariant.Default)}}
+                  buttonStyle={themedStyles.scanAgainButton}
+                  labelStyle={themedStyles.scanAgainLabel}
+                /> }
             </View>
 
-            <StatusLabel
-              statusText={statusText}
-              onChangeStatusText={onChangeStatusText}
-              style={themedStyles.statusLabel}
-            />
+            <View style={{flex: 2}}>
+              { !HasPermission() && 
+                <MessageLabel 
+                  text={"Camera permission is not enabled."}
+                  style={themedStyles.messageLabel}
+                /> }
+            </View>
+
+            <View style={{flex: 2}}>
+              { !HasPermission() && <GrantPermissionButton 
+                onPress={() => {
+                    const getBarCodeScannerPermissions = async () => {
+                      const { status } = await BarCodeScanner.requestPermissionsAsync();
+                      setHasPermission(status === 'granted');
+                    };
+
+                    getBarCodeScannerPermissions();
+                }}
+                buttonStyle={themedStyles.scanAgainButton}
+                labelStyle={themedStyles.scanAgainLabel}
+              /> }
+            </View>
+
+            <View style={{flex: 2}}>
+              <StatusLabel
+                statusText={statusText}
+                onChangeStatusText={onChangeStatusText}
+                style={themedStyles.statusLabel}
+              />
+            </View>
 
           </View>
         }
@@ -191,15 +192,6 @@ function GainCameraPermission({ components, setHasPermission}) {
 
 /* Connect to backend logic code start */
 
-/* 
-  Read the check-in status from the server
-  returns a CheckinStatus enum
-  if Checked-in, return CheckinStatus.CheckedIn
-  otherwise, reutrn CheckinStatus.NotCheckedIn
-*/
-function ReadCheckinStatus() {
-  return CheckinStatus.NotCheckedIn;
-}
 
 // Send the QR code data to the backend and
 // check if the code is valid
@@ -310,7 +302,7 @@ function ThemedStyles() {
     ]),
   
     statusLabel: StyleSheet.flatten([
-      {alignSelf: 'center', height: 30, top: -40},
+      {alignSelf: 'center', height: 30, top: 30},
       KolynStyle.kolynLabel(currentTheme.fontSizes.small, currentTheme.mainFont, currentTheme.primaryColor)
     ]),
   

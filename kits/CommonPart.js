@@ -7,6 +7,7 @@ import { loadFont } from '../props/FontLoader';
 import * as KolynStyle from '../kits/KolynStyleKit';
 import { KolynTopTitleLabel } from '../kits/KolynComponentKit';
 import { ThemeContext} from '../kits/AppTheme';
+import { loadImages } from '../props/ImageLoader';
 
 
 /*
@@ -23,13 +24,15 @@ export function CommonPart({components, title}) {
   });
 
   const fontsLoaded = loadFont();
+  const imageLoaded = loadImages();
+
   const onLayoutRootView = React.useCallback(async () => {
-    if (fontsLoaded) {
+    if (fontsLoaded && imageLoaded) {
       await SplashScreen.hideAsync();
     }
-  }, [fontsLoaded]);
+  }, [fontsLoaded, imageLoaded]);
 
-  if (!fontsLoaded) {
+  if (!fontsLoaded || !imageLoaded) {
     return null;
   }
 

@@ -34,7 +34,7 @@ export function CoursePageDefault({navigation}) {
     <CommonPart title={"Manage Course"}
       components={
           <View style={themedStyles.background}>
-            <View style={themedStyles.flatListView}>
+            <View style={[{flex: 10}, themedStyles.flatListView]}>
 
               <CourseList 
                 data={elementState}
@@ -45,7 +45,7 @@ export function CoursePageDefault({navigation}) {
 
             </View>
 
-          <View style={{flex: 1, top: 50}}>
+          <View style={{flex: 2}}>
 
             <AddCourseButton onPress={()=>{navigation.replace("CoursePageAddCourse")}}/>
 
@@ -62,28 +62,46 @@ function GetExampleElements()
 {
   return [
     {
-      id: 'CS320',
-      title: 'CS320, Jaime Dávila',
+      course: {
+        id: 'HE7LE8',
+        title: 'CS320, Jaime Dávila',
+        timespan: 'Tu, Th 13:00 - 14:15'
+      }
     },
     {
-      id: 'CS311',
-      title: 'CS311, Ghazaleh Parvini',
+      course: {
+        id: '8h7K4j',
+        title: 'CS311, Ghazaleh Parvini',
+        timespan: 'Mo, We, Fr 11:30 - 12:45'
+      }
     },
     {
-      id: 'CS576',
-      title: 'CS576, Evangelos Kalogerakis',
+      course: {
+        id: '2s6R1q',
+        title: 'CS576, Evangelos Kalogerakis',
+        timespan: 'Mo, We, Fr 5:15 - 6:30'
+      }
     },
     {
-      id: 'CS345',
-      title: 'CS345, Jaime Dávila',
+      course: {
+        id: '5d8F2w',
+        title: 'CS345, Jaime Dávila',
+        timespan: 'Tu, Th 15:00 - 16:15'
+      }
     },
     {
-      id: 'CS220',
-      title: 'CS220, Marius Minea',
+      course: {
+        id: '9t4Y7x',
+        title: 'CS220, Marius Minea',
+        timespan: 'Tu, Th 9:00 - 10:15'
+      }
     },
     {
-      id: 'CS377',
-      title: 'CS377, Prashant Shenoy'
+      course: {
+        id: '7Q2r9P',
+        title: 'CS377, Prashant Shenoy',
+        timespan: 'Fr 9:00 - 10:15'
+      }
     }
   ];
 }
@@ -120,13 +138,13 @@ function GetCourseArray(studentID)
 function CourseList({ data, onRefresh, isRefreshing, navigation }) {
   const themedStyles = ThemedStyles();
 
-  const Item = ({title}) => 
+  const Item = ({title, id, timespan}) => 
   {
     return (
       <View style={themedStyles.item}>
         <Pressable 
           onPress={()=>{
-            navigation.replace("CoursePageInspect");
+            navigation.replace("CoursePageInspect", {courseID: id, title: title, timespan: timespan});
           }}
         >
           <Text style={themedStyles.title}>{title}</Text>
@@ -138,7 +156,7 @@ function CourseList({ data, onRefresh, isRefreshing, navigation }) {
   return (
     <FlatList
       data={data}
-      renderItem={({item}) => <Item title={item.title} />}
+      renderItem={({item}) => <Item title={item.title} id={item.id} timespan={item.timespan} />}
       keyExtractor={item => item.id}
       showsVerticalScrollIndicator={false}
       onRefresh={onRefresh}
@@ -171,8 +189,6 @@ function ThemedStyles() {
     ]),
 
     flatListView: {
-      top: 50, 
-      flex: 2, 
       alignSelf: 'center', 
       backgroundColor: currentTheme.primaryColor
     },
@@ -195,7 +211,7 @@ function ThemedStyles() {
     ]),
   
     addCourseButton: StyleSheet.flatten([
-      {top: 55, width: 240, alignSelf: 'center'}, 
+      {width: 240, alignSelf: 'center'}, 
       KolynStyle.kolynButton(currentTheme.mainColor),
     ]),
   

@@ -15,10 +15,23 @@ import { ProfilePage } from './screens/profilePage/ProfilePage';
 import { BluetoothPage } from './screens/blutoothPage/BluetoothPage';
 import { QRScanPage } from './screens/qrPage/QRScanPage';
 
+
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
+const images = [
+  require('./assets/bluetooth-scan-icon.png'),
+  require('./assets/qr-scan-icon.png'),
+  require('./assets/add-icon.png'),
+  require('./assets/clicker-icon.png'),
+  require('./assets/profile-icon.png')
+];
+
 export default function App() {
+  state = {
+    isReady: false,
+  };
+
   return (
     <ThemeProvider>
       <NavigationContainer>
@@ -40,6 +53,7 @@ function BottomTabNavigator() {
   const themedStyles = ThemedStyles();
   const mainColor = GetMainColor();
 
+  
   return (
     <Tab.Navigator
       screenOptions={() =>({
@@ -61,7 +75,7 @@ function BottomTabNavigator() {
         tabBarIcon:() => (
           <View>
             <Image 
-              source={require('./assets/bluetooth-scan-icon.png')}
+              source={images[0]}
               style={themedStyles.smallPageIcon}>
             </Image>
             {getNavigatorTabIndex() == 0 && <View style={themedStyles.bottomUnderline}/>}
@@ -80,7 +94,7 @@ function BottomTabNavigator() {
         tabBarIcon:() => (
           <View>
             <Image 
-              source={require('./assets/qr-scan-icon.png')}
+              source={images[1]}
               style={themedStyles.smallPageIcon}>
             </Image>
             {getNavigatorTabIndex() == 1 && <View style={themedStyles.bottomUnderline}/>}
@@ -100,7 +114,7 @@ function BottomTabNavigator() {
           <View style={themedStyles.bottomCircle}>
             <View>
               <Image
-                source={require('./assets/add-icon.png')}
+                source={images[2]}
                 style={themedStyles.bigPageIcon}>
               </Image>
               {getNavigatorTabIndex() == 2 && <View style={[themedStyles.bottomUnderline, {top: 20}]}/>}
@@ -120,7 +134,7 @@ function BottomTabNavigator() {
         tabBarIcon:() => (
           <View>
             <Image 
-              source={require('./assets/clicker-icon.png')}
+              source={images[3]}
               style={themedStyles.smallPageIcon}>
             </Image>
             {getNavigatorTabIndex() == 3 && <View style={themedStyles.bottomUnderline}/>}
@@ -139,7 +153,7 @@ function BottomTabNavigator() {
         tabBarIcon:() => (
           <View>
             <Image 
-              source={require('./assets/profile-icon.png')}
+              source={images[4]}
               style={themedStyles.smallPageIcon}>
             </Image>
             {getNavigatorTabIndex() == 4 && <View style={themedStyles.bottomUnderline}/>}
