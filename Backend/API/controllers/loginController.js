@@ -56,6 +56,7 @@ const login = async (request, response) => {
           });
           response.status(200).send({
             message: "Login Successful",
+            User: user,
             email: user.email,
           });
           
