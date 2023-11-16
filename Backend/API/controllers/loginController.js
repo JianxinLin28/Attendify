@@ -59,7 +59,6 @@ const login = async (request, response) => {
             User: user,
             email: user.email,
           });
-          
         });
     })
     .catch((e) => {
