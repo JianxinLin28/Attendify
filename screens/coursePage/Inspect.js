@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { LogBox } from 'react-native';
 import { StyleSheet, Text, View, Pressable } from 'react-native';
 import { ThemeContext } from '../../kits/AppTheme';
 import * as KolynStyle from '../../kits/KolynStyleKit';
@@ -6,13 +7,19 @@ import { CommonPart } from '../../kits/CommonPart';
 import { KolynSubtitleLabel, KolynCourseLabel, KolynCasualButton } from '../../kits/KolynComponentKit';
 
 
+LogBox.ignoreLogs([
+  'Non-serializable values were found in the navigation state',
+]);
+
 export function CoursePageInspect({route, navigation}) {
   const themedStyles = ThemedStyles();
 
   const [courseText, onChangeCourseText] = React.useState('');
   const [timeText, onChangeTimeText] = React.useState('');
 
-  const { courseID, title } = route.params;
+  const course = route.params?.fromDefaultPage;
+
+  const courseID = course.getID().toString();
 
   return (
       <CommonPart title={"Manage Course"}
@@ -27,14 +34,14 @@ export function CoursePageInspect({route, navigation}) {
               <KolynCourseLabel
                 courseText={courseText}
                 onChangeCourseText={onChangeCourseText}
-                text={title}
+                text={course.getTitle()}
                 textColor={GetSubColor()}
               />
 
               <KolynCourseLabel
                 courseText={timeText}
                 onChangeCourseText={onChangeTimeText}
-                text="Tu, Th 13:00 - 14:15"
+                text={course.getTimespan()}
                 textColor={GetSubColor()}
               />
             </View>
@@ -44,7 +51,7 @@ export function CoursePageInspect({route, navigation}) {
               <TextLabel
                 text={""}
                 onChangeText={()=>{}}
-                content={"Course id: HE7LE8"}
+                content={`Course id: ${ courseID }`}
               />
 
               <TextLabel
@@ -66,8 +73,7 @@ export function CoursePageInspect({route, navigation}) {
                 buttonStyle={themedStyles.quitCourseButton}
                 labelStyle={themedStyles.quitCourseButtonLabel}
                 navigation={navigation}
-                courseID={courseID}
-                title={title}
+                course={course}
               />
             </View>
 
@@ -123,12 +129,11 @@ function TextLabel({ text, onChangeText, content }) {
 function QuitCourseButton({buttonStyle, 
                           labelStyle, 
                           navigation, 
-                          courseID, 
-                          title}) {
+                          course}) {
   return (
     <Pressable
       style={buttonStyle}
-      onPress={()=>{navigation.navigate("CoursePageQuitCourse"), {courseID: courseID, title: title}}}
+      onPress={()=>{navigation.navigate("CoursePageQuitCourse", {fromInspectPage: course})}}
     >
       <Text style={labelStyle}>Quit Course</Text>
     </Pressable>
