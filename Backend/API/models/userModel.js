@@ -31,6 +31,11 @@ const UserSchema = new mongoose.Schema({
         required: [true, "Please provide a role!"],
         unique: false,
     },
+    courses: {
+        type: Array,
+        required: [false, "N/A"],
+        unique: false,
+    },
   })
 
   module.exports = mongoose.model.Users || mongoose.model("Users", UserSchema);

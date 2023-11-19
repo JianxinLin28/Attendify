@@ -24,6 +24,7 @@ const register = async (request, response) => {
                   first_name: request.body.first_name,
                   last_name: request.body.last_name,
                   spire_id: request.body.spire_id,
+                  courses: []
                 });
                 user
                   .save()
