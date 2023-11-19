@@ -67,7 +67,7 @@ export function ClickerPageResponseHistory({navigation}) {
               <View style={{flex: 2}}>
                 <KolynCasualButton 
                   onPress={()=>{navigation.goBack()}} 
-                  text="Back"
+                  text="Go Back"
                 />
               </View>
 

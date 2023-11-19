@@ -15,7 +15,7 @@ const {width, height} = Dimensions.get('window');
 var initialElements = undefined;
 
 
-const SwipeableFlatList = ({ themedStyles, onSwipeToDelete, datas, onRefresh, isRefreshing }) => {
+const SwipeableFlatList = ({ themedStyles, onSwipeToDelete, datas, onRefresh, isRefreshing, navigation }) => {
   const flatListRef = React.useRef(null);
 
   var itemTransformXs = datas.map(_ => useSharedValue(0));
@@ -63,7 +63,13 @@ const SwipeableFlatList = ({ themedStyles, onSwipeToDelete, datas, onRefresh, is
           course.getTitle() != "" && themedStyles.item, 
           swipeableAnimatedStyle()
         ]}>
-        <Text style={themedStyles.title}>{course.getTitle()}</Text>
+          <Pressable 
+          onPress={()=>{
+            navigation.replace("CoursePageInspect", {fromDefaultPage: course});
+          }}
+        >
+          <Text style={themedStyles.title}>{course.getTitle()}</Text>
+        </Pressable>
       </Animated.View>
     );
   };
@@ -73,18 +79,24 @@ const SwipeableFlatList = ({ themedStyles, onSwipeToDelete, datas, onRefresh, is
       <FlatList
         ref={flatListRef}
         data={datas}
-        renderItem={({item})=> <RenderSwipeableItem 
+        renderItem={({item})=> {
+
+          datas.forEach(x=>console.log(x.course.getTitle()))
+          console.log("--------");
+
+          return <RenderSwipeableItem 
                                 course={item.course} 
                                 swipeableX={itemTransformXs[datas.findIndex(x=>x.course.getID() === item.course.getID())]}
                               />}
+                            }
         keyExtractor={item => item.course.getID()}
+        onRefresh={onRefresh}
+        refreshing={isRefreshing}
       />
       {true && handleSwipe(onSwipeToDelete)}
     </View>
   );
 };
-
-// TODO: maintain fixed length array
 
 export function CoursePageDefault({route, navigation}) {
   const themedStyles = ThemedStyles();
@@ -92,47 +104,52 @@ export function CoursePageDefault({route, navigation}) {
   // The refresh control for the course flat list
   const [isRefreshing, setIsRefreshing] = React.useState(false);
 
-  const optionalDeleteCourseID = route.params?.fromQuitSuccessPage;
-  if (optionalDeleteCourseID !== undefined)
-  {
-    const toBeDeletedCourseIndex = GetExampleElements()
-                                    .findIndex(x=>x.course.getID() === optionalDeleteCourseID);
-    
-    // use swipe away animation on the item in this index
-
-  }
-
   if (initialElements == undefined) { // first time loading page
     // fetch course information from the server
     initialElements = GetExampleElements(); // GetCourseArray()
-    console.log("initialElements are not defined");
-  } 
-  else { // go back to this page
-    // check if anything is deleted
-    // if yes, swipe that element out and delete it from the list
-    
-    /*
-    // for example, with the first item removed: 
-    const fetchedElements = [...GetExampleElements().slice(1, 6)];
-    
-    initialElements = fetchedElements;
-    if (initialElements.length != fetchedElements.length) {
-      console.log("there was a change");
-    } 
-    else {
-      console.log("there wasn't a change");
-    }
-    console.log("initialElements are defined");
-    */
+    console.log("Initial elements are undefined");
   } 
 
   // The entire array for the course items
   const [elementState, setElementState] = React.useState(initialElements);
-  const [onSwipeToDelete, setOnSwipeToDelete] = React.useState(0);
+  console.log("INITIALIZE ELEMENTSTATE");
+  const [onSwipeToDelete, setOnSwipeToDelete] = React.useState(-1);
+
+  const mySetElementState = (newElementState) => {
+    setElementState(newElementState);
+    initialElements = newElementState;
+  };
+
+  const optionalDeleteCourseID = route.params?.fromQuitSuccessPage;
+  if (optionalDeleteCourseID !== undefined)
+  {
+    const toBeDeletedCourseIndex = elementState
+                                    .findIndex(x=>x.course.getID() === optionalDeleteCourseID);
+    React.useEffect(() => {
+      const timeoutId = setTimeout(() => {
+
+        // Call the function that you want to execute after the timeout
+        animateSwipeDeletion(
+          toBeDeletedCourseIndex,
+          setOnSwipeToDelete,
+          elementState,
+          mySetElementState
+        );
+      }, 2000);
+
+      // Cleanup function to clear the timeout if the component unmounts
+      return () => clearTimeout(timeoutId);
+    }, []); // Empty dependency array to run the effect only once
+  }
 
   // Called each time the flat list if refreshed
   const refreshElements = () => {
-    setElementState(GetExampleElements());
+    /*
+    elementState.forEach(x=>{
+      console.log(x.course.getTitle());
+    });
+    */
+    mySetElementState(elementState);
   }
 
   // Refresh the flat list
@@ -160,32 +177,26 @@ export function CoursePageDefault({route, navigation}) {
             </View>
             */
             }
-
+            {
+                console.log("Before rendering flatlist")
+            }
+            {
+              elementState.forEach(x=>console.log(x.course.getTitle()))
+            }
+            {
+              console.log("!!!!!!!!!!!!")
+            }
             <SwipeableFlatList 
               themedStyles={themedStyles}
               onSwipeToDelete={onSwipeToDelete}
               datas={elementState}
               onRefresh={onRefresh}
               isRefreshing={isRefreshing}
+              navigation={navigation}
             />
 
           <View style={{flex: 2}}>
-
-            { /*<AddCourseButton onPress={()=>{navigation.replace("CoursePageAddCourse")}}/>*/ }
-            <AddCourseButton onPress={()=>{
-
-              setOnSwipeToDelete(1);  
-
-              //const updatedData = [...initialElements];
-
-              //updatedData.splice(3, 1);
-              //updatedData.forEach(x=>console.log(x.course.getTitle()))
-              setTimeout(() => { 
-                setOnSwipeToDelete(-1);  
-                setElementState(GetExampleElements2());
-              }, 2000);
-
-            }}/>
+            <AddCourseButton onPress={()=>{navigation.replace("CoursePageAddCourse")}}/>
           </View>
         </View>
       }
@@ -194,6 +205,50 @@ export function CoursePageDefault({route, navigation}) {
 }
 
 /* Internal logic code start */
+
+function animateSwipeDeletion(indexToRemove, 
+                              setOnSwipeToDelete, 
+                              elementState, 
+                              setElementState) {
+  setOnSwipeToDelete(indexToRemove);
+
+  var counter = 0;
+
+  var newElementState = elementState.map(x => {
+    if (counter++ == indexToRemove) {
+      return { course: new Course(Math.random(), "", "") };
+    }
+    return x;
+  });
+
+  var realNewElementState = [];
+  var i = 0;
+  var followingI = 0;
+  for (i; i < newElementState.length; i++) {
+    if (i == indexToRemove) {
+      continue;
+    }
+    realNewElementState[followingI] = newElementState[i];
+    followingI++;
+  }
+
+  for (i = followingI; i < newElementState.length; i++) {
+    realNewElementState[i] = { course: new Course(Math.random(), "", "") };
+  }
+
+  setTimeout(() => {
+    setOnSwipeToDelete(-1);
+    setElementState(realNewElementState);
+/*
+    realNewElementState.forEach(x=>{
+      console.log(x.course.getTitle());
+    });
+*/
+    //console.log("set element state");
+  }, 
+  2000);
+}
+
 export class Course {
   #id;
   #title;
@@ -252,47 +307,6 @@ function GetExampleElements()
   ];
 }
 
-function GetExampleElements2()
-{
-  return [
-    {
-      course: new Course(
-        'HE7LE8', 
-        'CS320, Jaime Dávila',
-        'Tu, Th 13:00 - 14:15')
-    },
-    {
-      course: new Course(
-        '2s6R1q', 
-        'CS576, Evangelos Kalogerakis', 
-        'Mo, We, Fr 5:15 - 6:30')
-    },
-    {
-      course: new Course(
-        '9t4Y7x',
-        'CS220, Marius Minea',
-        'Tu, Th 9:00 - 10:15')
-    },
-    {
-      course: new Course(
-        '7Q2r9P',
-        'CS377, Prashant Shenoy',
-        'Fr 9:00 - 10:15')
-    },
-    {
-      course: new Course(
-        '5d8F2w',
-        'CS345, Jaime Dávila',
-        'Tu, Th 15:00 - 16:15')
-    },
-    {
-      course: new Course(
-        '8h7K4j', 
-        '', 
-        '')
-    },
-  ];
-}
 /* Internal logic code end */
 
 /*************************************************************************************************/
@@ -358,7 +372,7 @@ function AddCourseButton({ onPress }) {
 
   return (
     <Pressable style={themedStyles.addCourseButton} onPress={onPress}>
-        <Text style={themedStyles.addCourseLabel}>Remove 311</Text>
+        <Text style={themedStyles.addCourseLabel}>Add course</Text>
     </Pressable>
   );
 }

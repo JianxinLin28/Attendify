@@ -1,6 +1,4 @@
 import * as React from 'react';
-import { useState } from 'react';
-import { Dimensions } from 'react-native';
 import { StyleSheet, Text, View, Pressable, FlatList } from 'react-native';
 import { ThemeContext } from '../../kits/AppTheme';
 import * as KolynStyle from '../../kits/KolynStyleKit';

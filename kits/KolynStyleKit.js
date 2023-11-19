@@ -13,11 +13,11 @@ export function kolynScreen(screenBackground) {
 
 export function kolynPrimaryColorScreen(primaryColor) {
     return {
-      flex: 1, 
-      width: width, 
-      height: height, 
-      alignSelf: 'center', 
-      backgroundColor: primaryColor
+        flex: 1, 
+        width: width, 
+        height: height, 
+        alignSelf: 'center', 
+        backgroundColor: primaryColor
     }
 }
 
