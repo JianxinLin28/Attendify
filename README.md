@@ -208,3 +208,28 @@ npm start
 then press 'shift + a'. You should see your android emulator device. 
 Select it and press 'enter'. Expo go will be downloaded into the device and 
 the project will be launched after the installation is done.
+
+## Re-render going-back-to page
+Sometimes, you might find youself want to re-render the page that you are going back to.
+Let's say you have a page A, and it can go to page B. You modified something in page B,
+now you want to go back to page A and you expect some changes to be reflected on page A. 
+If you did things normally, you will find out nothing has changed in page A.
+To solve this, you need to do these steps to page A:
+
+
+Step 1: 
+Define the 'useState' variables you want to use, they are variables that updates
+visually when changed.
+
+
+Step 2:
+Add this to your page function:
+```
+React.useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      // change state variable
+    });
+    return () => unsubscribe();
+  }, [navigation]);
+```
+Now Your page A should reflect the changes made from page B.
