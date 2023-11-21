@@ -6,6 +6,8 @@ import { KolynSwitchCourseButton } from '../../kits/KolynComponentKit';
 import { CommonPart } from '../../kits/CommonPart';
 import { KolynCourseLabel, KolynBluetoothScanIcon } from '../../kits/KolynComponentKit';
 import { CheckinStatus, ReadCheckinStatus } from '../../logic/CheckinStatus';
+import { getCourseIndex } from '../../props/CurrentCourse';
+import { GetSampleCourseList } from '../../props/CourseList';
 
 
 export const Hint = {
@@ -30,7 +32,10 @@ export function BluetoothPageDefault({navigation}) {
   const [pressHintText, onChangePressHintText] = React.useState(Hint.PressButton);
   const [disableButton, onButtonDisabled] = React.useState(false);
   const [enableCircularRotation, onEnableCircularRotation] = React.useState(false);
-  //const rotationValue = useRef(new Animated.Value(0)).current;
+
+  var initialElements = GetSampleCourseList(); // GetCourseArray()
+  const [elementState, setElementState] = React.useState(initialElements);
+  const [currentCourseIndex, setCurrentCourseIndex] = React.useState(getCourseIndex());
 
   // The check-in status text for the label
   const [statusText, onChangeStatusText] = React.useState(checkinStatus == CheckinStatus.CheckedIn ?
@@ -39,6 +44,13 @@ export function BluetoothPageDefault({navigation}) {
   var touchProps = {
     backgroundColor: !disableButton ? mainColor : disableColor
   }
+
+  React.useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      setCurrentCourseIndex(getCourseIndex());
+    });
+    return () => unsubscribe();
+  }, [navigation]);
 
   return (
     <CommonPart 
@@ -56,14 +68,14 @@ export function BluetoothPageDefault({navigation}) {
             <KolynCourseLabel
               courseText={courseText}
               onChangeCourseText={onChangeCourseText}
-              text="CS 320, Jaime Dávila"
+              text={elementState[currentCourseIndex].course.getTitle()}
               textColor={GetPrimaryColor()}
             />
 
             <KolynCourseLabel
               courseText={timeText}
               onChangeCourseText={onChangeTimeText}
-              text="Tu, Th 13:00 - 14:15"
+              text={elementState[currentCourseIndex].course.getTimespan()}
               textColor={GetPrimaryColor()}
             />
           </View>

@@ -8,6 +8,8 @@ import { CommonPart } from '../../kits/CommonPart';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { ThemeContext} from '../../kits/AppTheme';
 import { CheckinStatus, ReadCheckinStatus } from '../../logic/CheckinStatus';
+import { getCourseIndex } from '../../props/CurrentCourse';
+import { GetSampleCourseList } from '../../props/CourseList';
 
 
 /*
@@ -46,7 +48,19 @@ export function QRScanPageDefault({navigation}) {
   // Camera permission is an optional boolean
   const [hasPermission, setHasPermission] = useState(null);
 
+  var initialElements = GetSampleCourseList(); // GetCourseArray()
+  const [elementState, setElementState] = React.useState(initialElements);
+  const [currentCourseIndex, setCurrentCourseIndex] = React.useState(getCourseIndex());
+
+
   const HasPermission = () => !(hasPermission === null || hasPermission === false);
+
+  React.useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      setCurrentCourseIndex(getCourseIndex());
+    });
+    return () => unsubscribe();
+  }, [navigation]);
 
   // Add handle bar code logic to here
   const handleBarCodeScanned = ({ type, data }) => {
@@ -80,14 +94,14 @@ export function QRScanPageDefault({navigation}) {
               <KolynCourseLabel
                 courseText={courseText}
                 onChangeCourseText={onChangeCourseText}
-                text="CS 320, Jaime Dávila"
+                text={elementState[currentCourseIndex].course.getTitle()}
                 textColor={GetPrimaryColor()}
               />
 
               <KolynCourseLabel
                 courseText={timeText}
                 onChangeCourseText={onChangeTimeText}
-                text="Tu, Th 13:00 - 14:15"
+                text={elementState[currentCourseIndex].course.getTimespan()}
                 textColor={GetPrimaryColor()}
               />
 

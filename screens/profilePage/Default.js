@@ -6,11 +6,19 @@ import { CommonPart } from '../../kits/CommonPart';
 import { resetNavigatorTabIndex } from '../../props/NavigatorTabIndexController';
 import { Pfp, PfpStyle, getPfpIndex } from '../../props/Pfp';
 
+
 export function ProfilePageDefault({navigation}) {
   const themeManager = React.useContext(ThemeContext);
   const themedStyles = ThemedStyles();
 
-  const [icon, onChangeIcon] = React.useState(Pfp[getPfpIndex()].image);
+  const [currentSelectionMarkIndex, 
+    onChangeCurrentSelectionMarkIndex] = React.useState(getPfpIndex());
+  React.useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      onChangeCurrentSelectionMarkIndex(getPfpIndex());
+    });
+    return () => unsubscribe();
+  }, [navigation]);
 
   return (
       <CommonPart title={"Profile"}
@@ -31,7 +39,7 @@ export function ProfilePageDefault({navigation}) {
 
           <View style={{flex: 2}}>
             <PfpIcon
-              image={icon}
+              image={Pfp[currentSelectionMarkIndex].image}
               iconStyle={themedStyles.pfpIcon}
             />
           </View>

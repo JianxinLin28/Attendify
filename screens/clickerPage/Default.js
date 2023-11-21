@@ -5,6 +5,9 @@ import { ThemeContext } from '../../kits/AppTheme';
 import * as KolynStyle from '../../kits/KolynStyleKit';
 import { CommonPart } from '../../kits/CommonPart';
 import { KolynCourseLabel, KolynSwitchCourseButton2, KolynCasualButton } from '../../kits/KolynComponentKit';
+import { getCourseIndex } from '../../props/CurrentCourse';
+import { GetSampleCourseList } from '../../props/CourseList';
+
 
 const {width} = Dimensions.get('window');
 
@@ -19,6 +22,11 @@ export function ClickerPageDefault({navigation}) {
   const [courseText, onChangeCourseText] = React.useState('');
   const [timeText, onChangeTimeText] = React.useState('');
 
+  var initialElements = GetSampleCourseList(); // GetCourseArray()
+  const [elementState, setElementState] = React.useState(initialElements);
+  const [currentCourseIndex, setCurrentCourseIndex] = React.useState(getCourseIndex());
+
+  
   return (
       <CommonPart title={"Clicker"}
         components={
@@ -39,14 +47,14 @@ export function ClickerPageDefault({navigation}) {
               <KolynCourseLabel
                 courseText={courseText}
                 onChangeCourseText={onChangeCourseText}
-                text="CS 320, Jaime Dávila"
+                text={elementState[currentCourseIndex].course.getTitle()}
                 textColor={GetSubColor()}
               />
 
               <KolynCourseLabel
                 courseText={timeText}
                 onChangeCourseText={onChangeTimeText}
-                text="Tu, Th 13:00 - 14:15"
+                text={elementState[currentCourseIndex].course.getTimespan()}
                 textColor={GetSubColor()}
               />
             </View>

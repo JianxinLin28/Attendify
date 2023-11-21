@@ -9,6 +9,7 @@ import Animated, {
 import { ThemeContext } from '../../kits/AppTheme';
 import * as KolynStyle from '../../kits/KolynStyleKit';
 import { CommonPart } from '../../kits/CommonPart';
+import { Course, GetSampleCourseList } from '../../props/CourseList';
 
 
 const {width, height} = Dimensions.get('window');
@@ -81,8 +82,8 @@ const SwipeableFlatList = ({ themedStyles, onSwipeToDelete, datas, onRefresh, is
         data={datas}
         renderItem={({item})=> {
 
-          datas.forEach(x=>console.log(x.course.getTitle()))
-          console.log("--------");
+          //datas.forEach(x=>console.log(x.course.getTitle()))
+          //console.log("--------");
 
           return <RenderSwipeableItem 
                                 course={item.course} 
@@ -106,13 +107,13 @@ export function CoursePageDefault({route, navigation}) {
 
   if (initialElements == undefined) { // first time loading page
     // fetch course information from the server
-    initialElements = GetExampleElements(); // GetCourseArray()
-    console.log("Initial elements are undefined");
+    initialElements = GetSampleCourseList(); // GetCourseArray()
+    //console.log("Initial elements are undefined");
   } 
 
   // The entire array for the course items
   const [elementState, setElementState] = React.useState(initialElements);
-  console.log("INITIALIZE ELEMENTSTATE");
+  //console.log("INITIALIZE ELEMENTSTATE");
   const [onSwipeToDelete, setOnSwipeToDelete] = React.useState(-1);
 
   const mySetElementState = (newElementState) => {
@@ -178,13 +179,13 @@ export function CoursePageDefault({route, navigation}) {
             */
             }
             {
-                console.log("Before rendering flatlist")
+                //console.log("Before rendering flatlist")
             }
             {
-              elementState.forEach(x=>console.log(x.course.getTitle()))
+              //elementState.forEach(x=>console.log(x.course.getTitle()))
             }
             {
-              console.log("!!!!!!!!!!!!")
+              //console.log("!!!!!!!!!!!!")
             }
             <SwipeableFlatList 
               themedStyles={themedStyles}
@@ -249,64 +250,6 @@ function animateSwipeDeletion(indexToRemove,
   2000);
 }
 
-export class Course {
-  #id;
-  #title;
-  #timespan;
-
-  constructor(id, title, timespan) {
-    this.#id = id;
-    this.#title = title;
-    this.#timespan = timespan;
-
-    this.getID = () => this.#id;
-    this.getTitle = () => this.#title;
-    this.getTimespan = () => this.#timespan;
-  }
-}
-
-function GetExampleElements()
-{
-  return [
-    {
-      course: new Course(
-        'HE7LE8', 
-        'CS320, Jaime Dávila',
-        'Tu, Th 13:00 - 14:15')
-    },
-    {
-      course: new Course(
-        '8h7K4j', 
-        'CS311, Ghazaleh Parvini', 
-        'Mo, We, Fr 11:30 - 12:45')
-    },
-    {
-      course: new Course(
-        '2s6R1q', 
-        'CS576, Evangelos Kalogerakis', 
-        'Mo, We, Fr 5:15 - 6:30')
-    },
-    {
-      course: new Course(
-        '5d8F2w',
-        'CS345, Jaime Dávila',
-        'Tu, Th 15:00 - 16:15')
-    },
-    {
-      course: new Course(
-        '9t4Y7x',
-        'CS220, Marius Minea',
-        'Tu, Th 9:00 - 10:15')
-    },
-    {
-      course: new Course(
-        '7Q2r9P',
-        'CS377, Prashant Shenoy',
-        'Fr 9:00 - 10:15')
-    }
-  ];
-}
-
 /* Internal logic code end */
 
 /*************************************************************************************************/
@@ -334,37 +277,6 @@ function GetCourseArray(studentID)
 /*************************************************************************************************/
 
 /* User interface code start */
-
-/* The flat list that is used to show the courses */
-function CourseList({ data, onRefresh, isRefreshing, navigation }) {
-  const themedStyles = ThemedStyles();
-
-  const Item = ({course}) => 
-  {
-    return (
-      <View style={themedStyles.item}>
-        <Pressable 
-          onPress={()=>{
-            navigation.replace("CoursePageInspect", {fromDefaultPage: course});
-          }}
-        >
-          <Text style={themedStyles.title}>{course.getTitle()}</Text>
-        </Pressable>
-      </View>
-    );
-  };
-
-  return (
-    <FlatList
-      data={data}
-      renderItem={({item}) => <Item course={item.course} />}
-      keyExtractor={item => item.course.getID()}
-      showsVerticalScrollIndicator={false}
-      onRefresh={onRefresh}
-      refreshing={isRefreshing}
-    />
-  );
-}
 
 /* The 'add course' button */
 function AddCourseButton({ onPress }) {

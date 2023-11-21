@@ -49,15 +49,22 @@ export function ProfilePageSwitchPfp({navigation}) {
 const itemData = (currentSelectionMarkIndex) => Pfp.map((pfp, index)=>{
   return {
     icon: (themedStyles) => (
-      <View>
+      <View
+        key={`${pfp.key}icon`}
+      >
         <Image
           style={themedStyles.pfpIcon}
           source={pfp.image}
+          key={`${pfp.key}image`}
         />
         {index != currentSelectionMarkIndex && 
-          <View style={[themedStyles.unusedPfpOverlay]}/>}
+          <View 
+            style={[themedStyles.unusedPfpOverlay]}
+            key={`${pfp.key}overlay`}
+          />}
       </View>
     ),
+    key: pfp.key
   }
 });
 
@@ -73,6 +80,7 @@ const itemData = (currentSelectionMarkIndex) => Pfp.map((pfp, index)=>{
 
 /* User interface code start */
 
+/* The nest components should also possess unique key */
 const PfpItem = ({ onChangeCurrentSelectionMarkIndex, item, index }) => {
   const themedStyles = ThemedStyles();
 
@@ -83,22 +91,24 @@ const PfpItem = ({ onChangeCurrentSelectionMarkIndex, item, index }) => {
         onChangeCurrentSelectionMarkIndex(index); 
         setCurrentPfpIndex(index);
       }}
+      key={item.key}
     >
       {item.icon(themedStyles)}
     </Pressable>
   );
 };
 
+/* Unique key for all elements in the list */
 function PfpGrid({ currentSelectionMarkIndex, onChangeCurrentSelectionMarkIndex }) {
   const themedStyles = ThemedStyles();
   return (
     <View style={themedStyles.app}>
       {itemData(currentSelectionMarkIndex).map((item, index) => {
         return <PfpItem 
-                key={item.key}
                 onChangeCurrentSelectionMarkIndex={onChangeCurrentSelectionMarkIndex} 
                 item={item} 
                 index={index}
+                key={item.key}
               />;
       })}
     </View>

@@ -14,27 +14,27 @@ export const getPfpIndex = () => currentPfpIndex;
 export const Pfp = [
   {
     image: require('../assets/pfp-chair.png'),
-    key: "chair"
+    key: 'chair'
   },
   {
     image: require('../assets/pfp-mark.png'),
-    key: "chmarkair"
+    key: 'mark'
   },
   {
     image: require('../assets/pfp-apple.png'),
-    key: "apple"
+    key: 'apple'
   },
   {
     image: require('../assets/pfp-android.png'),
-    key: "android"
+    key: 'android'
   },
   {
     image: require('../assets/pfp-react.png'),
-    key: "react"
+    key: 'react'
   },
   {
     image: require('../assets/pfp-mongo.png'),
-    key: "mongo"
+    key: 'mongo'
   }
 ];
 

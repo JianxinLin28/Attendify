@@ -11,10 +11,18 @@ import { KolynCasualButton } from '../../kits/KolynComponentKit';
 export function ProfilePageInfo({navigation}) {
   const themedStyles = ThemedStyles();
   
-  const [icon, onChangeIcon] = React.useState(Pfp[getPfpIndex()].image);
   const [name, onChangeName] = React.useState("Team 6");
   const [email, onChangeEmail] = React.useState("attendify@umass.edu");
   const [phone, onChangePhone] = React.useState("000-000-0000");
+
+  const [currentSelectionMarkIndex, 
+    onChangeCurrentSelectionMarkIndex] = React.useState(getPfpIndex());
+  React.useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      onChangeCurrentSelectionMarkIndex(getPfpIndex());
+    });
+    return () => unsubscribe();
+  }, [navigation]);
 
   return (
       <CommonPart title={"Profile"}
@@ -30,7 +38,7 @@ export function ProfilePageInfo({navigation}) {
                   onPress={()=>{navigation.navigate("ProfilePageSwitchPfp");}}
                 >
                   <PfpIcon
-                    image={icon}
+                    image={Pfp[currentSelectionMarkIndex].image}
                     iconStyle={themedStyles.pfpIcon}
                   />
                 </Pressable>
