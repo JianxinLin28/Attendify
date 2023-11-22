@@ -56,8 +56,10 @@ const login = async (request, response) => {
           });
           response.status(200).send({
             message: "Login Successful",
-            User: user,
             email: user.email,
+            first_name: user.first_name,
+            last_name: user.last_name,
+            spire_id: user.spire_id
           });
         });
     })

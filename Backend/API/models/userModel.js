@@ -31,7 +31,7 @@ const UserSchema = new mongoose.Schema({
         required: [true, "Please provide a role!"],
         unique: false,
     },
-    courses: [Numbers]
+    //#courses: [number]
   })
 
   module.exports = mongoose.model.Users || mongoose.model("Users", UserSchema);
