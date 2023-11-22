@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { StyleSheet, Text, View, Pressable, Image } from 'react-native';
-import { themes, ThemeContext } from '../../kits/AppTheme';
+import { ThemeContext } from '../../kits/AppTheme';
 import * as KolynStyle from '../../kits/KolynStyleKit';
 import { CommonPart } from '../../kits/CommonPart';
 import { resetNavigatorTabIndex } from '../../props/NavigatorTabIndexController';
@@ -8,7 +8,6 @@ import { Pfp, PfpStyle, getPfpIndex } from '../../props/Pfp';
 
 
 export function ProfilePageDefault({navigation}) {
-  const themeManager = React.useContext(ThemeContext);
   const themedStyles = ThemedStyles();
 
   const [currentSelectionMarkIndex, 
@@ -25,16 +24,6 @@ export function ProfilePageDefault({navigation}) {
         components={
         <View style={[{flex: 6}, themedStyles.background]}>
 
-          {
-            /*
-          <ThemeButtons 
-            changeTheme={themeManager.changeTheme}
-            containerStyle={themedStyles.themeButtonsContainer}
-            themeButtonStyle={themedStyles.themeCircle}
-            themePressableStyle={themedStyles.themePressable}
-          />
-          */
-          }
           <View style={{flex: 1}}></View>
 
           <View style={{flex: 2}}>
@@ -76,7 +65,7 @@ export function ProfilePageDefault({navigation}) {
               <View style={{flex:1}}/>
               <GridButton
                 text={"Change Theme"}
-                onPress={()=>{}}
+                onPress={()=>{navigation.navigate("ProfilePageTheme")}}
               />
 
               <View style={{flex:1}}/>
@@ -162,52 +151,18 @@ function PfpIcon({ image, iconStyle }) {
   );
 }
 
-function ThemeButtons({ changeTheme, containerStyle, themeButtonStyle, themePressableStyle }) {
-    return (
-      <View
-        style={containerStyle}
-      >
-        {themes.map(theme => (
-          <ChangeThemeButton 
-            backgroundColor={theme.mainColor}
-            id={theme.index+""}
-            onPress={() => {changeTheme(theme.index)}}
-            buttonStyle={themeButtonStyle}
-            pressableStyle={themePressableStyle}
-            key={theme.index}
-          />
-        ))}
-    </View>
-    );
-  }
-  
-  function ChangeThemeButton({ backgroundColor, id, onPress, buttonStyle, pressableStyle }) {
-    return (
-      <Pressable
-        onPress={onPress}
-        id={id}
-        style={pressableStyle}
-      >
-        <View style={[
-          buttonStyle,
-          {backgroundColor: backgroundColor}
-        ]}/>
-      </Pressable>
-    );
-  }
-  
-  function LogoutButton({ onPress, buttonStyle, labelStyle }) {
-    return (
-    <Pressable
-      onPress={onPress}
-      style={buttonStyle}
-    >
-      <Text style={labelStyle}>
-        Back to login
-      </Text>
-    </Pressable>
-    );
-  }
+function LogoutButton({ onPress, buttonStyle, labelStyle }) {
+  return (
+  <Pressable
+    onPress={onPress}
+    style={buttonStyle}
+  >
+    <Text style={labelStyle}>
+      Back to login
+    </Text>
+  </Pressable>
+  );
+}
 
 /* User interface code end */
 
@@ -227,26 +182,6 @@ function ThemedStyles() {
       {alignSelf: 'center'},
       KolynStyle.kolynLabel(currentTheme.fontSizes.medium, currentTheme.mainFont, currentTheme.subColor,),
     ]),
-
-    themeButtonsContainer: {
-        flexDirection: 'row', 
-        justifyContent: 'space-between',
-        flex: 1, 
-        padding: 40
-      },
-  
-      themePressable: {
-        width: 50,
-        height: 50,
-      },
-  
-      themeCircle: {
-        width: 50,
-        height: 50,
-        borderRadius: 25,
-        borderColor: 'white',
-        borderWidth: 4,
-      },
 
       gridButton: StyleSheet.flatten([
         {width: 120, height: 80, backgroundColor:currentTheme.mainColor, alignSelf: 'center'}, 

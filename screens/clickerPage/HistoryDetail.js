@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { Dimensions } from 'react-native';
 import { StyleSheet, Text, View, Pressable, TextInput } from 'react-native';
+import { useRoute } from '@react-navigation/native';
 import { ThemeContext } from '../../kits/AppTheme';
 import * as KolynStyle from '../../kits/KolynStyleKit';
 import { CommonPart } from '../../kits/CommonPart';
@@ -10,7 +10,12 @@ import { KolynSubtitleLabel, KolynCasualButton } from '../../kits/KolynComponent
 export function ClickerPageHistoryDetail({navigation}) {
   const themedStyles = ThemedStyles();
 
-  const [boxText, onChangeBoxText] = React.useState('Box');
+  const route = useRoute();
+  const fromResponseHistory = route.params?.fromResponseHistory;
+
+  const [question, setQuestion] = React.useState(fromResponseHistory);
+  const [boxText, onChangeBoxText] = React.useState(question.getContext());
+  const [isInContext, onChangeIsInContext] = React.useState(true);
 
   return (
       <CommonPart title={"Clicker"}
@@ -21,7 +26,7 @@ export function ClickerPageHistoryDetail({navigation}) {
               <KolynSubtitleLabel title="Response detail" />
             </View>
 
-            <View style={{flex: 2}}>
+            <View style={{flex: 3, top: -30}}>
               <TextBox
                 boxText={boxText}
                 onChangeBoxText={onChangeBoxText}
@@ -29,13 +34,18 @@ export function ClickerPageHistoryDetail({navigation}) {
               />
               <ToOriginalButton
                 navigation={navigation}
+                question={question}
               />
             </View>
 
-            <View style={{flex: 2}}>
+            <View style={{flex: 1}}>
               <SwitchButton
                 buttonStyle={themedStyles.switchButton}
                 labelStyle={themedStyles.switchButtonLabel}
+                question={question}
+                onChangeBoxText={onChangeBoxText}
+                isInContext={isInContext}
+                onChangeIsInContext={onChangeIsInContext}
               />
             </View>
 
@@ -43,7 +53,7 @@ export function ClickerPageHistoryDetail({navigation}) {
               <TaggedAnswer
                 viewStyle={{top: 20}}
                 taggingText={"Correct answer:"}
-                answerText={"A. option 1"}
+                answerText={question.getPrettyCorrectAnswer()}
                 style={themedStyles}
               />
             </View>
@@ -52,7 +62,7 @@ export function ClickerPageHistoryDetail({navigation}) {
               <TaggedAnswer
                 viewStyle={{top: 20}}
                 taggingText={"You chose:"}
-                answerText={"A. option 1"}
+                answerText={question.getPrettyOriginalResponse()}
                 style={themedStyles}
               />
             </View>
@@ -85,36 +95,44 @@ export function ClickerPageHistoryDetail({navigation}) {
 
 /* User interface code start */
 
-function TextBox({ onChangeBoxText, boxText, textfieldStyle }) {
+function TextBox({ boxText, onChangeBoxText, textfieldStyle }) {
   return (
     <TextInput
       style={textfieldStyle}
-      value={boxText}
       onChangeText={onChangeBoxText}
+      value={boxText}
       editable={false}
       multiline={true}
     />
   );
 }
 
-function SwitchButton({buttonStyle, labelStyle }) {
+function SwitchButton({buttonStyle, labelStyle, question, onChangeBoxText, isInContext, onChangeIsInContext }) {
   return (
     <Pressable
       style={buttonStyle}
-      onPress={()=>{}}
+      onPress={()=>{
+        if (isInContext) {
+          onChangeBoxText(question.getExplanation());
+        }
+        else {
+          onChangeBoxText(question.getContext());
+        }
+        onChangeIsInContext(!isInContext);
+      }}
     >
-      <Text style={labelStyle}>Switch to explanation</Text>
+      <Text style={labelStyle}>{ isInContext ? "Switch to explanation" : "Switch to question" }</Text>
     </Pressable>
   );
 }
 
-function ToOriginalButton({navigation}) {
+function ToOriginalButton({ navigation, question }) {
   const themedStyles = ThemedStyles();
 
   return (
     <Pressable
-      style={[{alignSelf: 'flex-end', top: -180, left: -30}, themedStyles.toOriginalButton]}
-      onPress={()=>{navigation.navigate("ClickerPageQuestion", {previousPage: "HistoryDetail"})}}
+      style={[{alignSelf: 'flex-end', top: -200, left: -20}, themedStyles.toOriginalButton]}
+      onPress={()=>{navigation.navigate("ClickerPageQuestion", {previousPage: "HistoryDetail", question: question})}}
     >
       <View style={themedStyles.toOriginalButtonInner} />
     </Pressable>
@@ -162,7 +180,7 @@ function ThemedStyles() {
     ]),
 
     switchButton: StyleSheet.flatten([
-      {width: 240, top: 80},
+      {width: 240, top: 10},
       KolynStyle.kolynButton(currentTheme.mainColor),
     ]),
   
@@ -197,7 +215,7 @@ function ThemedStyles() {
     ]),
   
     answerButtonLabel: StyleSheet.flatten([
-      KolynStyle.kolynLabel(currentTheme.fontSizes.small, currentTheme.mainFont, currentTheme.primaryColor)
+      KolynStyle.kolynLabel(currentTheme.fontSizes.tiny, currentTheme.mainFont, currentTheme.primaryColor)
     ]),
   }));
 }

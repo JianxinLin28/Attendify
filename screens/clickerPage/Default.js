@@ -26,6 +26,12 @@ export function ClickerPageDefault({navigation}) {
   const [elementState, setElementState] = React.useState(initialElements);
   const [currentCourseIndex, setCurrentCourseIndex] = React.useState(getCourseIndex());
 
+  React.useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      setCurrentCourseIndex(getCourseIndex());
+    });
+    return () => unsubscribe();
+  }, [navigation]);
   
   return (
       <CommonPart title={"Clicker"}

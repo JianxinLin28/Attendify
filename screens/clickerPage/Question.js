@@ -4,6 +4,7 @@ import { useRoute } from '@react-navigation/native';
 import { ThemeContext } from '../../kits/AppTheme';
 import * as KolynStyle from '../../kits/KolynStyleKit';
 import { CommonPart } from '../../kits/CommonPart';
+import { GetExampleQuestionList } from '../../props/QuestionHistory';
 
 
 export function ClickerPageQuestion({navigation}) {
@@ -12,20 +13,25 @@ export function ClickerPageQuestion({navigation}) {
   const route = useRoute();
   const fromPreviousPage = route.params?.previousPage;
 
+  var question;
   var questionNavigate;
   if (fromPreviousPage != null && 
       fromPreviousPage == "HistoryDetail") {
     // if you were from 'history detail' page, go back
-    questionNavigate = ()=>{navigation.goBack();}
+    questionNavigate = (response) => {navigation.goBack();}
+    question = route.params?.question;
   }
   else {
     // if you were from other pages, navigate to reveal answer part
-    questionNavigate = ()=>{navigation.navigate("ClickerPageReveal");}
+    question = GetExampleQuestionList()[0].question;
+    questionNavigate = (response) => {
+      navigation.navigate("ClickerPageReveal", {question: question, response: response});
+    }
   }
 
-  const [questionTitleText, onChangeQuestionTitleText] = React.useState('Q1');
+  const [questionTitleText, onChangeQuestionTitleText] = React.useState(question.getTitle());
   const [timerText, onChangeTimerext] = React.useState('00: 59');
-  const [questionText, onChangeQuestionText] = React.useState('What is the speed of light?');
+  const [questionText, onChangeQuestionText] = React.useState(question.getContext());
 
   return (
       <CommonPart title={"Clicker"}
@@ -61,8 +67,8 @@ export function ClickerPageQuestion({navigation}) {
 
               <View style={{flex: 2}}>
                 <OptionButton
-                  onPress={()=>{questionNavigate()}}
-                  text={"A. 3 * 10^8 m/s"}
+                  onPress={()=>{questionNavigate('A');}}
+                  text={question.getPrettyChoices()[0]}
                   buttonStyle={themedStyles.optionButton}
                   labelStyle={themedStyles.optionButtonLabel}
                 />
@@ -70,8 +76,8 @@ export function ClickerPageQuestion({navigation}) {
 
               <View style={{flex: 2}}>
                 <OptionButton
-                  onPress={()=>{questionNavigate()}}
-                  text={"B. 2.3 * 10^8 m/s"}
+                  onPress={()=>{questionNavigate('B');}}
+                  text={question.getPrettyChoices()[1]}
                   buttonStyle={themedStyles.optionButton}
                   labelStyle={themedStyles.optionButtonLabel}
                 />
@@ -79,8 +85,8 @@ export function ClickerPageQuestion({navigation}) {
 
               <View style={{flex: 2}}>
                 <OptionButton
-                  onPress={()=>{questionNavigate()}}
-                  text={"C. 3 * 10^9 m/s"}
+                  onPress={()=>{questionNavigate('C');}}
+                  text={question.getPrettyChoices()[2]}
                   buttonStyle={themedStyles.optionButton}
                   labelStyle={themedStyles.optionButtonLabel}
                 />
@@ -88,8 +94,8 @@ export function ClickerPageQuestion({navigation}) {
 
               <View style={{flex: 2}}>
                 <OptionButton
-                  onPress={()=>{questionNavigate()}}
-                  text={"D. 2.2 * 10^8 m/s"}
+                  onPress={()=>{questionNavigate('D');}}
+                  text={question.getPrettyChoices()[3]}
                   buttonStyle={themedStyles.optionButton}
                   labelStyle={themedStyles.optionButtonLabel}
                 />
@@ -101,7 +107,6 @@ export function ClickerPageQuestion({navigation}) {
       />
   );
 }
-
 
 /* Internal logic code start */
 
@@ -225,7 +230,7 @@ function ThemedStyles() {
 
     optionButtonLabel: StyleSheet.flatten([
       {backgroundColor: currentTheme.mainColor},
-      KolynStyle.kolynLabel(currentTheme.fontSizes.small, currentTheme.mainFont, currentTheme.primaryColor)
+      KolynStyle.kolynLabel(currentTheme.fontSizes.tiny, currentTheme.mainFont, currentTheme.primaryColor)
     ]),
 
   }));

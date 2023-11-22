@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { StyleSheet, Text, View, TextInput } from 'react-native';
+import { useRoute } from '@react-navigation/native';
 import { ThemeContext } from '../../kits/AppTheme';
 import * as KolynStyle from '../../kits/KolynStyleKit';
 import { CommonPart } from '../../kits/CommonPart';
@@ -9,10 +10,14 @@ import { KolynCasualButton } from '../../kits/KolynComponentKit';
 export function ClickerPageReveal({navigation}) {
   const themedStyles = ThemedStyles();
 
-  const [questionTitleText, onChangeQuestionTitleText] = React.useState('Q1');
-  const [answerText, onChangeAnswerText] = React.useState('A');
-  const [explanationText, onChangeExplanationText] = React.useState('Explain');
-  const [responseText, onChangeResponseText] = React.useState('You answered: none');
+  const route = useRoute();
+  const question = route.params?.question;
+  const response = route.params?.response;
+
+  const [questionTitleText, onChangeQuestionTitleText] = React.useState(question.getTitle());
+  const [answerText, onChangeAnswerText] = React.useState(question.getPrettyCorrectAnswer());
+  const [explanationText, onChangeExplanationText] = React.useState(question.getExplanation());
+  const [responseText, onChangeResponseText] = React.useState('You answered: ' + response);
 
   return (
       <CommonPart title={"Clicker"}

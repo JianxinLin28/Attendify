@@ -5,6 +5,9 @@ import { ThemeContext } from '../../kits/AppTheme';
 import * as KolynStyle from '../../kits/KolynStyleKit';
 import { CommonPart } from '../../kits/CommonPart';
 import { KolynSubtitleLabel, KolynCasualButton, KolynCourseLabel } from '../../kits/KolynComponentKit';
+import { getCourseIndex } from '../../props/CurrentCourse';
+import { GetSampleCourseList } from '../../props/CourseList';
+import { GetExampleQuestionList } from '../../props/QuestionHistory';
 
 
 const {width, height} = Dimensions.get('window');
@@ -16,12 +19,24 @@ export function ClickerPageResponseHistory({navigation}) {
   const [courseText, onChangeCourseText] = React.useState('');
   const [timeText, onChangeTimeText] = React.useState('');
 
-  var initialElements = GetExampleElements(); // GetCourseArray()
+  var initialQuestions = GetExampleQuestionList();
+  const [questionsState, setQuestionsState] = React.useState(initialQuestions);
 
-  const [elementState, setElementState] = React.useState(initialElements);
+  var initialCourses = GetSampleCourseList(); // GetCourseArray()
+  const [courseState, setCourseState] = React.useState(initialCourses);
+  const [currentCourseIndex, setCurrentCourseIndex] = React.useState(getCourseIndex());
+
+  React.useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      setCurrentCourseIndex(getCourseIndex());
+    });
+    return () => unsubscribe();
+  }, [navigation]);
+
+
   // Called each time the flat list if refreshed
   const refreshElements = () => {
-    setElementState(GetExampleElements());
+    setQuestionsState(GetExampleQuestionList());
   }
 
   const onRefresh = () => {
@@ -43,21 +58,21 @@ export function ClickerPageResponseHistory({navigation}) {
                 <KolynCourseLabel
                   courseText={courseText}
                   onChangeCourseText={onChangeCourseText}
-                  text="CS 320, Jaime Dávila"
+                  text={courseState[currentCourseIndex].course.getTitle()}
                   textColor={GetSubColor()}
                 />
 
                 <KolynCourseLabel
                   courseText={timeText}
                   onChangeCourseText={onChangeTimeText}
-                  text="Tu, Th 13:00 - 14:15"
+                  text={courseState[currentCourseIndex].course.getTimespan()}
                   textColor={GetSubColor()}
                 />
               </View>
 
               <View style={{flex: 6, top: -20}}>
                 <ResponseHistoryList 
-                  data={elementState}
+                  data={questionsState}
                   onRefresh={onRefresh} 
                   isRefreshing={isRefreshing}
                   navigation={navigation}
@@ -85,48 +100,6 @@ function GetSubColor() {
   return currentTheme.subColor;
 }
 
-function GetExampleElements()
-{
-  return [
-    {
-      id: 'Q1',
-      date: '9/7',
-      title: 'Long long long long long long message',
-      isCorrect: true
-    },
-    {
-      id: 'Q2',
-      date: '9/7',
-      title: 'Long message',
-      isCorrect: true
-    },
-    {
-      id: 'Q3',
-      date: '9/7',
-      title: 'Long message',
-      isCorrect: false
-    },
-    {
-      id: 'Q4',
-      date: '9/7',
-      title: 'Long message',
-      isCorrect: true
-    },
-    {
-      id: 'Q5',
-      date: '9/7',
-      title: 'Long message',
-      isCorrect: false
-    },
-    {
-      id: 'Q6',
-      date: '9/7',
-      title: 'Long message',
-      isCorrect: true
-    }
-  ];
-}
-
 /* Internal logic code end */
 
 /*************************************************************************************************/
@@ -151,23 +124,23 @@ function FetchAllQuestionHistory(studentID) {
 function ResponseHistoryList({ data, onRefresh, isRefreshing, navigation }) {
   const themedStyles = ThemedStyles();
 
-  const Item = ({title, date, isCorrect}) => 
+  const Item = ({question}) => 
   {
     return (
       <View style={themedStyles.item}>
         <Pressable 
           onPress={()=>{
-            navigation.navigate("ClickerPageHistoryDetail")
+            navigation.navigate("ClickerPageHistoryDetail", { fromResponseHistory: question} )
           }}
         >
           <View style={{flex: 1, flexDirection: 'row'}}>
-            <Text style={themedStyles.date}>{date}</Text>
-            {isCorrect && <CheckMark style={themedStyles}/>}
-            {!isCorrect && <CrossMark style={themedStyles}/>}
+            <Text style={themedStyles.date}>{question.getDate()}</Text>
+            {question.IsCorrect() && <CheckMark style={themedStyles}/>}
+            {!question.IsCorrect() && <CrossMark style={themedStyles}/>}
           </View>
 
           <View style={themedStyles.itemInner}>
-            <Text style={themedStyles.title}>{title.length > 27 ? title.slice(0, 27)+"..." : title}</Text>
+            <Text style={themedStyles.title}>{question.getContext().length > 27 ? question.getContext().slice(0, 27)+"..." : question.getContext()}</Text>
           </View>
         </Pressable>
       </View>
@@ -177,8 +150,11 @@ function ResponseHistoryList({ data, onRefresh, isRefreshing, navigation }) {
   return (
     <FlatList
       data={data}
-      renderItem={({item}) => <Item title={item.title} date={item.date} isCorrect={item.isCorrect} />}
-      keyExtractor={item => item.id}
+      renderItem={({item}) => <Item 
+                                question={item.question}
+                                key={item.question.getID()}
+                              />}
+      keyExtractor={item => item.question.getID()}
       showsVerticalScrollIndicator={false}
       onRefresh={onRefresh}
       refreshing={isRefreshing}

@@ -131,7 +131,7 @@ function ThemedStyles() {
     flatListView: {
       top: 50, 
       alignSelf: 'center', 
-      height: '100%',
+      flex: 5,
       backgroundColor: currentTheme.mainColor
     },
 

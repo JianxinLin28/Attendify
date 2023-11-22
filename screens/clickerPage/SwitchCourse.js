@@ -4,6 +4,8 @@ import { StyleSheet, Text, View, Pressable, FlatList } from 'react-native';
 import { ThemeContext } from '../../kits/AppTheme';
 import * as KolynStyle from '../../kits/KolynStyleKit';
 import { CommonPart } from '../../kits/CommonPart';
+import { GetSampleCourseList } from '../../props/CourseList';
+import { setCurrentCourseIndex } from '../../props/CurrentCourse';
 
 
 const {width, height} = Dimensions.get('window');
@@ -13,12 +15,12 @@ export function SwitchCoursePage({navigation}) {
 
   const [isRefreshing, setIsRefreshing] = React.useState(false);
 
-  var initialElements = GetExampleElements(); // GetCourseArray()
+  var initialElements = GetSampleCourseList(); // GetCourseArray()
 
   const [elementState, setElementState] = React.useState(initialElements);
   // Called each time the flat list if refreshed
   const refreshElements = () => {
-    setElementState(GetExampleElements());
+    setElementState(GetSampleCourseList());
   }
 
   const onRefresh = () => {
@@ -30,8 +32,8 @@ export function SwitchCoursePage({navigation}) {
   return (
     <CommonPart title={"Switch Course"}
       components={
-          <View style={themedStyles.background}>
-            <View style={[themedStyles.flatListView, {flex: 7}]}>
+          <View style={[themedStyles.background]}>
+            <View style={[themedStyles.flatListView, {height: '100%'}]}>
 
               <CourseList 
                 data={elementState}
@@ -51,36 +53,6 @@ export function SwitchCoursePage({navigation}) {
 
 /* Internal logic code start */
 
-function GetExampleElements()
-{
-  return [
-    {
-      id: 'CS320',
-      title: 'CS320, Jaime Dávila',
-    },
-    {
-      id: 'CS311',
-      title: 'CS311, Ghazaleh Parvini',
-    },
-    {
-      id: 'CS576',
-      title: 'CS576, Evangelos Kalogerakis',
-    },
-    {
-      id: 'CS345',
-      title: 'CS345, Jaime Dávila',
-    },
-    {
-      id: 'CS220',
-      title: 'CS220, Marius Minea',
-    },
-    {
-      id: 'CS377',
-      title: 'CS377, Prashant Shenoy'
-    }
-  ];
-}
-
 /* Internal logic code end */
 
 /*************************************************************************************************/
@@ -98,19 +70,8 @@ function GetExampleElements()
   id can be string/number as long as two elements 
   in the array do not share the same id value
 */
-function GetCourseArray(studentID)
+function GetCourseArray()
 {
-
-}
-
-/*
-  Update the current course of this student
-  send this data to the database and update
-
-  return true is action were successful
-  otherwise return false
-*/
-function UpdateStudentCurrentCourse(studentID, courseID) {
 
 }
 
@@ -124,12 +85,13 @@ function UpdateStudentCurrentCourse(studentID, courseID) {
 function CourseList({ data, onRefresh, isRefreshing, navigation }) {
   const themedStyles = ThemedStyles();
 
-  const Item = ({title}) => 
+  const Item = ({title, index}) => 
   {
     return (
       <View style={themedStyles.item}>
         <Pressable 
           onPress={()=>{
+            setCurrentCourseIndex(index);
             navigation.goBack();
           }}
         >
@@ -142,14 +104,18 @@ function CourseList({ data, onRefresh, isRefreshing, navigation }) {
   return (
     <FlatList
       data={data}
-      renderItem={({item}) => <Item title={item.title} />}
-      keyExtractor={item => item.id}
+      renderItem={({item, index}) => <Item 
+                                      title={item.course.getTitle()}
+                                      index={index}
+                                    />}
+      keyExtractor={item => item.course.getID()}
       showsVerticalScrollIndicator={false}
       onRefresh={onRefresh}
       refreshing={isRefreshing}
     />
   );
 }
+
 /* User interface code end */
 
 function ThemedStyles() {
@@ -164,7 +130,7 @@ function ThemedStyles() {
 
     flatListView: {
       top: 50, 
-      flex: 2, 
+      flex: 5,
       alignSelf: 'center', 
       backgroundColor: currentTheme.primaryColor
     },
