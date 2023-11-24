@@ -5,16 +5,20 @@ import * as KolynStyle from '../../kits/KolynStyleKit';
 import { CommonPart } from '../../kits/CommonPart';
 import { resetNavigatorTabIndex } from '../../props/NavigatorTabIndexController';
 import { Pfp, PfpStyle, getPfpIndex } from '../../props/Pfp';
+import { getStudentName } from '../../props/StudentName';
 
 
 export function ProfilePageDefault({navigation}) {
   const themedStyles = ThemedStyles();
 
+  const [name, onChangeName] = React.useState(getStudentName());
   const [currentSelectionMarkIndex, 
     onChangeCurrentSelectionMarkIndex] = React.useState(getPfpIndex());
+
   React.useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       onChangeCurrentSelectionMarkIndex(getPfpIndex());
+      onChangeName(getStudentName());
     });
     return () => unsubscribe();
   }, [navigation]);
@@ -36,7 +40,7 @@ export function ProfilePageDefault({navigation}) {
           <View style={{flex: 2}}>
             <StudentNameLabel
               labelStyle={themedStyles.nameLabel}
-              name={"Team 6"}
+              name={name}
             />
             <StudentIDLabel
               labelStyle={themedStyles.nameLabel}
@@ -56,7 +60,7 @@ export function ProfilePageDefault({navigation}) {
 
               <GridButton
                 text={"Check in history"}
-                onPress={()=>{}}
+                onPress={()=>{navigation.navigate("ProfilePageCheckinHistory");}}
               />
               <View style={{flex:1}}/>
             </View>
@@ -65,14 +69,14 @@ export function ProfilePageDefault({navigation}) {
               <View style={{flex:1}}/>
               <GridButton
                 text={"Change Theme"}
-                onPress={()=>{navigation.navigate("ProfilePageTheme")}}
+                onPress={()=>{navigation.navigate("ProfilePageTheme");}}
               />
 
               <View style={{flex:1}}/>
 
               <GridButton
                 text={"Preference setting"}
-                onPress={()=>{}}
+                onPress={()=>{navigation.navigate("ProfilePageSetting");}}
               />
 
               <View style={{flex:1}}/>

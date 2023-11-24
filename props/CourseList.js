@@ -14,8 +14,7 @@ export class Course {
   }
 }
 
-export function GetSampleCourseList()
-{
+export function GetSampleCourseList() {
   return [
     {
       course: new Course(

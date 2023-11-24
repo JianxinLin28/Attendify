@@ -6,6 +6,7 @@ import { ProfilePageSelectCourse } from './SelectCourse';
 import { ProfilePageTheme } from './Theme';
 import { ProfilePageSwitchPfp } from './SwitchPfp';
 import { ProfilePageResetPassword } from './ResetPassword';
+import { ProfilePageSetting } from './Setting';
 
 
 const Stack = createNativeStackNavigator();
@@ -22,6 +23,7 @@ export function ProfilePage() {
       <Stack.Screen name="ProfilePageTheme" component={ProfilePageTheme}/>
       <Stack.Screen name="ProfilePageSwitchPfp" component={ProfilePageSwitchPfp}/>
       <Stack.Screen name="ProfilePageResetPassword" component={ProfilePageResetPassword}/>
+      <Stack.Screen name="ProfilePageSetting" component={ProfilePageSetting}/>
     </Stack.Navigator>
   );
 }

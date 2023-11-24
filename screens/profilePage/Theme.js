@@ -21,12 +21,12 @@ export function ProfilePageTheme({navigation}) {
               </View>
 
               <View style={{flex: 2}}>
-              <ThemeButtons 
-                changeTheme={themeManager.changeTheme}
-                containerStyle={themedStyles.themeButtonsContainer}
-                themeButtonStyle={themedStyles.themeCircle}
-                themePressableStyle={themedStyles.themePressable}
-              />
+                <ThemeButtons 
+                  changeTheme={themeManager.changeTheme}
+                  containerStyle={themedStyles.themeButtonsContainer}
+                  themeButtonStyle={themedStyles.themeCircle}
+                  themePressableStyle={themedStyles.themePressable}
+                />
               </View>
               <View style={{flex: 2}}></View>
               <View style={{flex: 2}}></View>

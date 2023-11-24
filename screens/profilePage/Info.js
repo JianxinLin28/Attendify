@@ -6,20 +6,24 @@ import { CommonPart } from '../../kits/CommonPart';
 import { KolynSubtitleLabel } from '../../kits/KolynComponentKit';
 import { Pfp, PfpStyle, getPfpIndex } from '../../props/Pfp';
 import { KolynCasualButton } from '../../kits/KolynComponentKit';
+import { setStudentName, getStudentName } from '../../props/StudentName';
 
 
 export function ProfilePageInfo({navigation}) {
   const themedStyles = ThemedStyles();
   
-  const [name, onChangeName] = React.useState("Team 6");
+  const [name, onChangeName] = React.useState(getStudentName());
   const [email, onChangeEmail] = React.useState("attendify@umass.edu");
   const [phone, onChangePhone] = React.useState("000-000-0000");
 
   const [currentSelectionMarkIndex, 
     onChangeCurrentSelectionMarkIndex] = React.useState(getPfpIndex());
+
+  
   React.useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       onChangeCurrentSelectionMarkIndex(getPfpIndex());
+      onChangeName(getStudentName());
     });
     return () => unsubscribe();
   }, [navigation]);
@@ -204,6 +208,7 @@ function ButtonEditTextfiled({ text, labelStyle, onChangeText }) {
         editable={isEditable}
         onSubmitEditing={()=>{
           console.log("editing submitted");
+          setStudentName(text);
           setIsEditable(false);
         }}
       />
