@@ -5,6 +5,7 @@ import { ThemeContext } from '../../kits/AppTheme';
 import * as KolynStyle from '../../kits/KolynStyleKit';
 import { CommonPart } from '../../kits/CommonPart';
 import { KolynSubtitleLabel, KolynCourseLabel, KolynCasualButton } from '../../kits/KolynComponentKit';
+import { SpringButton } from '../../kits/SpringButton';
 
 
 LogBox.ignoreLogs([
@@ -131,12 +132,12 @@ function QuitCourseButton({buttonStyle,
                           navigation, 
                           course}) {
   return (
-    <Pressable
-      style={buttonStyle}
+    <SpringButton
+      text="Quit Course"
       onPress={()=>{navigation.navigate("CoursePageQuitCourse", {fromInspectPage: course})}}
-    >
-      <Text style={labelStyle}>Quit Course</Text>
-    </Pressable>
+      buttonStyle={buttonStyle}
+      labelStyle={labelStyle}
+    />
   );
 }
 

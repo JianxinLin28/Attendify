@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { Dimensions, TextInput } from 'react-native';
-import { StyleSheet, Text, View, Pressable } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import * as KolynStyle from '../../kits/KolynStyleKit';
 import {KolynSwitchCourseButton, KolynCourseLabel } from '../../kits/KolynComponentKit';
 import { CommonPart } from '../../kits/CommonPart';
@@ -10,6 +10,7 @@ import { ThemeContext} from '../../kits/AppTheme';
 import { CheckinStatus, ReadCheckinStatus } from '../../logic/CheckinStatus';
 import { getCourseIndex } from '../../props/CurrentCourse';
 import { GetSampleCourseList } from '../../props/CourseList';
+import { SpringButton } from '../../kits/SpringButton';
 
 
 /*
@@ -235,17 +236,23 @@ function CameraScanner({ handleBarCodeScanned, style }) {
 /* A button when pressed changed the page variant to default */
 function ScanAgainButton({ onPress, buttonStyle, labelStyle }) {
   return (
-    <Pressable style={buttonStyle} onPress={onPress}>
-        <Text style={labelStyle}>Press to scan again</Text>
-    </Pressable>
+    <SpringButton
+    text="Press to scan again"
+    onPress={onPress}
+    buttonStyle={buttonStyle}
+    labelStyle={labelStyle}
+    />
   );
 }
 
 function GrantPermissionButton({ onPress, buttonStyle, labelStyle }) {
   return (
-    <Pressable style={buttonStyle} onPress={onPress}>
-        <Text style={labelStyle}>Grant Permission</Text>
-    </Pressable>
+    <SpringButton
+    text="Grant Permission"
+    onPress={onPress}
+    buttonStyle={buttonStyle}
+    labelStyle={labelStyle}
+    />
   );
 }
 

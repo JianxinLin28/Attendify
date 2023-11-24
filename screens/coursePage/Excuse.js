@@ -5,6 +5,7 @@ import { ThemeContext } from '../../kits/AppTheme';
 import * as KolynStyle from '../../kits/KolynStyleKit';
 import { CommonPart } from '../../kits/CommonPart';
 import { KolynSubtitleLabel, KolynCourseLabel, KolynCasualButton } from '../../kits/KolynComponentKit';
+import { SpringButton } from '../../kits/SpringButton';
 
 
 export function CoursePageExcuse({navigation}) {
@@ -106,12 +107,12 @@ function ConfirmButtonPressed(excuseMessage) {
 
 function UploadDocumentButton({buttonStyle, labelStyle, navigation}) {
   return (
-    <Pressable
-      style={buttonStyle}
+    <SpringButton
+      text="Upload Document"
       onPress={()=>{navigation.navigate("UploadDocumentPage")}}
-    >
-      <Text style={labelStyle}>Upload Document</Text>
-    </Pressable>
+      buttonStyle={buttonStyle}
+      labelStyle={labelStyle}
+    />
   );
 }
 

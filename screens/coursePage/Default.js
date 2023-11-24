@@ -10,6 +10,7 @@ import { ThemeContext } from '../../kits/AppTheme';
 import * as KolynStyle from '../../kits/KolynStyleKit';
 import { CommonPart } from '../../kits/CommonPart';
 import { Course, GetSampleCourseList } from '../../props/CourseList';
+import { SpringButton } from '../../kits/SpringButton';
 
 
 const {width, height} = Dimensions.get('window');
@@ -283,9 +284,12 @@ function AddCourseButton({ onPress }) {
   const themedStyles = ThemedStyles();
 
   return (
-    <Pressable style={themedStyles.addCourseButton} onPress={onPress}>
-        <Text style={themedStyles.addCourseLabel}>Add course</Text>
-    </Pressable>
+    <SpringButton
+      text="Add course"
+      onPress={onPress}
+      buttonStyle={themedStyles.addCourseButton}
+      labelStyle={themedStyles.addCourseLabel}
+    />
   );
 }
 

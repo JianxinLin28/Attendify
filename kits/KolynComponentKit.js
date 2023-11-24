@@ -9,9 +9,10 @@ import Animated, { useSharedValue,
   withRepeat } from 'react-native-reanimated';
 import * as KolynStyle from '../kits/KolynStyleKit';
 import { ThemeContext } from '../kits/AppTheme';
+import { SpringButton } from '../kits/SpringButton';
+
 
 const {width} = Dimensions.get('window');
-
 
 /* The icon & title image */
 export function KolynMainTitleImage() {
@@ -52,12 +53,12 @@ export function KolynSwitchCourseButton({onPress}) {
   const themedStyles = ThemedStyles();
 
   return (
-    <Pressable
-      style={[themedStyles.switchCourseButton]}
+    <SpringButton
+      text="Switch course"
       onPress={onPress}
-    >
-      <Text style={[themedStyles.switchCourseButtonLabel]}>Switch course</Text>
-    </Pressable>
+      buttonStyle={themedStyles.switchCourseButton}
+      labelStyle={themedStyles.switchCourseButtonLabel}
+    />
   );
 }
 
@@ -65,12 +66,12 @@ export function KolynSwitchCourseButton2({onPress}) {
   const themedStyles = ThemedStyles();
 
   return (
-    <Pressable
-      style={[themedStyles.switchCourseButton2]}
+    <SpringButton
+      text="Switch course"
       onPress={onPress}
-    >
-      <Text style={[themedStyles.switchCourseButtonLabel2]}>Switch course</Text>
-    </Pressable>
+      buttonStyle={themedStyles.switchCourseButton2}
+      labelStyle={themedStyles.switchCourseButtonLabel2}
+    />
   );
 }
 
@@ -78,11 +79,12 @@ export function KolynCasualButton({onPress, text}) {
   const themedStyles = ThemedStyles();
 
   return (
-    <Pressable
-      style={[themedStyles.casualButton]}
-      onPress={onPress}>
-      <Text style={[themedStyles.casualButtonLabel]}>{text}</Text>
-    </Pressable>
+    <SpringButton
+      text={text}
+      onPress={onPress}
+      buttonStyle={themedStyles.casualButton}
+      labelStyle={themedStyles.casualButtonLabel}
+    />
   );
 }
 
@@ -222,7 +224,13 @@ function ThemedStyles() {
     ]),
 
     switchCourseButton2: StyleSheet.flatten([
-      {width: 150, height: 40, end: -width/3.5, backgroundColor:currentTheme.primaryColor}, 
+      {
+        top: 40,
+        left: 15,
+        width: 150, 
+        height: 40, 
+        alignSelf: 'cetner',
+        backgroundColor:currentTheme.primaryColor}, 
       KolynStyle.kolynButton(currentTheme.mainColor),
     ]),
   

@@ -5,6 +5,8 @@ import { ThemeContext } from '../../kits/AppTheme';
 import * as KolynStyle from '../../kits/KolynStyleKit';
 import { CommonPart } from '../../kits/CommonPart';
 import { KolynSubtitleLabel, KolynCasualButton } from '../../kits/KolynComponentKit';
+import { SpringButton } from '../../kits/SpringButton';
+
 
 const {width, height} = Dimensions.get('window');
 
@@ -124,11 +126,12 @@ function SendFile() {
 
 function UploadDocumentButton({buttonStyle, labelStyle}) {
   return (
-    <Pressable
-      style={buttonStyle}
-    >
-      <Text style={labelStyle}>Upload Document</Text>
-    </Pressable>
+    <SpringButton
+      text="Upload Document"
+      onPress={()=>{}}
+      buttonStyle={buttonStyle}
+      labelStyle={labelStyle}
+    />
   );
 }
 

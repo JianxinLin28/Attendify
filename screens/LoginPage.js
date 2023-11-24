@@ -6,8 +6,9 @@ import Checkbox from 'expo-checkbox';
 import * as SplashScreen from 'expo-splash-screen';
 import { loadFont } from '../props/FontLoader';
 import * as KolynStyle from '../kits/KolynStyleKit';
-import {KolynMainTitleImage} from '../kits/KolynComponentKit';
+import { KolynMainTitleImage } from '../kits/KolynComponentKit';
 import { ThemeContext} from '../kits/AppTheme';
+import { SpringButton } from '../kits/SpringButton';
 
 
 /*
@@ -181,9 +182,12 @@ function PasswordTextfild({ onChangePasswordText, passwordText, textfieldStyle }
 /* The login button */
 function LoginButton({ onPress, buttonStyle, labelStyle }) {
   return (
-    <Pressable style={buttonStyle} onPress={onPress}>
-      <Text style={labelStyle}>Log in</Text>
-    </Pressable>
+    <SpringButton
+      text="Log in"
+      onPress={onPress}
+      buttonStyle={buttonStyle}
+      labelStyle={labelStyle}
+    />
   );
 }
 
@@ -212,12 +216,12 @@ function RememberMe({
 /* The signup button */
 function SignupButton({ onPress, buttonStyle, labelStyle }) {
   return (
-    <Pressable 
-      style={buttonStyle}
+    <SpringButton
+      text="Sign up"
       onPress={onPress}
-    >
-      <Text style={labelStyle}>Sign up</Text>
-    </Pressable>
+      buttonStyle={buttonStyle}
+      labelStyle={labelStyle}
+    />
   );
 }
 

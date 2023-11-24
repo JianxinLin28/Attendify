@@ -7,6 +7,7 @@ import { loadFont } from '../props/FontLoader';
 import * as KolynStyle from '../kits/KolynStyleKit';
 import {KolynMainTitleImage} from '../kits/KolynComponentKit';
 import { ThemeContext } from '../kits/AppTheme';
+import { SpringButton } from '../kits/SpringButton';
 
 
 /* 
@@ -371,20 +372,24 @@ function ChangeErrorMessagerText({ onChangeErrorText, validateResult })
 /* The signup button */
 function SignupButton({ onPress, buttonStyle, labelStyle }) {
   return (
-    <Pressable style={buttonStyle}
-      onPress={onPress}>
-      <Text style={labelStyle}>Sign up</Text>
-    </Pressable>
+    <SpringButton
+      text="Sign up"
+      onPress={onPress}
+      buttonStyle={buttonStyle}
+      labelStyle={labelStyle}
+    />
   );
 }
 
 /* The back button */
 function BackButton({ onPress, buttonStyle, labelStyle }) {
   return (
-    <Pressable style={buttonStyle}
-      onPress={onPress}>
-      <Text style={labelStyle}>Go back</Text>
-    </Pressable>
+    <SpringButton
+      text="Go back"
+      onPress={onPress}
+      buttonStyle={buttonStyle}
+      labelStyle={labelStyle}
+    />
   );
 }
 

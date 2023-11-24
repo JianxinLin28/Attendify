@@ -7,6 +7,7 @@ import { CommonPart } from '../../kits/CommonPart';
 import { KolynCourseLabel, KolynSwitchCourseButton2, KolynCasualButton } from '../../kits/KolynComponentKit';
 import { getCourseIndex } from '../../props/CurrentCourse';
 import { GetSampleCourseList } from '../../props/CourseList';
+import { SpringButton } from '../../kits/SpringButton';
 
 
 const {width} = Dimensions.get('window');
@@ -38,15 +39,19 @@ export function ClickerPageDefault({navigation}) {
         components={
             <View style={themedStyles.background}>
 
-            <View style={{flex: 2}}>
-              <HistoryButton
-                buttonStyle={themedStyles.historyButton}
-                labelStyle={themedStyles.historyButtonLabel}
-                navigation={navigation}
-              />
-              <KolynSwitchCourseButton2
-                onPress={()=>{navigation.navigate("SwitchCourse")}}
-              />
+            <View style={{flex: 2, flexDirection: 'row'}}>
+              <View style={{flex: 1}}>
+                <HistoryButton
+                  buttonStyle={themedStyles.historyButton}
+                  labelStyle={themedStyles.historyButtonLabel}
+                  navigation={navigation}
+                />
+              </View>
+              <View style={{flex: 1}}>
+                <KolynSwitchCourseButton2
+                  onPress={()=>{navigation.navigate("SwitchCourse")}}
+                />
+              </View>
             </View>
 
             <View style={{flex: 2}}>
@@ -126,12 +131,12 @@ function GetQuestion() {
 
 function HistoryButton({ buttonStyle, labelStyle, navigation }) {
   return (
-    <Pressable
-      style={buttonStyle}
+    <SpringButton
+      text="History"
       onPress={()=>navigation.navigate("ClickerPageResponseHistory")}
-    >
-      <Text style={labelStyle}>History</Text>
-    </Pressable>
+      buttonStyle={buttonStyle}
+      labelStyle={labelStyle}
+    />
   );
 }
 
@@ -156,7 +161,13 @@ function ThemedStyles() {
     ]),
 
     historyButton: StyleSheet.flatten([
-      {top: 40, width: 150, height: 40, start: -width/3.5, backgroundColor:currentTheme.primaryColor}, 
+      {
+        top: 40, 
+        width: 150, 
+        height: 40, 
+        left: -15,
+        backgroundColor:currentTheme.primaryColor, 
+        alignSelf: 'center'}, 
       KolynStyle.kolynButton(currentTheme.mainColor),
     ]),
   

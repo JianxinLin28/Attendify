@@ -7,6 +7,7 @@ import { KolynSubtitleLabel } from '../../kits/KolynComponentKit';
 import { Pfp, PfpStyle, getPfpIndex } from '../../props/Pfp';
 import { KolynCasualButton } from '../../kits/KolynComponentKit';
 import { setStudentName, getStudentName } from '../../props/StudentName';
+import { SpringButton } from '../../kits/SpringButton';
 
 
 export function ProfilePageInfo({navigation}) {
@@ -221,14 +222,12 @@ function ButtonEditTextfiled({ text, labelStyle, onChangeText }) {
 
 function ResetPasswordButton({ onPress, buttonStyle, labelStyle }) {
   return (
-  <Pressable
-    onPress={onPress}
-    style={buttonStyle}
-  >
-    <Text style={labelStyle}>
-      Reset password
-    </Text>
-  </Pressable>
+    <SpringButton
+      text="Reset password"
+      onPress={onPress}
+      buttonStyle={buttonStyle}
+      labelStyle={labelStyle}
+    />
   );
 }
 

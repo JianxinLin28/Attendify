@@ -131,7 +131,7 @@ function GoBackButton({navigation}) {
   return (
     <KolynCasualButton 
       onPress={()=>{navigation.goBack()}} 
-      text="GoBack"
+      text="Go Back"
     />
   );
 }

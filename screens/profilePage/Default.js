@@ -6,6 +6,7 @@ import { CommonPart } from '../../kits/CommonPart';
 import { resetNavigatorTabIndex } from '../../props/NavigatorTabIndexController';
 import { Pfp, PfpStyle, getPfpIndex } from '../../props/Pfp';
 import { getStudentName } from '../../props/StudentName';
+import { SpringButton } from '../../kits/SpringButton';
 
 
 export function ProfilePageDefault({navigation}) {
@@ -138,11 +139,12 @@ function GridButton({text, onPress}) {
   const themedStyles = ThemedStyles();
 
   return (
-    <Pressable
-      style={[themedStyles.gridButton]}
-      onPress={onPress}>
-      <Text style={[themedStyles.gridButtonLabel, {flex:1, flexWrap: 'wrap'}]}>{text}</Text>
-    </Pressable>
+    <SpringButton
+      text={text}
+      onPress={onPress}
+      buttonStyle={themedStyles.gridButton}
+      labelStyle={[themedStyles.gridButtonLabel, {flex:1, flexWrap: 'wrap'}]}
+    />
   );
 }
 
@@ -157,14 +159,12 @@ function PfpIcon({ image, iconStyle }) {
 
 function LogoutButton({ onPress, buttonStyle, labelStyle }) {
   return (
-  <Pressable
-    onPress={onPress}
-    style={buttonStyle}
-  >
-    <Text style={labelStyle}>
-      Back to login
-    </Text>
-  </Pressable>
+    <SpringButton
+      text="Back to login"
+      onPress={onPress}
+      buttonStyle={buttonStyle}
+      labelStyle={labelStyle}
+    />
   );
 }
 
