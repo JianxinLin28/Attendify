@@ -7,6 +7,7 @@ import { ProfilePageTheme } from './Theme';
 import { ProfilePageSwitchPfp } from './SwitchPfp';
 import { ProfilePageResetPassword } from './ResetPassword';
 import { ProfilePageSetting } from './Setting';
+import { SwitchCoursePage } from '../clickerPage/SwitchCourse';
 
 
 const Stack = createNativeStackNavigator();
@@ -24,6 +25,7 @@ export function ProfilePage() {
       <Stack.Screen name="ProfilePageSwitchPfp" component={ProfilePageSwitchPfp}/>
       <Stack.Screen name="ProfilePageResetPassword" component={ProfilePageResetPassword}/>
       <Stack.Screen name="ProfilePageSetting" component={ProfilePageSetting}/>
+      <Stack.Screen name="SwitchCourse" component={SwitchCoursePage}/>
     </Stack.Navigator>
   );
 }

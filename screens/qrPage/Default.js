@@ -3,11 +3,11 @@ import { useState, useEffect } from 'react';
 import { Dimensions, TextInput } from 'react-native';
 import { StyleSheet, Text, View } from 'react-native';
 import * as KolynStyle from '../../kits/KolynStyleKit';
-import {KolynSwitchCourseButton, KolynCourseLabel } from '../../kits/KolynComponentKit';
+import { KolynSwitchCourseButton, KolynCourseLabel } from '../../kits/KolynComponentKit';
 import { CommonPart } from '../../kits/CommonPart';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { ThemeContext} from '../../kits/AppTheme';
-import { CheckinStatus, ReadCheckinStatus } from '../../logic/CheckinStatus';
+import { CheckinStatus, ReadCheckinStatus, setCurrentCheckinStatus } from '../../logic/CheckinStatus';
 import { getCourseIndex } from '../../props/CurrentCourse';
 import { GetSampleCourseList } from '../../props/CourseList';
 import { SpringButton } from '../../kits/SpringButton';
@@ -70,6 +70,7 @@ export function QRScanPageDefault({navigation}) {
     if (isQRCodeValid) {
       onChangeStatusText(CheckinStatus.CheckedIn);
       setPageVariant(PageVariant.CheckedIn);
+      setCurrentCheckinStatus(CheckinStatus.CheckedIn);
     } else {
       setPageVariant(PageVariant.CodeInvalid);
     }

@@ -20,6 +20,8 @@ export function ProfilePageResetPassword({navigation}) {
   const themedStyles = ThemedStyles();
 
   const [passwordText, onChangePasswordText] = React.useState('');
+  const [repasswordText, onChangeRePasswordText] = React.useState('');
+  const [rerepasswordText, onChangeReRePasswordText] = React.useState('');
   const [pageVariant, onChangePageVariant] = React.useState(PageVariant.VerifyCurrent);
 
   return (
@@ -60,8 +62,8 @@ export function ProfilePageResetPassword({navigation}) {
                     text={pageVariant}
                   />
                   <PasswordTextfild
-                    onChangePasswordText={onChangePasswordText}
-                    passwordText={passwordText}
+                    onChangePasswordText={onChangeRePasswordText}
+                    passwordText={repasswordText}
                     textfieldStyle={themedStyles.inputTextfield}
                   />
                 </View>
@@ -74,8 +76,8 @@ export function ProfilePageResetPassword({navigation}) {
                     text={"Re-enter new password"}
                     />
                     <PasswordTextfild
-                      onChangePasswordText={onChangePasswordText}
-                      passwordText={passwordText}
+                      onChangePasswordText={onChangeReRePasswordText}
+                      passwordText={rerepasswordText}
                       textfieldStyle={themedStyles.inputTextfield}
                     />
                   </View>

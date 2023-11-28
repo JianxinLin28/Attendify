@@ -5,7 +5,7 @@ import * as KolynStyle from '../../kits/KolynStyleKit';
 import { KolynSwitchCourseButton } from '../../kits/KolynComponentKit';
 import { CommonPart } from '../../kits/CommonPart';
 import { KolynCourseLabel, KolynBluetoothScanIcon } from '../../kits/KolynComponentKit';
-import { CheckinStatus, ReadCheckinStatus } from '../../logic/CheckinStatus';
+import { CheckinStatus, ReadCheckinStatus, setCurrentCheckinStatus } from '../../logic/CheckinStatus';
 import { getCourseIndex } from '../../props/CurrentCourse';
 import { GetSampleCourseList } from '../../props/CourseList';
 
@@ -167,6 +167,7 @@ function SwitchToCheckedInUI(onChangePressHintText,
                               onButtonDisabled) {
   onChangePressHintText(Hint.CheckedIn);
   onChangeStatusText(CheckinStatus.CheckedIn);
+  setCurrentCheckinStatus(CheckinStatus.CheckedIn);
   onButtonDisabled(true);
 }
 

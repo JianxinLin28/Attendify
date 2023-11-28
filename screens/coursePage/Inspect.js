@@ -81,6 +81,7 @@ export function CoursePageInspect({route, navigation}) {
             <View style={{flex: 2}}>
               <ApplyExcuseButton 
                 navigation={navigation}
+                course={course}
               />
             </View>
 
@@ -141,10 +142,10 @@ function QuitCourseButton({buttonStyle,
   );
 }
 
-function ApplyExcuseButton({navigation}) {
+function ApplyExcuseButton({navigation, course}) {
   return (
     <KolynCasualButton
-      onPress={()=>{navigation.navigate("CoursePageExcuse")}}
+      onPress={()=>{navigation.navigate("CoursePageExcuse", {fromInspectPage: course})}}
       text={"Apply Excuse"}
     />
   );

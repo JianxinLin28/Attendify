@@ -6,11 +6,13 @@ import { CommonPart } from '../../kits/CommonPart';
 import { KolynSubtitleLabel, KolynCourseLabel, KolynCasualButton } from '../../kits/KolynComponentKit';
 
 
-export function CoursePageExcuseSuccess({navigation}) {
+export function CoursePageExcuseSuccess({route, navigation}) {
   const themedStyles = ThemedStyles();
 
   const [courseText, onChangeCourseText] = React.useState('');
   const [timeText, onChangeTimeText] = React.useState('');
+
+  const course = route.params?.fromExcusePage;
 
   return (
       <CommonPart title={"Manage Course"}
@@ -25,14 +27,14 @@ export function CoursePageExcuseSuccess({navigation}) {
                 <KolynCourseLabel
                   courseText={courseText}
                   onChangeCourseText={onChangeCourseText}
-                  text="CS 320, Jaime Dávila"
+                  text={course.getTitle()}
                   textColor={GetSubColor()}
                 />
 
                 <KolynCourseLabel
                   courseText={timeText}
                   onChangeCourseText={onChangeTimeText}
-                  text="Tu, Th 13:00 - 14:15"
+                  text={course.getTimespan()}
                   textColor={GetSubColor()}
                 />
               </View>

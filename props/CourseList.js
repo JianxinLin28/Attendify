@@ -18,15 +18,15 @@ export function GetSampleCourseList() {
   return [
     {
       course: new Course(
-        'HE7LE8', 
-        'CS320, Jaime Dávila',
-        'Tu, Th 13:00 - 14:15')
-    },
-    {
-      course: new Course(
         '8h7K4j', 
         'CS311, Ghazaleh Parvini', 
         'Mo, We, Fr 11:30 - 12:45')
+    },
+    {
+      course: new Course(
+        'HE7LE8', 
+        'CS320, Jaime Dávila',
+        'Tu, Th 13:00 - 14:15')
     },
     {
       course: new Course(

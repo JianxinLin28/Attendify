@@ -3,7 +3,7 @@ import { Dimensions } from 'react-native';
 import { StyleSheet, View, FlatList, Text } from 'react-native';
 import { ThemeContext } from '../../kits/AppTheme';
 import * as KolynStyle from '../../kits/KolynStyleKit';
-import { KolynSubtitleLabel, KolynCasualButton, KolynCourseLabel } from '../../kits/KolynComponentKit';
+import { KolynSwitchCourseButton2, KolynCasualButton, KolynCourseLabel } from '../../kits/KolynComponentKit';
 import { getCourseIndex } from '../../props/CurrentCourse';
 import { CommonPart } from '../../kits/CommonPart';
 import { GetSampleCourseList } from '../../props/CourseList';
@@ -43,12 +43,14 @@ export function ProfilePageCheckinHistory({navigation}) {
   }, [navigation]);
 
   return (
-      <CommonPart title={"Profile"}
+      <CommonPart title={"Check-in history"}
         components={
             <View style={themedStyles.background}>
               
-              <View style={{flex: 2}}>
-                <KolynSubtitleLabel title="Check-in history" />
+              <View style={{flex: 2, left: 98}}>
+                <KolynSwitchCourseButton2
+                  onPress={()=>{navigation.navigate("SwitchCourse")}}
+                />
               </View>
 
               <View style={{flex: 2}}>

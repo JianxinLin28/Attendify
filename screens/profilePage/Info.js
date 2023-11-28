@@ -55,6 +55,7 @@ export function ProfilePageInfo({navigation}) {
                     text={name}
                     labelStyle={themedStyles.nameLabel}
                     onChangeText={onChangeName}
+                    isStudentName={true}
                   />
                 </View>
                 <StudentIDLabel
@@ -72,6 +73,7 @@ export function ProfilePageInfo({navigation}) {
                   text={email}
                   labelStyle={themedStyles.infoLabel}
                   onChangeText={onChangeEmail}
+                  isStudentName={false}
                 />
                 {
                   /*
@@ -185,8 +187,7 @@ function ThemedLabel({labelStyle, text}) {
   );
 }
 
-function ButtonEditTextfiled({ text, labelStyle, onChangeText }) {
-  const themedStyles = ThemedStyles();
+function ButtonEditTextfiled({ text, labelStyle, onChangeText, isStudentName }) {
   const [isEditable, setIsEditable] = React.useState(false);
   const textInputRef = React.useRef(null);
 
@@ -209,7 +210,10 @@ function ButtonEditTextfiled({ text, labelStyle, onChangeText }) {
         editable={isEditable}
         onSubmitEditing={()=>{
           console.log("editing submitted");
-          setStudentName(text);
+          if (isStudentName)
+          {
+            setStudentName(text);
+          }
           setIsEditable(false);
         }}
       />

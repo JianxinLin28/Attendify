@@ -99,7 +99,7 @@ function GetMainColor() {
 
 const languages = [
   {key: '1', value: 'English'},
-  {key: '2', value: 'Spanish', disabled: true}
+  {key: '2', value: 'Español', disabled: false}
 ];
 
 /* Internal logic code end */
