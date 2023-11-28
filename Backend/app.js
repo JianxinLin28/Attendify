@@ -7,6 +7,7 @@ const courseResource = require("./API/routes/course");
 const loginResource = require("./API/routes/login");
 const registerResource = require("./API/routes/register");
 const qrReasource = require('./API/routes/qr');
+const courseRegistrationResource = require('./API/routes/courseRegistration');
 const morgan = require("morgan");
 const cors = require("cors");
 const dbConnect = require("./db/dbConnect");
@@ -21,6 +22,7 @@ app.use("/course", courseResource);
 app.use("/login", loginResource);
 app.use("/register", registerResource);
 app.use("/qr", qrReasource);
+app.use("/courseRegistration", courseRegistrationResource)
 
 
 module.exports = app;

@@ -1,6 +1,7 @@
 const QR = require("../models/qrModel");
 
 const get = async (request, response) => {
+  print(request.body);
   QR.findOne({ course_id: request.body.course_id })
     .then((qr) => {
       response.status(200).json({

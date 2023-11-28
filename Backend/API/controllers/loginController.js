@@ -3,7 +3,6 @@ const User = require("../models/userModel");
 const jwt = require("jsonwebtoken");
 
 const auth = async (request, response, next) => {
-  console.log("hi");
   try {
     console.log(JSON.stringify(request.cookies));
     //   get and verify JWT from cookie
