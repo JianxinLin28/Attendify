@@ -48,6 +48,7 @@ const create = async (request, response, next) => {
           .catch((e) => {
             response.status(500).json({
               message: "Error generating course",
+              error: e,
             });
           });
       }

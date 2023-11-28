@@ -1,4 +1,5 @@
 const User = require("../models/userModel");
+const Course = require("../models/courseModel");
 
 const get = async (request, response, next) => {
   User.findOne(
@@ -35,6 +36,19 @@ const edit = async (request, response, next) => {
     });
 };
 
+const courses = (request, response, next) => {
+  Course.find({instructor_ids: request.params.spire_id}).then((results) => {
+    response.status(200).json({
+      message: "Found courses for instructor: " + request.params.spire_id,
+      result: results,
+    });
+  }).catch((e) => {
+    response.status(404).json({
+      message: "Could not find courses for instructor: " + request.params.spire_id,
+    });
+  })
+}
+
 const del = (request, response, next) => {
   User.deleteOne({ spire_id: request.params.spire_id, role: "instructor" })
     .then(() => {
@@ -50,4 +64,4 @@ const del = (request, response, next) => {
     });
 };
 
-module.exports = {get, edit, del};
+module.exports = {get, edit, courses, del};
