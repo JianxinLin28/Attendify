@@ -10,10 +10,10 @@ const courseSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
-    instructor_ids: [Numbers],
+    instructor_ids: [Number],
     timePeriods:{
         sections: [{
-            days: [Strings],
+            days: [String],
             startTime: {
                 type: String,
                 required: true,
@@ -49,4 +49,4 @@ const courseSchema = new mongoose.Schema({
     }
 })
 
-module.exports = mongoose.model.course || mongoose.model("Course", courseSchemaSchema);
+module.exports = mongoose.model.course || mongoose.model("Course", courseSchema);

@@ -1,30 +1,14 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
+const {get, create, edit, del} = require('../controllers/courseController');
+router.use(express.json());
 
-router.get('/', (request, response, next) => {
-    response.status(200).json({
-        placeholder: 'Returned Courses'
-    });
-});
+router.get("/", get);
 
-router.get('/:course_id', (request, response, next) => {
-    const course_ID = request.params.course_id;
-    response.status(200).json({
-        placeholder: 'Returned Course Information for ' + course_ID
-    });
-});
+router.post("/create", create);
 
-router.post('/', (request, response, next) => {
-    response.status(201).json({
-        placeholder: 'Updated Courses'
-    });
-});
+router.post("/edit", edit);
 
-router.post('/:course_id', (request, response, next) => {
-    const course_ID = request.params.course_id;
-    response.status(201).json({
-        placeholder: 'Updated Course Information for ' + course_ID
-    });
-});
+router.delete("/", del);
 
 module.exports = router;
