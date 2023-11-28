@@ -3,6 +3,11 @@ const Course = require("../models/courseModel");
 const get = async (request, response, next) => {
   Course.findOne({ course_id: request.body.course_id })
     .then((course) => {
+      if (course == null){
+        response.status(404).json({
+          message: "Could not find course with id: " + request.body.course_id,
+        });
+      }
       response.status(200).json({
         message: "Found course with id " + request.body.course_id,
         course: course,
