@@ -2,9 +2,12 @@ import React from "react";
 import Card from "../components/Cards";
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
+import Navigation from "../components/Navigation";
 
 const Dashboard = () => {
   return (
+    <>
+    <Navigation />
     <Container maxWidth="lg">
       <Grid container spacing={6} sx={{ padding: "40px" }}>
         <Grid item xs={4}>
@@ -33,6 +36,7 @@ const Dashboard = () => {
         </Grid>
       </Grid>
     </Container>
+    </>
   );
 };
 
