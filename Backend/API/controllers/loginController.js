@@ -3,7 +3,6 @@ const User = require("../models/userModel");
 const jwt = require("jsonwebtoken");
 
 const auth = async (request, response, next) => {
-  console.log("hi");
   try {
     console.log(JSON.stringify(request.cookies));
     //   get and verify JWT from cookie
@@ -56,8 +55,11 @@ const login = async (request, response) => {
           });
           response.status(200).send({
             message: "Login Successful",
-            User: user,
+            token,
             email: user.email,
+            first_name: user.first_name,
+            last_name: user.last_name,
+            spire_id: user.spire_id
           });
         });
     })
