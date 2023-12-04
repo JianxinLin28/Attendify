@@ -24,5 +24,4 @@ app.use("/register", registerResource);
 app.use("/qr", qrReasource);
 app.use("/courseRegistration", courseRegistrationResource)
 
-
 module.exports = app;

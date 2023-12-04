@@ -12,4 +12,4 @@ const courseRegistrationSchema = new mongoose.Schema({
     },
 })
 
-module.exports = mongoose.model.courseRegistration || mongoose.model("courseRegistration", courseRegistrationSchema);
+module.exports = mongoose.model.courseRegistration || mongoose.model("courseRegistration", courseRegistrationSchema, "courseRegistration");

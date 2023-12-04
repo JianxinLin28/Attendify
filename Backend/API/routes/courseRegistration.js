@@ -1,12 +1,14 @@
 const express = require("express");
 const router = express.Router();
+const {get, edit, del, add} = require('../controllers/courseRegistrationController')
 router.use(express.json());
-const {get, edit, del} = require('../controllers/courseRegistrationController')
 
 router.get("/:course_id", get);
 
-router.post("/:course_id", edit);
+router.post("/edit", edit);
 
-router.delete("/:course_id", del);
+router.post("/delete", del);
+
+router.post("/", add);
 
 module.exports = router;
