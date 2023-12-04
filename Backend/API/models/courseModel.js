@@ -30,18 +30,18 @@ const courseSchema = new mongoose.Schema({
         checkIns: [{
             student_id: {
             type: Number,
-            required: true,
-            unique: true, 
+            required: false,
+            unique: false, 
             },
             attendance: [{
                 date: {
                     type: Number,
-                    required: true,
+                    required: false,
                     unique: false,
                 },
                 checkIn: {
                     type: Boolean,
-                    required: true,
+                    required: false,
                     unique: false,
                 }
             }]
