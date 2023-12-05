@@ -6,6 +6,8 @@
 4. Do the same at line 191 in Screens/SignUpPage.js
 5. Now you can run Aadi's code on your device. 
 
-   
 
-   
+Here is an existing account for testing purpose:
+Email: test@umass.edu
+Password: test
+
