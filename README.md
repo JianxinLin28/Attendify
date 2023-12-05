@@ -88,5 +88,26 @@ This following steps will only work if you have XCode.
    will be created. Before opening it, you need to trust yourself on your mobile device.
    To do that, go to "Setting -> General -> VPN&Device Management" and trust Attendify.
 5. Now you can open the app. With this approach, your app will have absolutely zero overhead
-   and it is equivalent to the Apps deployed in App Store. 
+   and it is equivalent to the Apps deployed in App Store.
+
+## How to get Backend code running on Mac
+
+1. Download Backend code zip from github
+2. Run npm install once in Backend folder
+3. Run  npm uninstall bcrypt
+4. Then run npm install bcrypt
+5. Now you should be able to run the code on a mac.
+6. If you're still facing trouble, remove all cache during start by running npm start -c
+
+   
+## How to get Aadi's part of code running >
+
+1. Change the IP address to your own computers since the code is still running local.
+2. Go to Screens/LoginPage.js
+3. Go to line 152 and add your device ip address http://localhost:8080/login instead of localhost
+4. Do the same at line 191 in Screens/SignUpPage.js
+5. Now you can run Aadi's code on your device. 
+
+   
+
    
