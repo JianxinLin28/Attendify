@@ -35,17 +35,13 @@ const courseSchema = new mongoose.Schema({
             },
             attendance: [{
                 date: {
-                    type: Number,
+                    type: Date,
                     required: false,
                     unique: false,
                 },
-                checkIn: {
-                    type: Boolean,
-                    required: false,
-                    unique: false,
-                }
             }]
         }]
+
     }
 })
 
