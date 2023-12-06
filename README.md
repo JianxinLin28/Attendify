@@ -42,7 +42,11 @@
    > (Android) to scan this code.
    >
    > Note: If for some reason you get a bunch of errors indicating there is no
-   > permission. Use 'sudo npm install' or 'sudo npm start' instead. You will
+   > permission when you are trying to install the packages, something like this:
+   > ![alt text](https://i.stack.imgur.com/daueK.png)
+   > Credit: julz oh, https://stackoverflow.com/questions/69718289/npm-install-ecacess-permission-denied
+   > 
+   > Use 'sudo npm install' instead. You will
    > have to enter your computer's password after that and everything should
    > work normally.
 9. After you have scanned the code, the Attendify app should be rendered in
