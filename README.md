@@ -6,6 +6,7 @@ Jianxin Lin (Kolyn090)
 The code in this branch only consists UI components.
 Please go to Aadi's branch for more instructions.
 
+## About me
 **I primary focus on the mobile front end development
 of our App - Attendify Student.**
 I also have experience with XCode and Swift. Java's Swing GUI framework.
