@@ -2,6 +2,10 @@
 ## This branch's source is the "Mobile" branch.
 Jianxin Lin (Kolyn090)
 
+## IMPORTANT note
+The code in this branch only consists UI components.
+Please go to Aadi's branch for more instructions.
+
 **I primary focus on the mobile front end development
 of our App - Attendify Student.**
 I also have experience with XCode and Swift. Java's Swing GUI framework.
