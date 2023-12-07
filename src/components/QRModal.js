@@ -4,6 +4,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import QR from '../constants/qr.png';
+import Swal from 'sweetalert2';
 
 const style = {
   position: 'absolute',
@@ -30,9 +31,20 @@ export default function BasicModal() {
     }
   `}</style>
 
+  const qrButton = () => {
+    Swal.fire({
+      title: "Attendance QR Code",
+      text: "Scan the QR code to mark your attendance!",
+      imageUrl: QR,
+      imageWidth: 300,
+      imageHeight: 300,
+      imageAlt: "QR-Image"
+    });
+  }
+
   return (
     <div>
-      <Button onClick={handleOpen}>QR Code</Button>
+      <Button onClick={qrButton}>QR Code</Button>
       <Modal
         open={open}
         onClose={handleClose}

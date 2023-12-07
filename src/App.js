@@ -5,6 +5,7 @@ import LoginPage from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import CreateCourse from "./pages/course";
 
 const CommonWrapper = ({ children }) => (
   <div
@@ -39,6 +40,7 @@ const App = () => {
             }
           />
           <Route path="/dashboard/:jwt" element={<Dashboard />} />
+          <Route path="/createCourse" element={<CreateCourse />} />
         </Routes>
       </BrowserRouter>
       <ToastContainer />

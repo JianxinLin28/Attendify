@@ -29,13 +29,13 @@ const NavBar = () => {
     <AppBar
       position="static"
       sx={{
-        backgroundColor: "#ffd700 ",
+        backgroundColor: "#2596ff",
         paddingTop: "15px",
       }}
     >
       <Toolbar sx={{ justifyContent: "space-between" }}>
         <div style={{ display: "flex", alignItems: "center" }}>
-          <Link to="/">
+          <Link to={`/dashboard/${localStorage.getItem("jwt")}`}>
             <img
               src={logo}
               alt="Logo"
@@ -51,35 +51,35 @@ const NavBar = () => {
             <Button
               color="inherit"
               sx={{
-                color: "#162dfe",
+                color: "#FFF",
                 marginRight: "10px",
                 "&:hover": {
                   color: "#ff8906",
                 },
               }}
               component={Link}
-              to="/"
+              to={`/dashboard/${localStorage.getItem("jwt")}`}
             >
               Dashboard
             </Button>
             <Button
               color="inherit"
               sx={{
-                color: "#162dfe",
+                color: "#FFF",
                 marginRight: "10px",
                 "&:hover": {
                   color: "#ff8906",
                 },
               }}
               component={Link}
-              to="/classes"
+              to="/createCourse"
             >
               Classes
             </Button>
             <Button
               color="inherit"
               sx={{
-                color: "#162dfe",
+                color: "#FFF",
                 marginRight: "10px",
                 "&:hover": {
                   color: "#ff8906",
@@ -133,7 +133,7 @@ const NavBar = () => {
           style={{
             width: "250px",
             padding: "20px",
-            backgroundColor: "#ffd700",
+            backgroundColor: "#2596ff",
             height: "100%",
             display: "flex",
             flexDirection: "column",
@@ -145,14 +145,14 @@ const NavBar = () => {
             <Button
               color="inherit"
               sx={{
-                color: "#162dfe",
+                color: "#FFF",
                 marginBottom: "10px",
                 "&:hover": {
                   color: "#ff8906",
                 },
               }}
               component={Link}
-              to="/"
+              to={`/dashboard/${localStorage.getItem("jwt")}`}
               onClick={toggleDrawer}
             >
               Dashboard
@@ -160,14 +160,14 @@ const NavBar = () => {
             <Button
               color="inherit"
               sx={{
-                color: "#162dfe",
+                color: "#FFF",
                 marginBottom: "10px",
                 "&:hover": {
                   color: "#ff8906",
                 },
               }}
               component={Link}
-              to="/Classes"
+              to="/createCourse"
               onClick={toggleDrawer}
             >
               Classes
@@ -175,7 +175,7 @@ const NavBar = () => {
             <Button
               color="inherit"
               sx={{
-                color: "#162dfe",
+                color: "#FFF",
                 marginBottom: "10px",
                 "&:hover": {
                   color: "#ff8906",
