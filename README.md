@@ -51,18 +51,19 @@ npm start
 Now you should see the QR code along with many instructions. The next thing to do
 is to follow the "How to run the app?" section.
 
-## Uploading to sub-branches
+## How to contribute to our development?
+### Uploading to sub-branches
 Remember, whenever you upload a project, **delete the node_modules file**.
 Also, **delete the ios file and android file**. They are huge!
 After done that, name your project to 'Attendify_Student' and upload.
 **Do not** directly upload to other people's branch without their permission.
 
-## How to contribute to our development?
+
 ### Understanding the structure
 We will be mostly following the interface designs from this figma page:
 https://www.figma.com/file/l5uew2GAntMmYJgnwMoHcD/Attendify-Student?type=design&node-id=1669%3A162202&mode=design&t=CWdsPYv5Xxg4tlXk-1
 
-For screen navigations, we plan to use the stack navigator library by React Native.
+For screen navigations, we are using the stack navigator library by React Native.
 Tutorial I wrote:
 https://docs.google.com/document/d/1_EzUmDY-dMop2H4Ky1Bvnebc8gwR2QuCnwDDyu6vWHQ/edit?usp=sharing
 
@@ -124,13 +125,15 @@ Coder: Jianxin
 every iOS devices.
 2. Be sure all your logs can be disabled in some way.
 3. Name all your folders starting with a lower case letter, i.e. **stardewValley**
-4. Name all js and ts files with the Pascal Case style, i.e. **MyDude.js** and **YuGiOh.ts**
+4. Name all js and ts files with the Pascal Case style, i.e. **MyDude.js**
 5. For system generated files, please leave it as it is.
 6. The use of StyleSheet: for each page, please make it its own file,
-   and concentrate styles as much as possible.
-7. Your Component functions all start with capital letters!
-8. Almost all other functions start with lower letters!
-9. One file === one page || One file === one functionality
+   and concentrate styles as much as possible. Also, please ensure you
+   only use color from the defined colors in AppTheme.js
+8. Your Component functions all start with capital letters!
+9. Almost all other functions start with lower letters!
+10. We will not be using ts because the tsconfig file is causing trouble
+   with the Android emulator (Android Studio).
 
 ### Terminology
 1. Don't use 'class', instead, use 'course'
