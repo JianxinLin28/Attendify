@@ -2,7 +2,8 @@
 
 Developer: Jianxin Lin & Aadi Deshmukh
 
-## What we are using?
+## -> If this is the first time you are using React Native Expo
+### What is React Native (RN) Expo?
 We are using React Native Expo framework to develop & deploy our app!
 If you don't have any experience and you want to try out Expo, you can
 start by using command:
@@ -14,7 +15,7 @@ the blank templet and name your project. The templet can be the
 foundation of your app and it can also be used for quick experiments.
 Also, remember to change directory to the newly created folder.
 
-## How to run the app?
+### How to run a RN expo app?
 If you want to run your app, use command:
 ```
 npm start
@@ -33,7 +34,8 @@ to something else. Use 'shift' + 'i' to choose a simulator device. I highly sugg
 you to download as few as possible since each one of them exceeds 6GB. I personally 
 use iPhone 14 Pro and iPad 12.9-inch 6th gen for testing.
 
-## Installing our project
+## -> If you are interested in using / contributing to our project
+### Installing our project
 Download the project as a zip file and unzip it. Change directory to the unzip folder,
 Start by running this command in the terminal:
 ```
@@ -51,23 +53,25 @@ npm start
 Now you should see the QR code along with many instructions. The next thing to do
 is to follow the "How to run the app?" section.
 
-## How to contribute to our development?
-### Uploading to sub-branches
+### How to contribute to our development?
+#### Uploading to sub-branches
 Remember, whenever you upload a project, **delete the node_modules file**.
-Also, **delete the ios file and android file**. They are huge!
-After done that, name your project to 'Attendify_Student' and upload.
+Also, **delete the ios file and android file** if there is any. They are huge!
 **Do not** directly upload to other people's branch without their permission.
 
-
-### Understanding the structure
-We will be mostly following the interface designs from this figma page:
+#### Can I see the UI design?
+Sure, We are mostly following the interface designs from this Figma page:
 https://www.figma.com/file/l5uew2GAntMmYJgnwMoHcD/Attendify-Student?type=design&node-id=1669%3A162202&mode=design&t=CWdsPYv5Xxg4tlXk-1
 
+However, some pages are not shown in the Figma page. Please refer the UI designs in the 
+app as the final version.
+
+#### Screen navigations in the app
 For screen navigations, we are using the stack navigator library by React Native.
 Tutorial I wrote:
 https://docs.google.com/document/d/1_EzUmDY-dMop2H4Ky1Bvnebc8gwR2QuCnwDDyu6vWHQ/edit?usp=sharing
 
-### Project UI structure (Navigation)
+#### Project UI structure (Navigation)
 First of all, everything originates from App() function in the App.js file. 
 (Very) general structure
 ```
@@ -93,7 +97,7 @@ figma design, you will know what I mean. I decided to put the bottom tab
 as a "page" of the main Stack because it seems to be easier to manage in
 this way. The login page and the signup page do not have bottom tab. 
 
-### Page code structure
+#### Page code structure
 Each complete page code should have one to three sections.
 
 Section 1: Internal logic functions, here we handle all interactions between UI components
@@ -120,7 +124,7 @@ Coder: Jianxin
 /* User interface code end */
 ```
 
-### Coding practice
+#### Coding practice
 1. Always including things in a SafeAreaView. This makes sure the app looks good on
 every iOS devices.
 2. Be sure all your logs can be disabled in some way.
@@ -135,7 +139,7 @@ every iOS devices.
 10. We will not be using ts because the tsconfig file is causing trouble
    with the Android emulator (Android Studio).
 
-### Terminology
+#### Terminology
 1. Don't use 'class', instead, use 'course'
 2. Although the standard way for RN to describe a page is 'screen', we use 'page' to refer them.
 
