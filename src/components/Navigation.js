@@ -1,161 +1,221 @@
-import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
-import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
-import logo from '../constants/Attendify_centered.png'
+import React, { useState, useEffect } from "react";
+import { AppBar, Toolbar, Drawer, IconButton, Button } from "@mui/material";
+import { Link } from "react-router-dom";
+import MenuIcon from "@mui/icons-material/Menu";
+import logo from "../constants/Attendify_centered.png";
 
-const pages = ['Dashboard', 'Classes', 'Analytics'];
-const settings = ['Profile', 'Logout'];
+const NavBar = () => {
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
-function ResponsiveAppBar() {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
-
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
+  const handleResize = () => {
+    setScreenWidth(window.innerWidth);
   };
 
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
+  const toggleDrawer = () => {
+    setIsDrawerOpen(!isDrawerOpen);
   };
 
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  const shouldShowButtons = screenWidth >= 768;
 
   return (
-    <AppBar position="static" sx={{background: '#FFF'}}>
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
-           <img src={logo} style={{width: '115px' }} alt="logo"/>
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-          </Typography>
+    <AppBar
+      position="static"
+      sx={{
+        backgroundColor: "#2596ff",
+        paddingTop: "15px",
+      }}
+    >
+      <Toolbar sx={{ justifyContent: "space-between" }}>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <Link to={`/dashboard/${localStorage.getItem("jwt")}`}>
+            <img
+              src={logo}
+              alt="Logo"
+              style={{
+                width: "115px",
+              }}
+            />
+          </Link>
+        </div>
 
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
+        {shouldShowButtons ? (
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <Button
               color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
               sx={{
-                display: { xs: 'block', md: 'none' },
+                color: "#FFF",
+                marginRight: "10px",
+                "&:hover": {
+                  color: "#ff8906",
+                },
               }}
+              component={Link}
+              to={`/dashboard/${localStorage.getItem("jwt")}`}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
-            sx={{
-              mr: 2,
-              display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
+              Dashboard
+            </Button>
+            <Button
+              color="inherit"
+              sx={{
+                color: "#FFF",
+                marginRight: "10px",
+                "&:hover": {
+                  color: "#ff8906",
+                },
+              }}
+              component={Link}
+              to="/createCourse"
+            >
+              Classes
+            </Button>
+            <Button
+              color="inherit"
+              sx={{
+                color: "#FFF",
+                marginRight: "10px",
+                "&:hover": {
+                  color: "#ff8906",
+                },
+              }}
+              component={Link}
+              to="/analytics"
+            >
+              Analytics
+            </Button>
+          </div>
+        ) : (
+          <IconButton
+            edge="end"
+            color="inherit"
+            aria-label="menu"
+            onClick={toggleDrawer}
           >
-          </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: '#1976d2', display: 'block' }}
-              >
-                {page}
-              </Button>
-            ))}
-          </Box>
+            <MenuIcon />
+          </IconButton>
+        )}
 
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
+        {shouldShowButtons ? (
+          localStorage.getItem("jwt") ? (
+            <a
+              style={{
+                color: "#fffffe",
+                backgroundColor: "#ff8906",
+                borderRadius: 10,
+                padding: "10px 18px",
+                textDecoration: "none",
+                fontWeight: 500,
+                "&:hover": {
+                  color: "#ff8906",
+                  backgroundColor: "#fffffe",
+                },
               }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
+              href="/"
+              onClick={() => {
+                localStorage.removeItem("jwt");
               }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-        </Toolbar>
-      </Container>
+              Log Out
+            </a>
+          ) : null
+        ) : null}
+      </Toolbar>
+
+      <Drawer anchor="right" open={isDrawerOpen} onClose={toggleDrawer}>
+        <div
+          style={{
+            width: "250px",
+            padding: "20px",
+            backgroundColor: "#2596ff",
+            height: "100%",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+          }}
+        >
+          {/* Vertically stacked buttons */}
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <Button
+              color="inherit"
+              sx={{
+                color: "#FFF",
+                marginBottom: "10px",
+                "&:hover": {
+                  color: "#ff8906",
+                },
+              }}
+              component={Link}
+              to={`/dashboard/${localStorage.getItem("jwt")}`}
+              onClick={toggleDrawer}
+            >
+              Dashboard
+            </Button>
+            <Button
+              color="inherit"
+              sx={{
+                color: "#FFF",
+                marginBottom: "10px",
+                "&:hover": {
+                  color: "#ff8906",
+                },
+              }}
+              component={Link}
+              to="/createCourse"
+              onClick={toggleDrawer}
+            >
+              Classes
+            </Button>
+            <Button
+              color="inherit"
+              sx={{
+                color: "#FFF",
+                marginBottom: "10px",
+                "&:hover": {
+                  color: "#ff8906",
+                },
+              }}
+              component={Link}
+              to="/analytics"
+              onClick={toggleDrawer}
+            >
+              Analytics
+            </Button>
+          </div>
+          {localStorage.getItem("jwt") ? (
+            <Button
+              color="inherit"
+              sx={{
+                color: "#fffffe",
+                backgroundColor: "#ff8906",
+                borderRadius: 10,
+                padding: "10px 18px",
+                "&:hover": {
+                  color: "#ff8906",
+                  backgroundColor: "#fffffe",
+                },
+              }}
+              component={Link}
+              to="/"
+              onClick={() => {
+                localStorage.removeItem("jwt");
+                localStorage.removeItem("userState");
+                toggleDrawer();
+              }}
+            >
+              Log Out
+            </Button>
+          ) : null}
+        </div>
+      </Drawer>
     </AppBar>
   );
-}
-export default ResponsiveAppBar;
+};
+
+export default NavBar;
