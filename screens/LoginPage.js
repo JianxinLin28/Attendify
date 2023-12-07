@@ -146,7 +146,7 @@ export function PressLoginButton(navigation, emailText, passwordText, onChangeEr
   const userData = { email: emailText, password: passwordText };
 
   // Use fetch API to send the user data to the backend
-  fetch('http://192.168.1.246:8080/login', {
+  fetch('http://localhost:8080/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

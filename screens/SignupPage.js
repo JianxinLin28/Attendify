@@ -191,7 +191,7 @@ function PressSignupButton(
   };
 
   // Use fetch API to send the user data to the backend
-  fetch('http://192.168.1.246:8080/register', {
+  fetch('http://localhost:8080/register', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
