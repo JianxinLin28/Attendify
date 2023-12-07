@@ -120,6 +120,7 @@ const NavBar = () => {
               href="/"
               onClick={() => {
                 localStorage.removeItem("jwt");
+                localStorage.removeItem("userState");
               }}
             >
               Log Out
