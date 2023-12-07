@@ -19,8 +19,16 @@ const Signup = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // console.log(signupState);
-    createAccount();
+    console.log(signupState);
+    if (signupState.password !== signupState.confirm_password) {
+      toast.error("Password and Confirm Password do not match");
+    } else if (signupState.sid.length !== 8 || isNaN(signupState.sid)) {
+      toast.error("Spire ID must be 8 numbers long");
+    } else if (!signupState.email_address.includes("umass.edu")) {
+      toast.error("a umass email is required for signing up");
+    } else {
+      createAccount();
+    }
   };
 
   //handle Signup API Integration here

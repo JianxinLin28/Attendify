@@ -1,9 +1,10 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import React from "react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import SignupPage from "./pages/Signup";
 import LoginPage from "./pages/Login";
+import Dashboard from "./pages/Dashboard";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Dashboard from "./pages/Dashboard";
 
 const CommonWrapper = ({ children }) => (
   <div
@@ -15,6 +16,8 @@ const CommonWrapper = ({ children }) => (
 );
 
 const App = () => {
+  const jwt = localStorage.getItem("jwt");
+
   return (
     <div>
       <BrowserRouter>
@@ -23,7 +26,7 @@ const App = () => {
             path="/"
             element={
               <CommonWrapper>
-                <LoginPage />
+                {jwt ? <Navigate to={`/dashboard/${jwt}`} /> : <LoginPage />}
               </CommonWrapper>
             }
           />
@@ -35,7 +38,7 @@ const App = () => {
               </CommonWrapper>
             }
           />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/dashboard/:jwt" element={<Dashboard />} />
         </Routes>
       </BrowserRouter>
       <ToastContainer />
