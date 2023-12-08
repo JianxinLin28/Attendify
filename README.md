@@ -6,7 +6,7 @@ Developer: Jianxin Lin & Aadi Deshmukh
 
 [First time using React Native Expo](https://github.com/SatwikPatro/Attendify/edit/Mobile/README.md#--if-this-is-the-first-time-you-are-using-react-native-expo)
 
-[Install our product](https://github.com/SatwikPatro/Attendify/edit/Mobile/README.md#--installing-our-project)
+[Install our product]([https://github.com/SatwikPatro/Attendify/edit/Mobile/README.md#--installing-our-project](https://github.com/SatwikPatro/Attendify/tree/Mobile#--if-you-are-interested-in-using-our-project))
 
 ## -> If this is the first time you are using React Native Expo
 ### Get a hang of React Native Expo
