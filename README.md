@@ -2,7 +2,7 @@
 
 Developer: Jianxin Lin & Aadi Deshmukh
 
-Writer for this page: Jianxin Lin
+Writer for this page: Jianxin Lin 
 
 ## Table of contents
 
@@ -73,8 +73,8 @@ since the code is still running local.
    > you are using -> You will see your network's IP address in the TCP/IP section.
 
 * Step 4: Go to line 5 of logic/sendToBackend.js and replace the part of string 'localhost' in
-   http://localhost:8080/login with the ip address you just got.
-   > For example: http://888.88.88.888:8080/login
+   http://localhost:8080/ with the ip address you just got.
+   > For example: http://888.88.88.888:8080/
    
 * Step 5: Enter **npm install** command 
    > Hint: Verify you are doing the steps right by checking if a new folder called
