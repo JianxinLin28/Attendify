@@ -4,7 +4,7 @@ Developer: Jianxin Lin & Aadi Deshmukh
 
 ## Table of contents
 
-[First time using React Native Expo](https://github.com/SatwikPatro/Attendify/Mobile/README.md#--if-this-is-the-first-time-you-are-using-react-native-expo)
+[First time using React Native Expo](https://github.com/SatwikPatro/Attendify/tree/Mobile#--if-this-is-the-first-time-you-are-using-react-native-expo)
 
 [Install our product](https://github.com/SatwikPatro/Attendify/tree/Mobile#--if-you-are-interested-in-using-our-project)
 
