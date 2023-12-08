@@ -8,6 +8,8 @@ Developer: Jianxin Lin & Aadi Deshmukh
 
 [Install our product](https://github.com/SatwikPatro/Attendify/tree/Mobile#--if-you-are-interested-in-using-our-project)
 
+[Contribute to our development](https://github.com/SatwikPatro/Attendify/tree/Mobile#--if-you-are-interested-in-contributing-to-our-development)
+
 ## -> If this is the first time you are using React Native Expo
 ### Get a hang of React Native Expo
 We are using React Native Expo framework to develop & deploy our app!
