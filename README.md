@@ -70,19 +70,17 @@ since the code is still running local.
    > Hint: If you are using Mac, Click on the apple icon located on
    > the top left corner of the screen -> Click 'System Settings...'
    > -> Click 'Wi-Fi' -> Click 'Details' button next to the network
-   > you are using -> You will see your network's IP address.
+   > you are using -> You will see your network's IP address in the TCP/IP section.
 
-* Step 4: Go to line 149 of screens/LoginPage.js and replace the part of string 'localhost' in
+* Step 4: Go to line 5 of logic/sendToBackend.js and replace the part of string 'localhost' in
    http://localhost:8080/login with the ip address you just got.
    > For example: http://888.88.88.888:8080/login
-
-* Step 5: Do the same at line 194 in screens/SignupPage.js
    
-* Step 6: Enter **npm install** command 
+* Step 5: Enter **npm install** command 
    > Hint: Verify you are doing the steps right by checking if a new folder called
    > 'node_modules' is added to unzipped folder.
 
-* Step 7: Enter **npm start** command
+* Step 6: Enter **npm start** command
 
    If you have not already done so, please download the 'Expo go' app from Google Play Store
 (Android) or Apple Store (iOS). 
@@ -99,7 +97,7 @@ since the code is still running local.
    > have to enter your computer's password after that and everything should
    > work normally.
 
-* Step 8: Render the Attendify mobile app on your phone
+* Step 7: Render the Attendify mobile app on your phone
 
    If you have not already done so, please download the 'Expo go' app from Google Play Store
 (Android) or Apple Store (iOS). 
@@ -109,19 +107,19 @@ and Attendify will be starting to rendered. After the downloading process is don
 be in the Login page. However, this app will not functioning correctly for now because you
 still have to set up the backend.
 
-* Step 9: Installing the Backend
+* Step 8: Installing the Backend
 
    Download Backend code folder from Powall's or Ishan's branch (i.e. the folder should have name
 Attendify-Powall if downloaded from Powall's branch)
 
-* Step 10: Open the folder and install the packages
+* Step 9: Open the folder and install the packages
 
    Open a new window from your IDE and open the Backend folder you just unzipped.
 cd to the Backend directory and run **npm install** 
    > Hint: Again, verify you are doing the steps right by checking if a new folder called
    > 'node_modules' is added to unzipped folder.
 
-* Step 11: Resolve bcrypt bug on Mac
+* Step 10: Resolve bcrypt bug on Mac
 
    If your device is a mac, you need to reinstall bcrypt as you will
 face a compatibility issue as the backend was developed on windows laptops. 
@@ -129,13 +127,13 @@ face a compatibility issue as the backend was developed on windows laptops.
    > 
    > Step 2: Then run **npm install bcrypt**
 
-* Step 12: Start the Backend code
+* Step 11: Start the Backend code
 
    Once this is done, you can run the Backend code by running **npm start**
    > To verify your action was successful, you should see log message:
    > 'Successfully connected to MongoDB Atlas!'
 
-* Step 13: Run the app
+* Step 12: Run the app
 
    After you have set up both frontend & backend. 
 Now you should be able to Log in/Sign up and do everything in the app.
