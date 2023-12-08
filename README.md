@@ -10,7 +10,7 @@ Writer for this page: Jianxin Lin
 
 [Install our product](https://github.com/SatwikPatro/Attendify/tree/Mobile#--if-you-are-interested-in-using-our-project)
 
-[Use our product](https://github.com/SatwikPatro/Attendify/tree/Mobile#--use-the-app-as-a-student)
+[Use our product](https://github.com/SatwikPatro/Attendify/tree/Mobile#use-the-app-as-a-student)
 
 [Contribute to our development](https://github.com/SatwikPatro/Attendify/tree/Mobile#--if-you-are-interested-in-contributing-to-our-development)
 
