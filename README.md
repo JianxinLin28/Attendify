@@ -2,6 +2,8 @@
 
 Developer: Jianxin Lin & Aadi Deshmukh
 
+Writer for this page: Jianxin Lin
+
 ## Table of contents
 
 [First time using React Native Expo](https://github.com/SatwikPatro/Attendify/tree/Mobile#--if-this-is-the-first-time-you-are-using-react-native-expo)
@@ -136,11 +138,11 @@ face a compatibility issue as the backend was developed on windows laptops.
    After you have set up both frontend & backend. 
 Now you should be able to Log in/Sign up and do everything in the app.
 
-### Here is an existing account for testing purpose:
+   Here is an existing account for testing purposes:
 
-   Email: test@umass.edu
+      Email: test@umass.edu
 
-   Password: test
+      Password: test
 
 ### Use the app as a student
 
@@ -157,14 +159,16 @@ or use the existing test account mentioned above.
 * Step 2: Bluetooth scan page
 
    After you log into the app, you will be navigated to the main view.
-The first page shown to you is the bluetooth scan page. 
+The first page shown to you is the bluetooth scan page.
+You can also access the bluetooth scan page from the bottom tab navigator.
+The first button leads to the bluetooth scan page.
 The main idea for this feature is that the student can check in via
 searching the bluetooth beacon hosted by the instructor. To check in,
 press the bluetooth scan button. If a valid beacon is scanned, the
-student will be checked-in. Otherwise, the system will show the scan 
+student will be checked in. Otherwise, the system will show the scan 
 has failed after a set of time. However, it is important to note that
 this is only a demo so we have not fully implemented this feature yet.
-If you press the button now, the system will mark you as checked-in
+If you press the button now, the system will mark you as checked in
 regardless if there is a valid beacon nearby.
    > Note: a valid beacon is a beacon hosted by the current course's instructor,
 you can also learn which class you are in from the bluetooth scan page.
@@ -208,8 +212,61 @@ so there are only UI components (visual). You will not be able to actually add
 a new course, quit a course, apply an excuse for a course.
 
 * Step 5: Clicker page
+  
+   You can access the clicker page from the bottom tab navigator.
+The fourth button leads to the clicker page.
+Here you can access the clicker feature. If you already have experience
+with clickers, you will be able to familiarize yourself with this feature
+quickly. Again, the clicker page has not been integrated with backend yet.
+Therefore, the app cannot receive questions from the instructor side. To
+demonstrate the situation when the app receives a question. I have made a
+button called "Get a question". After it is pressed, you will be navigated
+to a new page that contains a sample question along with its options. You
+can also check your answer history by pressing the 'History' button. You
+will be navigated to a page that has a list of questions you have answered.
+We have already included two sample questions for you. You can check the
+details by clicking on one of them.
 
+* Step 6: Profile page
 
+  You can access the profile page from the bottom tab navigator.
+The fifth button leads to the profile page.
+Here you can edit your profile, change the app's theme, check
+your check-in history, toggle notification setting and change
+the language of the app. However, many of those features are still
+in the developmental phase. After you have done some actions, they
+will not be saved in the database nor locally. In addition, you can
+go back to the Login page by clicking the "Log out button".
+
+   Something to keep in mind while using this page: 
+
+     * You can edit your profile
+  picture by go into the edit info page. You cannot directly edit
+  your profile picture in the settings main page. You can only edit
+  your information after tapping the little pencil icon twice. Tapping
+  on the label will not trigger the keyboard to show up. As being said,
+  change password is not functioning because the profile page has not been 
+  connected to the backend. 
+
+     * Change theme feature has been fully implemented. However, the setting
+  is not saved to anywhere so the next time you open the app the theme will
+  be restored to the defaul setting.
+
+     * The check-in history shows a list of samples. However, currently
+  you cannot add any new items besides modifying the code.
+
+     * The notification toggle has no effect because the app has no any
+notifications. The change language option will not function as well because
+this feature has a low priority.
+
+* Step 7: Prob the app yourself
+
+   I understand that it can be a little disappointing the app is missing
+a majority of backend logics. Our team was short on time / sometimes
+even short on people, and we had to create two apps within one semester.
+Due to the given constraints, we did the best we could to deliver the app
+experience on the surface level. Please feel free to expolre the app by
+yourself. If you are interested, you can even help us to develop this app!
 
 ## -> If you are interested in contributing to our development
 ### Uploading to sub-branches
@@ -282,27 +339,34 @@ Coder: Jianxin
 /* User interface code end */
 ```
 
-Code: Jianxin
-Everything else
+Coder: Jianxin
+
+Everything else 
 
 ### Coding practice
-1. Always including things in a SafeAreaView. This makes sure the app looks good on
-every iOS devices.
-2. Be sure all your logs can be disabled in some way.
-3. Name all your folders starting with a lower case letter, i.e. **stardewValley**
-4. Name all js and ts files with the Pascal Case style, i.e. **MyDude.js**
-5. For system generated files, please leave it as it is.
-6. The use of StyleSheet: for each page, please make it its own file,
-   and concentrate styles as much as possible. Also, please ensure you
-   only use color from the defined colors in AppTheme.js
-8. Your Component functions all start with capital letters!
-9. Almost all other functions start with lower letters!
-10. We will not be using ts because the tsconfig file is causing trouble
-   with the Android emulator (Android Studio).
+   1. Always including things in a SafeAreaView. This makes sure the app looks good on
+   every iOS devices.
+   2. Be sure all your logs can be disabled in some way.
+   3. Name all your folders starting with a lower case letter, i.e. **stardewValley**
+   4. Name all js and ts files with the Pascal Case style, i.e. **MyDude.js**
+   5. For system generated files, please leave it as it is.
+   6. The use of StyleSheet: for each page, please make it its own file,
+      and concentrate styles as much as possible. Also, please ensure you
+      only use color from the defined colors in AppTheme.js
+   8. Your Component functions all start with capital letters!
+   9. Almost all other functions start with lower letters!
+   10. We will not be using ts because the tsconfig file is causing trouble
+      with the Android emulator (Android Studio).
 
 ### Terminology
-1. Don't use 'class', instead, use 'course'
-2. Although the standard way for RN to describe a page is 'screen', we use 'page' to refer them.
+   1. Don't use 'class', instead, use 'course'
+   2. Although the standard way for RN to describe a page is 'screen', we use 'page' to refer them.
+
+### Known bugs
+   1. UI bug: After logged out and logged in again, the bottom tab navigator indicator (
+   the white bar below the button in the bottom tab navigator) sometimes will not be
+   correctly updated to the desired position (the white bar should be below the
+   bluetooth scan button).
 
 ## Troubleshooting
 ### Asset bundle works on an iOS simulator but not a real iOS device
@@ -329,28 +393,28 @@ for testing on a real device.
 
 ## Deploy to iOS
 This following steps will only work if you have XCode. 
-[Warning: XCode is very large]
-1. Run this command in the project directory
-   ```
-   npx expo run:ios
-   ```
-   This will create an iOS folder for the app. If the project already has it you
-   don't have to run this command.
-2. Open the iOS folder in XCode. If you have not worked with XCode before, start
-   by creating an developer account using your Apple Store account.
-3. Allow 'Developer Mode' on your iPhone by going to 'Setting -> Privacy & Security
-   -> Developer Mode'. Turn on the developer mode, but remember **your iOS device
-   might be vunlnerable to certain attacks if this mode is opened**. Your iOS device
-   will be forced to restart and you will be asked to turn on developer mode.
-4. With 'Developer Mode', you will be allowed to create a _real App_ on your iOS device.
-   This is very similar to using Swift and Object-C. First, you need to connect your mobile
-   device to your Mac via a USB cable. Your mobile device will be asked to trust your Mac.
-   Second, in XCode, select your simulator device to your device (not a simulator).
-   Third, click the run button in XCode to run the App. After these three steps, a real app
-   will be created. Before opening it, you need to trust yourself on your mobile device.
-   To do that, go to "Setting -> General -> VPN&Device Management" and trust Attendify.
-5. Now you can open the app. With this approach, your app will have absolutely zero overhead
-   and it is equivalent to the Apps deployed in App Store.
+(Warning: XCode is very large)
+   1. Run this command in the project directory
+      ```
+      npx expo run:ios
+      ```
+      This will create an iOS folder for the app. If the project already has it you
+      don't have to run this command.
+   2. Open the iOS folder in XCode. If you have not worked with XCode before, start
+      by creating an developer account using your Apple Store account.
+   3. Allow 'Developer Mode' on your iPhone by going to 'Setting -> Privacy & Security
+      -> Developer Mode'. Turn on the developer mode, but remember **your iOS device
+      might be vunlnerable to certain attacks if this mode is opened**. Your iOS device
+      will be forced to restart and you will be asked to turn on developer mode.
+   4. With 'Developer Mode', you will be allowed to create a _real App_ on your iOS device.
+      This is very similar to using Swift and Object-C. First, you need to connect your mobile
+      device to your Mac via a USB cable. Your mobile device will be asked to trust your Mac.
+      Second, in XCode, select your simulator device to your device (not a simulator).
+      Third, click the run button in XCode to run the App. After these three steps, a real app
+      will be created. Before opening it, you need to trust yourself on your mobile device.
+      To do that, go to "Setting -> General -> VPN&Device Management" and trust Attendify.
+   5. Now you can open the app. With this approach, your app will have absolutely zero overhead
+      and it is equivalent to the Apps deployed in App Store.
 
 ## Testing on an Android emulator
 Emulators are hardware dependent! They work by emulating an entire device on your laptop.
@@ -381,20 +445,18 @@ now you want to go back to page A and you expect some changes to be reflected on
 If you did things normally, you will find out nothing has changed in page A.
 To solve this, you need to do these steps to page A:
 
-
 Step 1: 
 Define the 'useState' variables you want to use, they are variables that updates
 visually when changed.
-
-
+   
 Step 2:
 Add this to your page function:
 ```
 React.useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      // change state variable
-    });
-    return () => unsubscribe();
-  }, [navigation]);
+const unsubscribe = navigation.addListener('focus', () => {
+// change state variable
+});
+return () => unsubscribe();
+}, [navigation]);
 ```
 Now Your page A should reflect the changes made from page B.
