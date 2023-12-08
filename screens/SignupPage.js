@@ -8,6 +8,7 @@ import * as KolynStyle from '../kits/KolynStyleKit';
 import {KolynMainTitleImage} from '../kits/KolynComponentKit';
 import { ThemeContext } from '../kits/AppTheme';
 import { SpringButton } from '../kits/SpringButton';
+import {sendSignUpCred} from '../logic/sendToBackend';
 
 
 /* 
@@ -190,16 +191,9 @@ function PressSignupButton(
     spire_id: idText,
   };
 
-  // Use fetch API to send the user data to the backend
-  fetch('http://localhost:8080/register', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(requestData),
-  })
-    .then(response => response.json())
-    .then(data => {
+
+  response = sendSignUpCred(requestData)
+    response.then(data => {
       // Check if the response has a status property before accessing it
       //console.log(data)
       if (data && data["message"] === "User created!") {

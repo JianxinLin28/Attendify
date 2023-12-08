@@ -9,6 +9,7 @@ import * as KolynStyle from '../kits/KolynStyleKit';
 import { KolynMainTitleImage } from '../kits/KolynComponentKit';
 import { ThemeContext} from '../kits/AppTheme';
 import { SpringButton } from '../kits/SpringButton';
+import {sendLoginCred} from '../logic/sendToBackend';
 
 
 /*
@@ -144,32 +145,15 @@ function GetSubColor() {
 export function PressLoginButton(navigation, emailText, passwordText, onChangeErrorText) {
   // Create the object with the user email and password
   const userData = { email: emailText, password: passwordText };
-
-  // Use fetch API to send the user data to the backend
-  fetch('http://localhost:8080/login', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(userData),
-  })
-    .then(response => response.json())
-    .then(data => {
-      // Check if the response has a status property before accessing it
-      // console.log(data)
-      if (data && data["message"] === "Login Successful") {
-        //console.warn("Login Successful")
+  sendLoginCred(userData).then(loginStatus => {
+      if(loginStatus === true){
         navigation.navigate('BottomTab');
-      } 
-      else
-      {
-        onChangeErrorText(data["message"]);
       }
-    })
-    .catch(error => {
-      // If there is any error during the communication with the backend, show it to the user
-      console.warn('Login Unsuccessful');
-    });
+      else{
+        console.log(loginStatus)
+      }
+})
+
 }
 
 /* Connect to backend logic code end */
