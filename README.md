@@ -43,6 +43,11 @@ to the 'Testing on an Android emulator' section on this Readme page.
 ## -> If you are interested in using our project
 
 ### Installing our project
+
+To install our app, we have listed 14 steps for you to follow.
+You can also follow the steps in this video link made by Mr.Aadi:
+[Video placeholder]
+
 * Step 1: Download the project from this branch as a zip file and unzip it. 
 
 * Step 2: Open the unzipped folder in VSCode or any IDE you like.
@@ -123,9 +128,9 @@ Once this is done, you can run the Backend code by running **npm start**
 * Step 14: Run the app
 
 After you have set up both frontend & backend. 
-Now you should be able to Log in / Sign up.
+Now you should be able to Log in/Sign up and do everything in the app.
 
-## Here is an existing account for testing purpose:
+### Here is an existing account for testing purpose:
 
 Email: test@umass.edu
 
