@@ -2,8 +2,6 @@
 
 Developer: Jianxin Lin & Aadi Deshmukh
 
-Writer for this page: Jianxin Lin 
-
 ## Table of contents
 
 [First time using React Native Expo](https://github.com/SatwikPatro/Attendify/tree/Mobile#--if-this-is-the-first-time-you-are-using-react-native-expo)
