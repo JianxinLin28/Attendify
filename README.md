@@ -73,7 +73,7 @@ since the code is still running local.
    > you are using -> You will see your network's IP address in the TCP/IP section.
 
 * Step 4: Go to line 5 of logic/sendToBackend.js and replace the part of string 'localhost' in
-   http://localhost:8080/ with the ip address you just got.
+   http://localhost:8080/ with the IP address you just got.
    > For example: http://888.88.88.888:8080/
    
 * Step 5: Enter **npm install** command 
