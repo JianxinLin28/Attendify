@@ -11,3 +11,6 @@ Please switch the current branch to 'Satwik' and follow the Readme instructions 
 
 ## Install the Mobile Application (Student app)
 Please switch the current branch to 'Mobile' and follow the Readme instructions from there!
+
+## View the backend server (Instructor and Student)
+Please switch the current branch to 'Backend' and follow the Readme instructions from there!
